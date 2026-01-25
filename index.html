@@ -1,664 +1,1264 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Как влияют компьютерные игры на человека</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: #e0e0e0;
-            background: #0a0a15;
-            min-height: 100vh;
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(28, 58, 173, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 20%);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%);
-            padding: 5rem 0;
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 3px solid #8b5cf6;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            color: #c084fc;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            color: #e9d5ff;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* Navigation */
-        nav {
-            background: rgba(15, 23, 42, 0.95);
-            padding: 1.2rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid #4c1d95;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-        }
-
-        nav a {
-            color: #e9d5ff;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.8rem 1.5rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-            font-size: 1.1rem;
-        }
-
-        nav a:hover {
-            background: linear-gradient(45deg, #8b5cf6, #c084fc);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
-        }
-
-        nav a.active {
-            background: linear-gradient(45deg, #8b5cf6, #c084fc);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
-        }
-
-        /* Main Content */
-        .content-section {
-            background: rgba(30, 41, 59, 0.8);
-            margin: 3rem auto;
-            padding: 4rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            position: relative;
-            border: 1px solid #5b21b6;
-            backdrop-filter: blur(10px);
-        }
-
-        h2 {
-            color: #c084fc;
-            margin-bottom: 2rem;
-            font-size: 3rem;
-            text-align: center;
-            padding-bottom: 1rem;
-            position: relative;
-            font-weight: 700;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 5px;
-            background: linear-gradient(90deg, #8b5cf6, #c084fc);
-            border-radius: 3px;
-        }
-
-        h3 {
-            color: #fbbf24;
-            margin: 2rem 0 1rem 0;
-            font-size: 2.2rem;
-            font-weight: 600;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-            text-align: justify;
-            line-height: 1.8;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #1e1b4b, #3730a3);
-            color: white;
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-            border: 1px solid #6d28d9;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #8b5cf6, #c084fc);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .stat-number {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #c084fc;
-        }
-
-        .stat-label {
-            font-size: 1.4rem;
-            opacity: 0.9;
-            color: #ddd6fe;
-        }
-
-        /* Game Examples */
-        .game-examples {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-            margin: 3rem 0;
-        }
-
-        .game-card {
-            background: #1e1b4b;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-            border: 1px solid #6d28d9;
-        }
-
-        .game-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-        }
-
-        .game-image {
-            width: 100%;
-            height: 250px;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            position: relative;
-        }
-
-        .game-title-overlay {
-            background: rgba(0,0,0,0.8);
-            padding: 1.5rem 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 2px solid #c084fc;
-        }
-
-        .game-title-main {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #fbbf24;
-            margin-bottom: 0.5rem;
-        }
-
-        .game-title-sub {
-            font-size: 1.3rem;
-            color: #c084fc;
-        }
-
-        .game-content {
-            padding: 2rem;
-        }
-
-        .game-title {
-            font-size: 1.8rem;
-            color: #c084fc;
-            margin-bottom: 1.5rem;
-            font-weight: bold;
-        }
-
-        .game-feature {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-            position: relative;
-            font-size: 1.2rem;
-        }
-
-        .game-feature::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: #fbbf24;
-            font-size: 1.8rem;
-        }
-
-        /* Effects Grid */
-        .effects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .effect-card {
-            background: #1e1b4b;
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .effect-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-        }
-
-        .effect-card.positive::before {
-            background: linear-gradient(90deg, #10b981, #34d399);
-        }
-
-        .effect-card.negative::before {
-            background: linear-gradient(90deg, #ef4444, #f87171);
-        }
-
-        .effect-card.positive {
-            border-color: #10b981;
-        }
-
-        .effect-card.negative {
-            border-color: #ef4444;
-        }
-
-        .effect-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .effect-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .effect-card.positive .effect-icon {
-            background: linear-gradient(135deg, #10b981, #34d399);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
-        }
-
-        .effect-card.negative .effect-icon {
-            background: linear-gradient(135deg, #ef4444, #f87171);
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
-        }
-
-        /* Quiz Section */
-        .quiz-section {
-            background: rgba(30, 27, 75, 0.9);
-            padding: 3rem;
-            border-radius: 20px;
-            margin: 3rem 0;
-            border: 1px solid #6d28d9;
-        }
-
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .question-card {
-            background: #1e1b4b;
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            border: 1px solid #6d28d9;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-
-        .question-card h3 {
-            color: #c084fc;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-
-        .options {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .option {
-            background: #4c1d95;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 2px solid #6d28d9;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            font-size: 1.2rem;
-        }
-
-        .option:hover {
-            border-color: #c084fc;
-            background: #8b5cf6;
-            transform: translateX(5px);
-        }
-
-        .option.selected {
-            border-color: #fbbf24;
-            background: #f59e0b;
-            color: #1e1b4b;
-        }
-
-        .quiz-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #8b5cf6, #c084fc);
-            color: white;
-            padding: 1.2rem 2.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
-        }
-
-        .result {
-            text-align: center;
-            padding: 3rem;
-            background: #1e1b4b;
-            border-radius: 20px;
-            border: 2px solid #6d28d9;
-        }
-
-        .result-score {
-            font-size: 4.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #fbbf24;
-        }
-
-        /* Source References */
-        .sources {
-            background: #1e1b4b;
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin: 3rem 0;
-            border-left: 4px solid #c084fc;
-        }
-
-        .sources h3 {
-            color: #c084fc;
-            margin-bottom: 1.5rem;
-            font-size: 2.2rem;
-        }
-
-        .source-list {
-            list-style: none;
-        }
-
-        .source-list li {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-bottom: 1px solid #4c1d95;
-            transition: background 0.3s;
-            font-size: 1.2rem;
-        }
-
-        .source-list li:hover {
-            background: #4c1d95;
-            border-radius: 8px;
-        }
-
-        .source-list a {
-            color: #c084fc;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .source-list a:hover {
-            text-decoration: underline;
-        }
-
-        /* AI Notice */
-        .ai-notice {
-            background: rgba(30, 64, 175, 0.2);
-            border-left: 4px solid #8b5cf6;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            font-size: 1.1rem;
-            border: 1px solid #4c1d95;
-        }
-
-        /* Final Slide */
-        .final-slide {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%);
-            color: white;
-            padding: 5rem 2rem;
-            border-radius: 25px;
-            text-align: center;
-            margin: 3rem auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .final-slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="gaming" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23gaming)"/></svg>');
-        }
-
-        .final-text {
-            font-size: 3.5rem;
-            margin-bottom: 2rem;
-            font-weight: bold;
-            position: relative;
-            z-index: 2;
-            color: #c084fc;
-        }
-
-        .author {
-            font-size: 1.8rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 2;
-            color: #e9d5ff;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(15, 23, 42, 0.95);
-            color: #94a3b8;
-            text-align: center;
-            padding: 3rem 0;
-            margin-top: 4rem;
-            border-top: 2px solid #4c1d95;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 3rem;
-            }
-
-            .subtitle {
-                font-size: 1.4rem;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-
-            .stats-grid,
-            .game-examples,
-            .effects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quiz-buttons {
-                flex-direction: column;
-            }
-
-            h2 {
-                font-size: 2.5rem;
-            }
-
-            p {
-                font-size: 1.2rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        /* Game-specific info */
-        .game-info {
-            background: rgba(30, 27, 75, 0.6);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            border-left: 4px solid #fbbf24;
-        }
-
-        .game-info h4 {
-            color: #fbbf24;
-            margin-bottom: 0.8rem;
-            font-size: 1.4rem;
-        }
-
-        .cs2-feature {
-            background: rgba(59, 130, 246, 0.2);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 0.5rem 0;
-            border-left: 3px solid #3b82f6;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Как влияют компьютерные игры на человека</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=JetBrains+Mono:wght@300..800&display=swap" rel="stylesheet">
+
+  <!-- Libraries (CDN) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #070812;
+      --panel: rgba(14, 16, 30, .72);
+      --panel2: rgba(9, 10, 18, .62);
+      --stroke: rgba(255,255,255,.10);
+      --stroke2: rgba(255,255,255,.16);
+      --text: rgba(255,255,255,.90);
+      --muted: rgba(255,255,255,.66);
+      --faint: rgba(255,255,255,.46);
+      --brand: #7c3aed;  /* violet */
+      --brand2: #22d3ee; /* cyan  */
+      --good: #34d399;
+      --bad: #fb7185;
+      --warn: #fbbf24;
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.45);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 1180px;
+      --content: 760px;
+      --fs: 16px;
+      --lh: 1.75;
+      --measure: 72ch;
+      --focus: 0 0 0 3px rgba(34,211,238,.25), 0 0 0 1px rgba(124,58,237,.35) inset;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size: var(--fs);
+      line-height: var(--lh);
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 20% 20%, rgba(124,58,237,.22), transparent 60%),
+                  radial-gradient(1000px 700px at 80% 30%, rgba(34,211,238,.18), transparent 55%),
+                  radial-gradient(900px 700px at 55% 95%, rgba(251,113,133,.14), transparent 60%),
+                  var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* WebGL backdrop */
+    #bg3d {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+    }
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      opacity: .11;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+    .scanlines {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: .09;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.06) 0px,
+        rgba(255,255,255,.06) 1px,
+        transparent 2px,
+        transparent 6px
+      );
+    }
+
+    /* Top progress */
+    .top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      z-index: 50;
+      box-shadow: 0 0 18px rgba(34,211,238,.35);
+    }
+
+    /* Layout */
+    .shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      gap: 26px;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 18px 90px;
+    }
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar */
+    .side {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      height: calc(100dvh - 32px);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    @media (max-width: 980px) {
+      .side { position: relative; height: auto; }
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+    .panel .hd {
+      padding: 14px 16px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(90deg, rgba(124,58,237,.16), rgba(34,211,238,.10));
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .sig {
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.65), rgba(255,255,255,.08)),
+                  linear-gradient(135deg, rgba(124,58,237,.9), rgba(34,211,238,.8));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.14) inset, 0 14px 40px rgba(124,58,237,.22);
+      position: relative;
+      overflow: hidden;
+    }
+    .sig:after {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      background: conic-gradient(from 180deg, transparent, rgba(255,255,255,.38), transparent);
+      animation: spin 5.5s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .kbd {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.80);
+      background: rgba(0,0,0,.25);
+    }
+
+    .side .body {
+      padding: 14px 16px 16px;
+    }
+
+    .toc {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .toc a {
+      text-decoration: none;
+      color: rgba(255,255,255,.74);
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: rgba(0,0,0,.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .toc a:hover {
+      transform: translateY(-1px);
+      border-color: rgba(34,211,238,.22);
+      background: rgba(34,211,238,.07);
+    }
+    .toc a.active {
+      color: rgba(255,255,255,.92);
+      border-color: rgba(124,58,237,.35);
+      background: linear-gradient(90deg, rgba(124,58,237,.20), rgba(34,211,238,.10));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.22);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
+      flex: none;
+    }
+    .toc a.active .dot {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 0 18px rgba(34,211,238,.28);
+    }
+
+    .hud {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .chip {
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-height: 54px;
+    }
+    .chip b {
+      font-size: 13px;
+      color: rgba(255,255,255,.86);
+      font-weight: 700;
+    }
+    .chip span {
+      font-size: 12px;
+      color: rgba(255,255,255,.62);
+    }
+
+    .side-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      color: rgba(255,255,255,.86);
+      padding: 11px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 650;
+      letter-spacing: .15px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(34,211,238,.25);
+      background: rgba(34,211,238,.08);
+    }
+    .btn:focus-visible { outline: none; box-shadow: var(--focus); }
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(124,58,237,.85), rgba(34,211,238,.70));
+      border-color: rgba(255,255,255,.14);
+      box-shadow: 0 14px 40px rgba(124,58,237,.22);
+    }
+    .btn.primary:hover {
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.80));
+    }
+
+    /* Main */
+    main {
+      min-width: 0;
+    }
+
+    .hero {
+      padding: 18px 0 16px;
+    }
+    .hero-card {
+      border-radius: calc(var(--radius) + 8px);
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card:before {
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(900px 420px at 18% 18%, rgba(124,58,237,.24), transparent 55%),
+        radial-gradient(700px 360px at 88% 28%, rgba(34,211,238,.18), transparent 55%),
+        radial-gradient(900px 420px at 40% 110%, rgba(251,113,133,.12), transparent 60%);
+      filter: blur(0px);
+      opacity: .95;
+      pointer-events:none;
+    }
+    .hero-inner {
+      position: relative;
+      padding: 28px 24px 22px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .hero-inner { grid-template-columns: 1fr; }
+    }
+
+    .glitch {
+      position: relative;
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1.05;
+      margin: 0;
+      letter-spacing: -0.02em;
+      font-weight: 900;
+      text-shadow: 0 0 24px rgba(34,211,238,.18);
+    }
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      opacity: .65;
+      pointer-events: none;
+      clip-path: inset(0 0 0 0);
+      mix-blend-mode: screen;
+      filter: saturate(1.2);
+    }
+    .glitch::before {
+      transform: translate(2px, 0);
+      color: rgba(34,211,238,.70);
+      animation: glitchA 3.2s infinite linear alternate-reverse;
+    }
+    .glitch::after {
+      transform: translate(-2px, 0);
+      color: rgba(251,113,133,.58);
+      animation: glitchB 2.6s infinite linear alternate-reverse;
+    }
+    @keyframes glitchA {
+      0% { clip-path: inset(10% 0 65% 0); }
+      10% { clip-path: inset(28% 0 40% 0); }
+      20% { clip-path: inset(5% 0 75% 0); }
+      30% { clip-path: inset(55% 0 22% 0); }
+      40% { clip-path: inset(14% 0 62% 0); }
+      50% { clip-path: inset(42% 0 34% 0); }
+      60% { clip-path: inset(64% 0 12% 0); }
+      70% { clip-path: inset(20% 0 55% 0); }
+      80% { clip-path: inset(74% 0 6% 0); }
+      90% { clip-path: inset(34% 0 38% 0); }
+      100% { clip-path: inset(12% 0 65% 0); }
+    }
+    @keyframes glitchB {
+      0% { clip-path: inset(70% 0 8% 0); }
+      12% { clip-path: inset(12% 0 72% 0); }
+      24% { clip-path: inset(48% 0 24% 0); }
+      36% { clip-path: inset(22% 0 52% 0); }
+      48% { clip-path: inset(66% 0 10% 0); }
+      60% { clip-path: inset(30% 0 46% 0); }
+      72% { clip-path: inset(6% 0 78% 0); }
+      84% { clip-path: inset(58% 0 18% 0); }
+      100% { clip-path: inset(16% 0 64% 0); }
+    }
+
+    .sub {
+      margin: 14px 0 0;
+      color: rgba(255,255,255,.78);
+      font-size: 16px;
+      max-width: 62ch;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .badge {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: rgba(255,255,255,.76);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset;
+      user-select: none;
+    }
+    .badge.hot {
+      background: linear-gradient(135deg, rgba(124,58,237,.45), rgba(34,211,238,.28));
+      border-color: rgba(255,255,255,.14);
+      color: rgba(255,255,255,.86);
+    }
+
+    .mini {
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.20);
+      padding: 12px 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .mini-row {
+      display:flex; align-items:center; justify-content: space-between; gap: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,.70);
+    }
+    .bar {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .bar > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      box-shadow: 0 0 18px rgba(34,211,238,.22);
+    }
+
+    /* Content cards */
+    section {
+      scroll-margin-top: 16px;
+    }
+    .card {
+      margin-top: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background: var(--panel);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+    .card .card-inner {
+      padding: 22px 22px 24px;
+    }
+
+    .kicker {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,.66);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kicker:before {
+      content:"";
+      width: 20px; height: 2px;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      border-radius: 999px;
+      box-shadow: 0 0 18px rgba(34,211,238,.18);
+    }
+
+    h2 {
+      margin: 10px 0 12px;
+      font-size: clamp(22px, 2.3vw, 30px);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      margin: 18px 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    p {
+      margin: 10px 0;
+      color: rgba(255,255,255,.80);
+      max-width: var(--measure);
+    }
+    .lead {
+      font-size: 18px;
+      color: rgba(255,255,255,.82);
+      max-width: 70ch;
+    }
+
+    /* Stats blocks */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin: 14px 0 12px;
+    }
+    @media (max-width: 720px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+    .stat-card {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      padding: 16px 16px;
+      position: relative;
+      overflow:hidden;
+    }
+    .stat-card:before {
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(480px 220px at 20% 25%, rgba(34,211,238,.14), transparent 55%),
+                  radial-gradient(520px 240px at 80% 30%, rgba(124,58,237,.16), transparent 55%);
+      opacity: .9;
+      pointer-events:none;
+    }
+    .stat-number {
+      position: relative;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, rgba(255,255,255,.92), rgba(34,211,238,.86));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(34,211,238,.12);
+    }
+    .stat-label {
+      position: relative;
+      margin-top: 4px;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+    }
+
+    /* Effects grid */
+    .effects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin: 14px 0 8px;
+    }
+    @media (max-width: 980px) {
+      .effects-grid { grid-template-columns: 1fr; }
+    }
+    .effect-card {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      padding: 16px 16px;
+      position: relative;
+      overflow: hidden;
+      min-height: 118px;
+    }
+    .effect-card.positive:before {
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(520px 240px at 18% 20%, rgba(52,211,153,.16), transparent 55%),
+                  radial-gradient(520px 240px at 84% 40%, rgba(34,211,238,.14), transparent 58%);
+      opacity: .95;
+      pointer-events:none;
+    }
+    .effect-card.negative:before {
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(520px 240px at 18% 20%, rgba(251,113,133,.16), transparent 55%),
+                  radial-gradient(520px 240px at 84% 40%, rgba(251,191,36,.10), transparent 58%);
+      opacity: .95;
+      pointer-events:none;
+    }
+    .effect-icon {
+      position: relative;
+      font-size: 22px;
+      width: 38px; height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 16px 40px rgba(0,0,0,.25);
+    }
+    .effect-card h3 {
+      position: relative;
+      margin: 12px 0 6px;
+      font-size: 16px;
+      color: rgba(255,255,255,.90);
+    }
+    .effect-card p {
+      position: relative;
+      margin: 0;
+      color: rgba(255,255,255,.70);
+      font-size: 13px;
+      max-width: 46ch;
+    }
+
+    /* Games */
+    .game-examples {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px) {
+      .game-examples { grid-template-columns: 1fr; }
+    }
+    .game-card {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      display: flex;
+      flex-direction: column;
+      min-height: 360px;
+      transform-style: preserve-3d;
+    }
+    .game-image {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      filter: saturate(1.12) contrast(1.04);
+      transform: translateZ(1px);
+    }
+    .game-content {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .game-title {
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      font-size: 18px;
+    }
+    .game-feature {
+      color: rgba(255,255,255,.74);
+      font-size: 13px;
+    }
+    .game-feature strong {
+      color: rgba(255,255,255,.90);
+    }
+    .game-info {
+      margin-top: 10px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .game-info h4 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: rgba(255,255,255,.86);
+      letter-spacing: .01em;
+    }
+    .cs2-feature {
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      margin: 6px 0;
+    }
+
+    /* Story */
+    .story-lead {
+      margin: 6px 0 6px;
+      color: rgba(255,255,255,.70);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .story-after {
+      color: rgba(255,255,255,.76);
+      border-left: 2px solid rgba(34,211,238,.35);
+      padding-left: 12px;
+    }
+
+    /* Interactive embeds */
+    .embed {
+      margin-top: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      overflow: hidden;
+    }
+    .embed .embed-hd {
+      padding: 12px 14px;
+      display:flex; align-items:center; justify-content: space-between; gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(90deg, rgba(124,58,237,.14), rgba(34,211,238,.08));
+      color: rgba(255,255,255,.82);
+      font-weight: 750;
+      font-size: 13px;
+    }
+    .embed .embed-bd {
+      padding: 12px 14px 14px;
+    }
+    .range {
+      display:flex; gap: 10px; align-items:center; flex-wrap: wrap;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      margin-top: 10px;
+    }
+    input[type="range"] {
+      width: 240px;
+      accent-color: var(--brand2);
+    }
+
+    /* Quiz */
+    .quiz-section .quiz-container {
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .quiz-q {
+      font-weight: 850;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .quiz-opt {
+      display:flex; align-items:flex-start; gap: 10px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      margin: 8px 0;
+      user-select: none;
+    }
+    .quiz-opt:hover {
+      transform: translateY(-1px);
+      border-color: rgba(34,211,238,.22);
+      background: rgba(34,211,238,.06);
+    }
+    .quiz-opt input { margin-top: 3px; }
+    .quiz-opt.correct {
+      border-color: rgba(52,211,153,.35);
+      background: rgba(52,211,153,.10);
+    }
+    .quiz-opt.wrong {
+      border-color: rgba(251,113,133,.35);
+      background: rgba(251,113,133,.10);
+    }
+    .quiz-actions {
+      display:flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;
+    }
+    .quiz-actions .btn { flex: 0 0 auto; }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: min(420px, calc(100vw - 36px));
+      z-index: 80;
+      display: grid;
+      gap: 10px;
+    }
+    .toast-item {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.42);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow2);
+      padding: 12px 12px;
+      display:flex; gap: 10px; align-items:flex-start;
+      transform: translateY(10px);
+      opacity: 0;
+      animation: toastIn .28s ease forwards;
+    }
+    @keyframes toastIn {
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .toast-ic {
+      width: 36px; height: 36px; border-radius: 14px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(124,58,237,.55), rgba(34,211,238,.35));
+      border: 1px solid rgba(255,255,255,.12);
+      flex:none;
+    }
+    .toast-item b { display:block; font-size: 13px; }
+    .toast-item span { display:block; font-size: 12px; color: rgba(255,255,255,.70); margin-top: 2px; }
+
+    /* Modals */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 90;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .overlay.show { display: flex; }
+    .modal {
+      width: min(860px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10, 11, 20, .78);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
+    .modal .mh {
+      padding: 14px 16px;
+      display:flex; justify-content: space-between; align-items:center; gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(90deg, rgba(124,58,237,.18), rgba(34,211,238,.10));
+    }
+    .modal .mh b {
+      font-size: 14px;
+      letter-spacing: .2px;
+    }
+    .modal .mb {
+      padding: 16px 16px 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 780px) {
+      .modal .mb { grid-template-columns: 1fr; }
+    }
+    .field {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      padding: 12px 12px;
+    }
+    .field label {
+      display:block;
+      font-size: 12px;
+      color: rgba(255,255,255,.70);
+      margin-bottom: 8px;
+    }
+    .field .row {
+      display:flex; align-items:center; justify-content: space-between; gap: 10px;
+    }
+    .field small { color: rgba(255,255,255,.58); font-size: 11px; }
+    .toggle {
+      display:flex; align-items:center; gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .toggle input {
+      width: 18px; height: 18px;
+      accent-color: var(--brand2);
+    }
+
+    /* Sources */
+    .sources {
+      margin-top: 10px;
+    }
+    .source-list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+    .source-list li {
+      margin: 10px 0;
+      color: rgba(255,255,255,.74);
+    }
+    .source-list a {
+      color: rgba(34,211,238,.86);
+      text-decoration: none;
+    }
+    .source-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* Motion prefs */
+    @media (prefers-reduced-motion: reduce) {
+      .glitch::before, .glitch::after { animation: none; }
+      .sig:after { animation: none; }
+      * { scroll-behavior: auto !important; }
+    }
+  
+/* ===== Ultra v2: Cinematic / Interactive ===== */
+.cinematic-divider{
+  width: min(1100px, calc(100% - 48px));
+  margin: 26px auto 18px;
+  filter: drop-shadow(0 0 24px rgba(124,58,237,.25)) drop-shadow(0 0 20px rgba(34,211,238,.18));
+  opacity: .95;
+}
+.cinematic-divider svg{ display:block; width:100%; height:84px; }
+.cinematic-divider .cd-glow{
+  fill: rgba(124,58,237,.16);
+}
+.cinematic-divider .cd-line{
+  fill:none;
+  stroke: rgba(34,211,238,.55);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 14 10;
+  animation: cdDash 5.5s linear infinite;
+}
+@keyframes cdDash { to { stroke-dashoffset: -120; } }
+
+.pullquote{
+  position: relative;
+  border-radius: 18px;
+  padding: 18px 18px 14px;
+  background: linear-gradient(180deg, rgba(124,58,237,.18), rgba(0,0,0,.35));
+  border: 1px solid rgba(124,58,237,.28);
+  box-shadow: 0 18px 70px rgba(0,0,0,.45);
+  overflow: hidden;
+}
+.pullquote:before{
+  content:"";
+  position:absolute; inset:-2px;
+  background: radial-gradient(600px 220px at 10% 0%, rgba(34,211,238,.25), transparent 60%),
+              radial-gradient(600px 220px at 90% 10%, rgba(124,58,237,.25), transparent 60%);
+  opacity:.9;
+  pointer-events:none;
+}
+.pq-label{ font-size: 12px; color: var(--muted); letter-spacing:.12em; text-transform: uppercase; position:relative; }
+.pq-text{ font-size: 18px; line-height:1.35; margin-top: 10px; position:relative; }
+.pq-actions{ display:flex; gap:10px; margin-top: 12px; position:relative; flex-wrap:wrap; }
+.btn.tiny{ padding: 8px 10px; font-size: 12px; border-radius: 12px; }
+
+.callout{
+  border-radius: 18px;
+  background: rgba(15, 15, 20, .55);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 14px 14px 10px;
+  box-shadow: 0 14px 60px rgba(0,0,0,.45);
+}
+.callout-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.callout-body p{ margin: 10px 0 0 0; color: var(--muted); }
+
+.story-wrap{ margin-top: 18px; }
+.story-main{
+  display:grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 18px;
+}
+@media (max-width: 980px){
+  .story-main{ grid-template-columns: 1fr; }
+}
+.story-card{
+  border-radius: 22px;
+  background: rgba(10,10,14,.62);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 18px;
+  box-shadow: 0 26px 100px rgba(0,0,0,.55);
+  position: relative;
+  overflow:hidden;
+}
+.story-card:after{
+  content:"";
+  position:absolute; inset:-2px;
+  background:
+    radial-gradient(800px 260px at 10% -10%, rgba(34,211,238,.18), transparent 60%),
+    radial-gradient(800px 260px at 110% 10%, rgba(124,58,237,.22), transparent 60%);
+  pointer-events:none;
+}
+.story-top{ display:flex; align-items:flex-start; justify-content:space-between; gap: 14px; position:relative; }
+.story-title{ font-weight: 750; letter-spacing:.02em; }
+.story-stats{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.pill{
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.28);
+  font-size: 12px;
+}
+.story-text{
+  position:relative;
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255,255,255,.92);
+}
+.story-choices{ position:relative; margin-top: 14px; display:grid; gap: 10px; }
+.choice{
+  padding: 12px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.28);
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.choice:hover{
+  transform: translateY(-1px);
+  border-color: rgba(34,211,238,.35);
+  background: rgba(34,211,238,.08);
+}
+.choice .c-title{ font-weight: 700; }
+.choice .c-meta{ margin-top: 6px; font-size: 12px; color: var(--muted); display:flex; gap:10px; flex-wrap:wrap; }
+.story-controls{ position:relative; margin-top: 14px; display:flex; gap: 10px; flex-wrap: wrap; }
+.story-footnote{ position:relative; margin-top: 14px; }
+
+.story-side{ display:grid; gap: 18px; }
+.story-log{
+  border-radius: 22px;
+  background: rgba(10,10,14,.52);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 16px;
+  box-shadow: 0 22px 90px rgba(0,0,0,.55);
+}
+.story-log-head{ display:flex; align-items:center; justify-content:space-between; }
+.story-path{ margin-top: 10px; display:grid; gap: 10px; }
+.path-item{
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.22);
+}
+.path-item b{ display:block; }
+.divider-mini{
+  height:1px; background: rgba(255,255,255,.08);
+  margin: 14px 0;
+}
+.result-grid{
+  display:grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 620px){ .result-grid{ grid-template-columns: 1fr; } }
+.result-card{
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.24);
+}
+.result-card span{ display:block; font-size: 12px; color: var(--muted); }
+.result-card b{ display:block; margin-top: 6px; font-size: 14px; }
+
+.cinematic-break{
+  margin-top: 18px;
+  border-radius: 22px;
+  padding: 16px 16px;
+  background: linear-gradient(90deg, rgba(124,58,237,.18), rgba(34,211,238,.10));
+  border: 1px solid rgba(255,255,255,.10);
+  display:flex; align-items:center; justify-content:space-between; gap: 14px;
+}
+.cb-right{ display:flex; gap: 12px; flex-wrap:wrap; justify-content:flex-end; }
+.hud-mini{ display:flex; gap: 8px; align-items:center; padding: 8px 10px; border-radius: 999px; background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.10); }
+
+.missions{
+  margin-top: 14px;
+  border-radius: 22px;
+  padding: 14px;
+  background: rgba(10,10,14,.55);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 22px 90px rgba(0,0,0,.55);
+}
+.missions-head{ display:flex; align-items:center; justify-content:space-between; gap: 10px; }
+.rank{ display:flex; flex-direction:column; gap: 4px; }
+.rank-badge{
+  display:inline-flex; width:max-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(34,211,238,.25);
+  background: rgba(34,211,238,.08);
+  font-weight: 750;
+  letter-spacing: .02em;
+}
+.rank-sub{ font-size: 12px; color: var(--muted); }
+.side-actions .btn{ width: 100%; }
+.missions-list{ margin-top: 12px; display:grid; gap: 10px; }
+.mission{
+  display:grid;
+  grid-template-columns: 10px 1fr auto;
+  gap: 10px;
+  align-items:flex-start;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.20);
+}
+.m-dot{
+  width: 10px; height: 10px; border-radius: 999px;
+  background: rgba(255,255,255,.18);
+  margin-top: 5px;
+}
+.mission.done .m-dot{
+  background: linear-gradient(90deg, rgba(124,58,237,1), rgba(34,211,238,1));
+  box-shadow: 0 0 18px rgba(34,211,238,.30);
+}
+.m-title{ font-weight: 700; }
+.m-desc{ margin-top: 4px; font-size: 12px; color: var(--muted); }
+.m-state{ font-size: 12px; color: rgba(255,255,255,.9); }
+
+.share-fab{
+  position: fixed;
+  z-index: 60;
+  left: -9999px; top: -9999px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .15s ease, transform .15s ease;
+  pointer-events:none;
+}
+.share-fab.show{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events:auto;
+}
+
+</style>
 </head>
-<body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <h1>Как влияют компьютерные игры на человека</h1>
-                <p class="subtitle">Исследование влияния игр на психику, социальные навыки и когнитивные способности и повседневную жизнь человека</p>
-            </div>
-        </div>
-    </header>
 
-    <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#stats" class="active">Статистика</a></li>
-                <li><a href="#positive">Польза</a></li>
-                <li><a href="#negative">Вред</a></li>
-                <li><a href="#examples">Примеры</a></li>
-                <li><a href="#quiz">Тест</a></li>
-                <li><a href="#conclusion">Выводы</a></li>
-                <li><a href="#sources">Источники</a></li>
-            </ul>
+<body>
+  <canvas id="bg3d" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="top-progress" id="topProgress"></div>
+
+  <div class="shell">
+    <aside class="side">
+      <div class="panel">
+        <div class="hd">
+          <div class="brand">
+            <div class="sig" aria-hidden="true"></div>
+            <div>
+              <div style="font-size:13px; line-height: 1.1;">Gaming Longread</div>
+              <div style="font-size:12px; color: rgba(255,255,255,.62); margin-top: 2px;">Навигация и HUD</div>
+            </div>
+          </div>
+          <div class="kbd" title="Открыть командную палитру">Ctrl K</div>
         </div>
-    </nav>
+        <div class="body">
+          <div style="font-size:12px; color: rgba(255,255,255,.68);">
+            Быстрые действия: <span class="kbd">/</span> поиск • <span class="kbd">T</span> тема • <span class="kbd">S</span> настройки
+          </div>
+
+          <nav class="toc" id="toc">
+            <a href="#stats" data-id="stats"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Статистика</span><span class="kbd" style="opacity:.7">1</span></a>
+            <a href="#positive" data-id="positive"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Польза</span><span class="kbd" style="opacity:.7">2</span></a>
+            <a href="#negative" data-id="negative"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Вред</span><span class="kbd" style="opacity:.7">3</span></a>
+            <a href="#examples" data-id="examples"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Примеры</span><span class="kbd" style="opacity:.7">4</span></a>
+            <a href="#story" data-id="story"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Story Mode</span><span class="kbd" style="opacity:.7">5</span></a>
+            <a href="#quiz" data-id="quiz"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Тест</span><span class="kbd" style="opacity:.7">6</span></a>
+            <a href="#conclusion" data-id="conclusion"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Выводы</span><span class="kbd" style="opacity:.7">7</span></a>
+            <a href="#sources" data-id="sources"><span style="display:flex; align-items:center; gap:10px;"><i class="dot"></i>Источники</span><span class="kbd" style="opacity:.7">8</span></a>
+          </nav>
+
+          <div class="hud">
+            <div class="chip">
+              <b id="rtLabel">⏱️ Время</b>
+              <span id="rtValue">—</span>
+            </div>
+            <div class="chip">
+              <b>🎯 Прогресс</b>
+              <span id="progValue">0%</span>
+            </div>
+            <div class="chip">
+              <b>🏆 Ачивки</b>
+              <span id="achValue">0</span>
+            </div>
+            <div class="chip">
+              <b>🏅 Ранг</b>
+              <span id="rankValue">Recruit</span>
+            </div>
+            <div class="chip">
+              <b>🧭 Секция</b
+              <span id="secValue">—</span>
+            </div>
+          </div>
+
+          <div class="mini" aria-label="Мини-радар чтения">
+            <div class="mini-row"><span>Радар чтения</span><span id="radarPct">0%</span></div>
+            <div class="bar"><i id="radarBar"></i></div>
+          
+          <div class="missions" aria-label="Миссии читателя">
+            <div class="missions-head">
+              <div class="rank">
+                <span class="rank-badge" id="rankBadge">Recruit</span>
+                <span class="rank-sub" id="rankSub">0/3 миссий</span>
+              </div>
+              <button class="btn tiny" id="resetProgressBtn" title="Сбросить локальный прогресс">Сброс</button>
+            </div>
+            <div class="missions-list">
+              <div class="mission" data-m="read">
+                <i class="m-dot" aria-hidden="true"></i>
+                <div class="m-body">
+                  <div class="m-title">Пройти 60% материала</div>
+                  <div class="m-desc">Прогресс чтения и секции учитываются автоматически.</div>
+                </div>
+                <span class="m-state" id="mRead">0%</span>
+              </div>
+              <div class="mission" data-m="story">
+                <i class="m-dot" aria-hidden="true"></i>
+                <div class="m-body">
+                  <div class="m-title">Завершить Story Mode</div>
+                  <div class="m-desc">Пройдите интерактивную ветку и зафиксируйте результат.</div>
+                </div>
+                <span class="m-state" id="mStory">—</span>
+              </div>
+              <div class="mission" data-m="quiz">
+                <i class="m-dot" aria-hidden="true"></i>
+                <div class="m-body">
+                  <div class="m-title">Пройти тест</div>
+                  <div class="m-desc">Проверка понимания ключевых тезисов лонгрида.</div>
+                </div>
+                <span class="m-state" id="mQuiz">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-actions">
+            <button class="btn primary" id="startBtn">▶ Старт</button>
+            <button class="btn" id="settingsBtn">⚙ Настройки</button>
+          </div>
+        </div>
+      </div>
+    </aside>
 
     <main>
-        <div class="container">
-            <!-- AI Notice -->
-            <div class="ai-notice fade-in">
-                <strong>Примечание об использовании ИИ:</strong> Этот проект был создан с использованием искусственного интеллекта DeepSeek для помощи в структурировании информации и генерации контента. Все статистические данные и научные факты проверены и имеют ссылки на источники.
+      <div class="hero">
+        <div class="hero-card" id="top">
+          <div class="hero-inner">
+            <div>
+              <h1 class="glitch" data-text="Как влияют компьютерные игры на человека">Как влияют компьютерные игры на человека</h1>
+              <p class="sub">Исследование влияния игр на психику, социальные навыки, когнитивные способности и повседневную жизнь человека</p>
+              <div class="hero-cta">
+                <button class="btn primary" id="jumpToRead">Читать (Scroll)</button>
+                <button class="btn" id="paletteBtn">Командная палитра</button>
+                <button class="btn" id="toggleThemeBtn">Тема: Neon</button>
+              </div>
             </div>
+            <div>
+              <div class="badges" aria-label="Ключевые теги">
+                <span class="badge hot">UI / Motion</span>
+                <span class="badge">WebGL</span>
+                <span class="badge">Интерактив</span>
+                <span class="badge">Данные</span>
+              </div>
+              <div class="mini" style="margin-top: 14px;">
+                <div class="mini-row"><span>Сложность чтения</span><span id="densityLabel">—</span></div>
+                <div class="mini-row"><span>Текст</span><span id="textModeLabel">Comfort</span></div>
+                <div class="mini-row"><span>Горячие клавиши</span><span class="kbd">Ctrl K</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Statistics Section -->
-            <section class="content-section fade-in" id="stats">
-                <h2>Статистика игровой индустрии</h2>
+      <!-- CONTENT -->
+      <section id="stats" class="card" data-kicker="DATA">
+        <div class="card-inner">
+          <div class="kicker">DATA • РЫНОК</div>
+          <h2>Статистика игровой индустрии</h2>
 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -676,11 +1276,35 @@
                 </div>
 
                 <p>Согласно исследованию Newzoo, увлечение играми стало массовым явлением: индустрия продолжает расти, привлекая все более разнообразную аудиторию. Среднестатистический игрок уделяет играм около 7 часов в неделю, что сопоставимо со временем на хобби.</p>
-            </section>
+          <div class="embed" id="statsViz">
+            <div class="embed-hd">
+              <span>Интерактивная визуализация: «7 часов в неделю»</span>
+              <span class="kbd">drag</span>
+            </div>
+            <div class="embed-bd">
+              <canvas id="hoursChart" height="120"></canvas>
+              <div class="range">
+                <span>Смоделируйте время в неделю:</span>
+                <input type="range" id="hoursRange" min="0" max="30" value="7" />
+                <b><span id="hoursVal">7</span> ч/нед</b>
+                <span style="color: rgba(255,255,255,.55)">Сравнение: сон/хобби/игры</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Positive Effects -->
-            <section class="content-section fade-in" id="positive">
-                <h2>Положительное влияние игр</h2>
+<div class="cinematic-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="cd-glow" d="M0,64 C180,96 360,16 540,48 C720,80 900,112 1080,72 C1260,32 1350,40 1440,56 L1440,120 L0,120 Z"></path>
+    <path class="cd-line" d="M0,70 C180,102 360,22 540,54 C720,86 900,118 1080,78 C1260,38 1350,46 1440,62"></path>
+  </svg>
+</div>
+
+      <section id="positive" class="card" data-kicker="UPSIDE">
+        <div class="card-inner">
+          <div class="kicker">UPSIDE • НАВЫКИ</div>
+          <h2>Положительное влияние игр</h2>
 
                 <div class="effects-grid">
                     <div class="effect-card positive">
@@ -704,11 +1328,20 @@
 
                 <h3>Пример из Dota 2:</h3>
                 <p>Чтобы добиться успеха, игрок Dota 2 должен одновременно контролировать карту, предсказывать действия пяти оппонентов, координироваться с командой и мгновенно принимать тактические решения. Это развивает не только аналитическое мышление и многозадачность, но и стрессоустойчивость.</p>
-            </section>
+        </div>
+      </section>
 
-            <!-- Negative Effects -->
-            <section class="content-section fade-in" id="negative">
-                <h2>Отрицательное влияние игр</h2>
+<div class="cinematic-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="cd-glow" d="M0,64 C180,96 360,16 540,48 C720,80 900,112 1080,72 C1260,32 1350,40 1440,56 L1440,120 L0,120 Z"></path>
+    <path class="cd-line" d="M0,70 C180,102 360,22 540,54 C720,86 900,118 1080,78 C1260,38 1350,46 1440,62"></path>
+  </svg>
+</div>
+
+      <section id="negative" class="card" data-kicker="DOWNSIDE">
+        <div class="card-inner">
+          <div class="kicker">DOWNSIDE • РИСК</div>
+          <h2>Отрицательное влияние игр</h2>
 
                 <div class="effects-grid">
                     <div class="effect-card negative">
@@ -731,14 +1364,44 @@
                 </div>
 
                 <h3>История из жизни:</h3>
-                <p>классическая, иллюстрирующая риск развития зависимости:</p>
+                <p class="story-lead">классическая, иллюстрирующая риск развития зависимости</p>
                 <p>"Мой друг из 9 класса начал играть в Dota 2 и постепенно стал зависимым от дофаминовых всплесков, которые он получал во время игры. После каждой победы он чувствовал сильную эйфорию и сразу хотел играть снова, чтобы повторить это ощущение. Поражения же вызывали у него раздражение и желание 'отыграться'. Со временем он начал проводить за игрой по 5-6 часов в день, его успеваемость в школе упала, а общение с реальными друзьями почти прекратилось. Родители заметили, что он стал более замкнутым и раздражительным, особенно когда не мог поиграть."</p>
-                <p>Этот пример показывает трансформацию игры из увлечения в проблему, вытесняющую реальную жизнь и влияющую на психоэмоциональное состояние.</p>
-            </section>
+                <p class="story-after">Этот пример показывает трансформацию игры из увлечения в проблему, вытесняющую реальную жизнь и влияющую на психоэмоциональное состояние.</p>
+          <div class="embed" id="riskSim">
+            <div class="embed-hd">
+              <span>Симулятор риска: «сколько часов — уже красная зона?»</span>
+              <span class="kbd">interactive</span>
+            </div>
+            <div class="embed-bd">
+              <p style="margin:0 0 8px; color: rgba(255,255,255,.72); max-width: 70ch;">
+                Это не диагноз, а демонстрация: при росте времени и ухудшении сна/учёбы/социализации вероятность проблем увеличивается.
+              </p>
+              <div class="range">
+                <span>Часы в день:</span>
+                <input type="range" id="riskRange" min="0" max="10" value="2" />
+                <b><span id="riskVal">2</span> ч/день</b>
+              </div>
+              <div class="mini" style="margin-top: 12px;">
+                <div class="mini-row"><span>Индекс риска</span><span id="riskPct">—</span></div>
+                <div class="bar"><i id="riskBar"></i></div>
+              </div>
+              <p id="riskText" style="margin-top: 10px;"></p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Game Examples -->
-            <section class="content-section fade-in" id="examples">
-                <h2>Примеры влияния популярных игр</h2>
+<div class="cinematic-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="cd-glow" d="M0,64 C180,96 360,16 540,48 C720,80 900,112 1080,72 C1260,32 1350,40 1440,56 L1440,120 L0,120 Z"></path>
+    <path class="cd-line" d="M0,70 C180,102 360,22 540,54 C720,86 900,118 1080,78 C1260,38 1350,46 1440,62"></path>
+  </svg>
+</div>
+
+      <section id="examples" class="card" data-kicker="CASE STUDIES">
+        <div class="card-inner">
+          <div class="kicker">CASE STUDIES • ЖАНРЫ</div>
+          <h2>Примеры влияния популярных игр</h2>
 
                 <div class="game-examples">
                     <div class="game-card">
@@ -779,11 +1442,148 @@
                         </div>
                     </div>
                 </div>
-            </section>
+          <div class="embed" id="filters">
+            <div class="embed-hd"><span>Интерактив: фильтр карточек по эффекту</span><span class="kbd">click</span></div>
+            <div class="embed-bd">
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn" data-filter="all">Все</button>
+                <button class="btn" data-filter="positive">Больше пользы</button>
+                <button class="btn" data-filter="negative">Больше риска</button>
+              </div>
+              <p style="margin-top: 10px; color: rgba(255,255,255,.66); font-size: 12px;">
+                Подсказка: наведите курсор на карточку — включается 3D-tilt. На мобильных tilt отключён автоматически.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Quiz Section -->
-            <section class="content-section fade-in" id="quiz">
-                <h2>Проверьте свои знания</h2>
+<div class="cinematic-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="cd-glow" d="M0,64 C180,96 360,16 540,48 C720,80 900,112 1080,72 C1260,32 1350,40 1440,56 L1440,120 L0,120 Z"></path>
+    <path class="cd-line" d="M0,70 C180,102 360,22 540,54 C720,86 900,118 1080,78 C1260,38 1350,46 1440,62"></path>
+  </svg>
+</div>
+
+      <section id="story" class="card" data-kicker="STORY">
+        <div class="card-inner">
+          <div class="card-head">
+            <div>
+              <div class="kicker">STORY MODE</div>
+              <h2>Интерактивная ветка: «Неделя игрока»</h2>
+              <p class="lead">Вы пройдёте короткий сценарий выбора: баланс игр, работы/учёбы, сна и эмоций. В конце — персональный разбор и фиксируемая «ачивка».</p>
+            </div>
+            <div class="meta">
+              <div class="meta-item"><span class="dot"></span><span>Ветвление</span></div>
+              <div class="meta-item"><span class="dot"></span><span>Индекс риска</span></div>
+              <div class="meta-item"><span class="dot"></span><span>Рекомендации</span></div>
+            </div>
+          </div>
+
+          <div class="story-wrap">
+            <div class="story-main">
+              <div class="story-card">
+                <div class="story-top">
+                  <div class="story-title">Сценарий</div>
+                  <div class="story-stats">
+                    <span class="pill">Сон: <b id="stSleep">—</b></span>
+                    <span class="pill">Часы игр: <b id="stHours">—</b></span>
+                    <span class="pill">Стресс: <b id="stStress">—</b></span>
+                    <span class="pill">Риск: <b id="stRisk">—</b></span>
+                  </div>
+                </div>
+
+                <div class="story-text" id="storyText">—</div>
+
+                <div class="story-choices" id="storyChoices"></div>
+
+                <div class="story-controls">
+                  <button class="btn" id="storyBackBtn">← Назад</button>
+                  <button class="btn" id="storyRestartBtn">↺ Сначала</button>
+                  <button class="btn primary" id="storyFinishBtn" disabled>Завершить ветку</button>
+                </div>
+
+                <div class="story-footnote">
+                  <div class="callout">
+                    <div class="callout-head">
+                      <b>Как считается «риск»?</b>
+                      <button class="btn tiny callout-toggle" aria-expanded="false">Показать</button>
+                    </div>
+                    <div class="callout-body" hidden>
+                      <p>Это демонстрационная модель для вовлечения: риск растёт при дефиците сна, высокой ежедневной нагрузке и негативной эмоциональной реакции на поражения. Это не медицинская диагностика и не клиническая шкала.</p>
+                      <p class="mono">risk = f(hours, sleep, stress, control)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="story-side">
+                <div class="pullquote">
+                  <div class="pq-label">Pull quote</div>
+                  <div class="pq-text">«Баланс — это не отказ от игр, а управление временем, эмоциями и контекстом»</div>
+                  <div class="pq-actions">
+                    <button class="btn tiny pq-copy" data-copy="Баланс — это не отказ от игр, а управление временем, эмоциями и контекстом">Скопировать</button>
+                    <button class="btn tiny pq-share" data-share="#story">Ссылка</button>
+                  </div>
+                </div>
+
+                <div class="story-log">
+                  <div class="story-log-head">
+                    <b>Ваш путь</b>
+                    <span class="kbd" id="storyStepLabel">—</span>
+                  </div>
+                  <div class="story-path" id="storyPath"></div>
+
+                  <div class="divider-mini"></div>
+
+                  <div class="story-result" id="storyResult" style="display:none;">
+                    <h3 style="margin:0 0 8px 0;">Итог</h3>
+                    <p id="storySummary" style="margin:0 0 12px 0; color: var(--muted);"></p>
+                    <div class="result-grid">
+                      <div class="result-card"><span>Баланс</span><b id="resBalance">—</b></div>
+                      <div class="result-card"><span>Риск</span><b id="resRisk">—</b></div>
+                      <div class="result-card"><span>Совет</span><b id="resTip">—</b></div>
+                    </div>
+                    <button class="btn primary" id="storyClaimBtn">Засчитать миссию</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cinematic-break">
+              <div class="cb-left">
+                <h3 style="margin:0 0 6px 0;">Миссия: «Осознанный режим»</h3>
+                <p style="margin:0; color: var(--muted);">Пройдите ветку до финала и нажмите «Засчитать миссию», чтобы получить ранг.</p>
+              </div>
+              <div class="cb-right">
+                <div class="hud-mini">
+                  <span class="kbd">Ctrl K</span>
+                  <span style="color:var(--muted);">палитра</span>
+                </div>
+                <div class="hud-mini">
+                  <span class="kbd">Shift</span>
+                  <span style="color:var(--muted);">+ выделение</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+</section>
+
+<div class="cinematic-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="cd-glow" d="M0,64 C180,96 360,16 540,48 C720,80 900,112 1080,72 C1260,32 1350,40 1440,56 L1440,120 L0,120 Z"></path>
+    <path class="cd-line" d="M0,70 C180,102 360,22 540,54 C720,86 900,118 1080,78 C1260,38 1350,46 1440,62"></path>
+  </svg>
+</div>
+
+      <section id="quiz" class="card" data-kicker="INTERACTIVE">
+        <div class="card-inner">
+          <div class="kicker">INTERACTIVE • TEST</div>
+          <h2>Проверьте свои знания</h2>
 
                 <div class="quiz-section">
                     <div class="quiz-container">
@@ -803,11 +1603,28 @@
                         </div>
                     </div>
                 </div>
-            </section>
+          <div class="embed">
+            <div class="embed-hd"><span>Система ачивок</span><span class="kbd">auto</span></div>
+            <div class="embed-bd">
+              <p style="margin:0; color: rgba(255,255,255,.72); max-width: 72ch;">
+                Ачивки выдаются за чтение разделов и прохождение теста. Это демонстрация подхода “engagement layer” для лонгрида.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Conclusion -->
-            <section class="content-section fade-in" id="conclusion">
-                <h2>Выводы исследования</h2>
+<div class="cinematic-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="cd-glow" d="M0,64 C180,96 360,16 540,48 C720,80 900,112 1080,72 C1260,32 1350,40 1440,56 L1440,120 L0,120 Z"></path>
+    <path class="cd-line" d="M0,70 C180,102 360,22 540,54 C720,86 900,118 1080,78 C1260,38 1350,46 1440,62"></path>
+  </svg>
+</div>
+
+      <section id="conclusion" class="card" data-kicker="SUMMARY">
+        <div class="card-inner">
+          <div class="kicker">SUMMARY • TAKEAWAYS</div>
+          <h2>Выводы исследования</h2>
 
                 <div class="effects-grid">
                     <div class="effect-card positive">
@@ -834,20 +1651,20 @@
                     <p>• Развивайте другие хобби и интересы помимо игр</p>
                     <p>• Обращайте внимание на свое эмоциональное состояние</p>
                 </div>
-            </section>
+        </div>
+      </section>
 
-            <!-- Final Slide -->
-            <section class="final-slide fade-in">
-                <div class="final-text">Спасибо за внимание!</div>
-                <div class="author">Автор: Спицин Артём</div>
-                <div style="margin-top: 1rem; font-size: 1.2rem; opacity: 0.8; position: relative; z-index: 2;">
-                    Проект создан в рамках исследования влияния компьютерных игр на психику человека
-                </div>
-            </section>
+<div class="cinematic-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="cd-glow" d="M0,64 C180,96 360,16 540,48 C720,80 900,112 1080,72 C1260,32 1350,40 1440,56 L1440,120 L0,120 Z"></path>
+    <path class="cd-line" d="M0,70 C180,102 360,22 540,54 C720,86 900,118 1080,78 C1260,38 1350,46 1440,62"></path>
+  </svg>
+</div>
 
-            <!-- Sources -->
-            <section class="content-section fade-in" id="sources">
-                <h2>Источники и ссылки</h2>
+      <section id="sources" class="card" data-kicker="REFERENCES">
+        <div class="card-inner">
+          <div class="kicker">REFERENCES • LINKS</div>
+          <h2>Источники и ссылки</h2>
 
                 <div class="sources">
                     <h3>Научные исследования:</h3>
@@ -888,212 +1705,1148 @@
                         </li>
                     </ul>
                 </div>
-            </section>
         </div>
+      </section>
     </main>
+  </div>
 
-    <footer>
-        <div class="container">
-            <p>© 2024 Исследовательский проект о влиянии компьютерных игр. Все права защищены.</p>
-            <p style="margin-top: 1rem; font-size: 1rem; opacity: 0.8;">
-                Все материалы используются в образовательных целях с соблюдением авторских прав
-            </p>
+  <div class="toast" id="toast"></div>
+
+  <!-- Settings modal -->
+  <div class="overlay" id="settingsOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Настройки чтения">
+      <div class="mh">
+        <b>⚙ Настройки чтения и интерфейса</b>
+        <button class="btn" id="closeSettings" style="flex:0 0 auto;">✕</button>
+      </div>
+      <div class="mb">
+        <div class="field">
+          <label>Размер шрифта</label>
+          <div class="row">
+            <input type="range" id="fontRange" min="14" max="20" value="16" />
+            <span class="kbd"><span id="fontVal">16</span>px</span>
+          </div>
+          <small>Изменяет базовый размер текста для всех секций.</small>
         </div>
-    </footer>
 
-    <script>
-        // Quiz functionality
-        const quizData = [
-            {
-                question: "Какой процент игроков в мире составляет взрослое население?",
-                options: ["46%", "58%", "71%", "83%"],
-                correct: 2
-            },
-            {
-                question: "Какое положительное влияние оказывают стратегические игры?",
-                options: [
-                    "Улучшение физической формы",
-                    "Развитие стратегического мышления",
-                    "Повышение аппетита",
-                    "Улучшение слуха"
-                ],
-                correct: 1
-            },
-            {
-                question: "Какой основной риск связан с многопользовательскими онлайн-играми?",
-                options: ["Улучшение зрения", "Развитие музыкального слуха", "Токсичное сообщество", "Повышение артериального давления"],
-                correct: 2
-            },
-            {
-                question: "Сколько в среднем длится раунд в Counter-Strike 2?",
-                options: ["1 минута", "2 минуты", "5 минут", "10 минут"],
-                correct: 1
-            },
-            {
-                question: "Что рекомендуется делать для предотвращения игровой зависимости?",
-                options: [
-                    "Играть только ночью",
-                    "Устанавливать лимиты времени на игры",
-                    "Играть только в одиночные игры",
-                    "Не играть вообще"
-                ],
-                correct: 1
-            }
-        ];
+        <div class="field">
+          <label>Ширина строки (measure)</label>
+          <div class="row">
+            <input type="range" id="measureRange" min="58" max="86" value="72" />
+            <span class="kbd"><span id="measureVal">72</span>ch</span>
+          </div>
+          <small>Оптимизация читаемости на больших экранах.</small>
+        </div>
 
-        let currentQuestion = 0;
-        let score = 0;
-        let selectedAnswer = null;
+        <div class="field">
+          <label>Плавный скролл</label>
+          <div class="row">
+            <div class="toggle">
+              <input type="checkbox" id="smoothToggle" checked />
+              <span>Lenis (если доступен)</span>
+            </div>
+          </div>
+          <small>Отключите, если есть лаги на слабых устройствах.</small>
+        </div>
 
-        const quizArea = document.getElementById('quizArea');
-        const checkBtn = document.getElementById('checkBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const result = document.getElementById('result');
-        const restartBtn = document.getElementById('restartBtn');
+        <div class="field">
+          <label>Эффекты / Motion</label>
+          <div class="row">
+            <div class="toggle">
+              <input type="checkbox" id="motionToggle" checked />
+              <span>GSAP / 3D / Parallax</span>
+            </div>
+          </div>
+          <small>Сохраняет современный “гейминговый” характер страницы.</small>
+        </div>
 
-        function loadQuestion() {
-            const question = quizData[currentQuestion];
+        <div class="field" style="grid-column: 1 / -1;">
+          <label>Горячие клавиши</label>
+          <p style="margin:0; color: rgba(255,255,255,.74); font-size: 13px;">
+            <span class="kbd">Ctrl K</span> командная палитра •
+            <span class="kbd">/</span> поиск по разделам •
+            <span class="kbd">T</span> переключить тему •
+            <span class="kbd">S</span> настройки
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            quizArea.innerHTML = `
-                <div class="question-card">
-                    <h3>Вопрос ${currentQuestion + 1} из ${quizData.length}</h3>
-                    <p>${question.question}</p>
-                </div>
-                <div class="options" id="optionsContainer">
-                    ${question.options.map((option, index) => `
-                        <div class="option" data-index="${index}">${option}</div>
-                    `).join('')}
-                </div>
-            `;
+  <!-- Command palette -->
+  <div class="overlay" id="paletteOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Командная палитра">
+      <div class="mh">
+        <b>⌘ Командная палитра</b>
+        <button class="btn" id="closePalette" style="flex:0 0 auto;">✕</button>
+      </div>
+      <div class="mb" style="grid-template-columns: 1fr;">
+        <div class="field">
+          <label>Поиск / переход к разделу</label>
+          <input id="paletteInput" type="text" placeholder="Введите: статистика, польза, вред, примеры, тест, выводы, источники…" 
+                 style="width:100%; padding: 12px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.28); color: rgba(255,255,255,.88);" />
+          <div id="paletteList" style="margin-top: 10px; display:grid; gap: 8px;"></div>
+          <small>Enter — перейти • Esc — закрыть</small>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            selectedAnswer = null;
-            checkBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
+  <script>
+    // ===== Utilities =====
+    const $ = (s, p=document) => p.querySelector(s);
+    const $$ = (s, p=document) => Array.from(p.querySelectorAll(s));
+    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                option.addEventListener('click', () => {
-                    if (!option.classList.contains('selected')) {
-                        options.forEach(opt => opt.classList.remove('selected'));
-                        option.classList.add('selected');
-                        selectedAnswer = parseInt(option.getAttribute('data-index'));
-                        checkBtn.style.display = 'inline-block';
-                    }
-                });
-            });
+    function toast(title, msg, icon="🏆") {
+      const host = $("#toast");
+      if(!host) return;
+      const el = document.createElement("div");
+      el.className = "toast-item";
+      el.innerHTML = `<div class="toast-ic">${icon}</div><div><b>${title}</b><span>${msg}</span></div>`;
+      host.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(8px)";
+        setTimeout(() => el.remove(), 260);
+      }, 3600);
+    }
+
+    // ===== Smooth scroll (Lenis) =====
+    let lenis = null;
+    function enableLenis(on) {
+      try {
+        if(!window.Lenis) return;
+        if(on && !lenis) {
+          lenis = new Lenis({
+            duration: 1.05,
+            easing: (t) => 1 - Math.pow(1 - t, 3),
+            smoothWheel: true
+          });
+          function raf(time) {
+            if(!lenis) return;
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+          }
+          requestAnimationFrame(raf);
+        } else if(!on && lenis) {
+          lenis.destroy();
+          lenis = null;
         }
+      } catch(e) {}
+    }
 
-        checkBtn.addEventListener('click', () => {
-            if (selectedAnswer === null) return;
+    // ===== Reading time & density =====
+    function computeReading() {
+      const text = document.body.innerText || "";
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      const minutes = Math.max(1, Math.round(words / 180)); // ~180 wpm RU
+      $("#rtValue").textContent = `${minutes} мин • ${words.toLocaleString("ru-RU")} слов`;
+      $("#densityLabel").textContent = (words > 1700 ? "High" : words > 900 ? "Medium" : "Low");
+      return {words, minutes};
+    }
 
-            const options = document.querySelectorAll('.option');
-            const correctAnswer = quizData[currentQuestion].correct;
+    // ===== Progress =====
+    function updateProgress() {
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      const pct = scrollHeight ? (scrollTop / scrollHeight) * 100 : 0;
+      $("#topProgress").style.width = `${pct}%`;
+      $("#progValue").textContent = `${Math.round(pct)}%`;
+      $("#radarPct").textContent = `${Math.round(pct)}%`;
+      $("#radarBar").style.width = `${pct}%`;
+      return pct;
+      updateReadMission();
 
-            options.forEach((option, index) => {
-                option.style.pointerEvents = 'none';
-                if (index === correctAnswer) {
-                    option.classList.add('selected');
-                }
-                if (index === selectedAnswer && selectedAnswer !== correctAnswer) {
-                    option.classList.add('selected');
-                }
-            });
+    }
 
-            if (selectedAnswer === correctAnswer) {
-                score++;
-            }
+    // ===== TOC active section =====
+    const sectionOrder = ["stats","positive","negative","examples","story","quiz","conclusion","sources"];
+    const sectionNames = {
+      stats: "Статистика",
+      positive: "Польза",
+      negative: "Вред",
+      examples: "Примеры",
+      story: "Story Mode",
+      quiz: "Тест",
+      conclusion: "Выводы",
+      sources: "Источники",
+    };
 
-            checkBtn.style.display = 'none';
+    function setActive(id) {
+      $$("#toc a").forEach(a => a.classList.toggle("active", a.dataset.id === id));
+      $("#secValue").textContent = sectionNames[id] || "—";
+    }
 
-            if (currentQuestion < quizData.length - 1) {
-                nextBtn.style.display = 'inline-block';
-            } else {
-                setTimeout(showResults, 1000);
-            }
+    // ===== Achievements =====
+    const achievements = new Set();
+    function unlock(key, title, msg, icon="🏆") {
+      if(achievements.has(key)) return;
+      achievements.add(key);
+      $("#achValue").textContent = String(achievements.size);
+      toast(title, msg, icon);
+    }
+
+    // ===== 3D Tilt (desktop only) =====
+    function bindTilt() {
+      const isFinePointer = matchMedia("(pointer:fine)").matches;
+      if(!isFinePointer) return;
+      const max = 9;
+      const cards = [...$$(".card"), ...$$(".game-card")];
+      cards.forEach(card => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top) / r.height;
+          const ry = (x - .5) * (max * 2);
+          const rx = -(y - .5) * (max * 2);
+          card.style.transform = `translateY(-2px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
         });
-
-        nextBtn.addEventListener('click', () => {
-            currentQuestion++;
-            loadQuestion();
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "";
         });
+      });
+    }
 
-        function showResults() {
-            quizArea.style.display = 'none';
-            checkBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
-            result.style.display = 'block';
+    // ===== Chart.js (Stats) =====
+    let hoursChart = null;
+    function initChart() {
+      if(!window.Chart) return;
+      const ctx = $("#hoursChart");
+      if(!ctx) return;
 
-            const percentage = (score / quizData.length) * 100;
-            document.getElementById('resultScore').textContent = `${score} из ${quizData.length}`;
+      const base = 7;
+      const data = (v) => ([
+        {label: "Игры", value: v},
+        {label: "Другое хобби", value: Math.max(0, base - Math.max(0, v - base))},
+        {label: "Сон (в неделю)", value: 56}, // 8h/day
+      ]);
 
-            let message = '';
-            if (percentage === 100) {
-                message = 'Отлично! Вы отлично разбираетесь в теме!';
-            } else if (percentage >= 80) {
-                message = 'Очень хорошо! Вы хорошо усвоили материал!';
-            } else if (percentage >= 60) {
-                message = 'Хорошо! Вы поняли основные аспекты влияния игр.';
-            } else {
-                message = 'Рекомендуется еще раз изучить материал для лучшего понимания.';
+      const series = data(base);
+
+      hoursChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: series.map(s => s.label),
+          datasets: [{
+            label: "Часы",
+            data: series.map(s => s.value),
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (c) => `${c.raw} ч`
+              }
             }
-
-            document.getElementById('resultMessage').textContent = message;
+          },
+          scales: {
+            x: {
+              ticks: { color: "rgba(255,255,255,.72)" },
+              grid: { color: "rgba(255,255,255,.06)" }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: { color: "rgba(255,255,255,.72)" },
+              grid: { color: "rgba(255,255,255,.06)" }
+            }
+          }
         }
+      });
 
-        restartBtn.addEventListener('click', () => {
-            currentQuestion = 0;
-            score = 0;
-            selectedAnswer = null;
-            result.style.display = 'none';
-            quizArea.style.display = 'block';
-            loadQuestion();
+      const range = $("#hoursRange");
+      const out = $("#hoursVal");
+      range?.addEventListener("input", () => {
+        const v = Number(range.value);
+        out.textContent = String(v);
+        const s = data(v);
+        hoursChart.data.labels = s.map(x => x.label);
+        hoursChart.data.datasets[0].data = s.map(x => x.value);
+        hoursChart.update();
+        if(v >= 14) unlock("hours14", "Ачивка: Насыщенная неделя", "14+ часов игр в неделю — следите за балансом.", "⚠️");
+      });
+    }
+
+    // ===== Risk simulator =====
+    function initRisk() {
+      const range = $("#riskRange");
+      const out = $("#riskVal");
+      const bar = $("#riskBar");
+      const pct = $("#riskPct");
+      const text = $("#riskText");
+
+      function render(v) {
+        const risk = clamp((v*v) * 8, 0, 100); // simple curve
+        out.textContent = String(v);
+        bar.style.width = `${risk}%`;
+        pct.textContent = `${Math.round(risk)}%`;
+        const band =
+          risk < 18 ? {"t":"Низкий. Если сохраняются сон/учёба/работа и общение — риск минимален.", "c":"rgba(52,211,153,.14)"} :
+          risk < 45 ? {"t":"Умеренный. Появляется шанс смещения баланса в сторону игры.", "c":"rgba(251,191,36,.12)"} :
+          risk < 75 ? {"t":"Высокий. Вероятны проблемы со сном/обязательствами/настроением.", "c":"rgba(251,113,133,.12)"} :
+                      {"t":"Критический. Нужны жёсткие лимиты и восстановление режима.", "c":"rgba(251,113,133,.18)"};
+        text.textContent = band.t;
+        text.style.background = band.c;
+        text.style.padding = "10px 12px";
+        text.style.borderRadius = "14px";
+        text.style.border = "1px solid rgba(255,255,255,.10)";
+      }
+
+      range?.addEventListener("input", () => {
+        const v = Number(range.value);
+        render(v);
+        if(v >= 6) unlock("risk6", "Ачивка: Красная зона", "6+ часов в день — высокий риск нарушить режим и обязательства.", "🧨");
+      });
+      render(Number(range?.value || 2));
+    }
+
+    // ===== Filter game cards =====
+    function initFilters() {
+      const buttons = $$("#filters [data-filter]");
+      const cards = $$(".game-card");
+      if(!buttons.length || !cards.length) return;
+
+      function classify(card) {
+        const t = card.innerText.toLowerCase();
+        const pos = ["развитие","команд","мышлен","реакц","социал"].some(k => t.includes(k));
+        const neg = ["зависим","стресс","токс","агресс","врем"].some(k => t.includes(k));
+        return {pos, neg};
+      }
+
+      const meta = new Map(cards.map(c => [c, classify(c)]));
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const f = btn.dataset.filter;
+          buttons.forEach(b => b.classList.remove("primary"));
+          btn.classList.add("primary");
+          cards.forEach(c => {
+            const m = meta.get(c);
+            const show =
+              f === "all" ? true :
+              f === "positive" ? (m.pos && !m.neg) || (m.pos && m.neg) :
+              f === "negative" ? (m.neg) : true;
+            c.style.display = show ? "" : "none";
+          });
+          unlock("filter", "Ачивка: Аналитик", "Вы использовали фильтр по эффектам.", "🧠");
         });
+      });
+    }
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
+    // ===== Quiz (upgrade) =====
+    const quizData = [
+      {
+        question: "Какой процент игроков в мире составляет взрослое население?",
+        options: ["46%", "58%", "71%", "83%"],
+        correct: 2
+      },
+      {
+        question: "Какое положительное влияние оказывают стратегические игры?",
+        options: [
+          "Ухудшают память",
+          "Развивают аналитическое мышление",
+          "Снижают реакцию",
+          "Вызывают зависимость"
+        ],
+        correct: 1
+      },
+      {
+        question: "Сколько часов в неделю в среднем тратит игрок (по тексту в разделе статистики)?",
+        options: ["2 часа", "7 часов", "14 часов", "21 час"],
+        correct: 1
+      },
+      {
+        question: "Что важно контролировать для здорового отношения к играм (в выводах)?",
+        options: [
+          "Только уровень навыка",
+          "Только количество побед",
+          "Время и эмоциональные реакции",
+          "Только выбор жанра"
+        ],
+        correct: 2
+      }
+    ];
 
-                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
+    let quizIdx = 0;
+    let quizScore = 0;
+    let answered = false;
 
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
+    function renderQuiz() {
+      const area = $("#quizArea");
+      const checkBtn = $("#checkBtn");
+      const nextBtn = $("#nextBtn");
+      const result = $("#result");
+      const restartBtn = $("#restartBtn");
+
+      if(!area) return;
+
+      if(quizIdx >= quizData.length) {
+        area.innerHTML = "";
+        result.style.display = "";
+        $("#resultScore").textContent = `Ваш результат: ${quizScore} / ${quizData.length}`;
+        const msg =
+          quizScore === quizData.length ? "Отлично. Вы внимательно прочитали материал." :
+          quizScore >= Math.ceil(quizData.length * .65) ? "Хорошо. Есть небольшие пробелы — пролистайте нужные секции." :
+          "Рекомендуется перечитать ключевые разделы и повторить тест.";
+        $("#resultMessage").textContent = msg;
+        checkBtn.style.display = "none";
+        nextBtn.style.display = "none";
+        unlock("quiz_done", "Ачивка: Тест пройден", "Вы завершили интерактивный тест.", "✅");
+        if(quizScore === quizData.length) unlock("quiz_perfect", "Ачивка: Perfect", "100% правильных ответов.", "🌟");
+        return;
+      }
+
+      const q = quizData[quizIdx];
+      area.innerHTML = `
+        <div class="quiz-q">${quizIdx+1}/${quizData.length} — ${q.question}</div>
+        <div id="quizOpts">
+          ${q.options.map((o,i)=>`
+            <label class="quiz-opt" data-i="${i}">
+              <input type="radio" name="q" value="${i}" />
+              <div>${o}</div>
+            </label>
+          `).join("")}
+        </div>
+      `;
+      result.style.display = "none";
+      checkBtn.style.display = "";
+      nextBtn.style.display = "none";
+      answered = false;
+
+      // clickable options
+      $$("#quizOpts .quiz-opt").forEach(opt => {
+        opt.addEventListener("click", () => {
+          const r = opt.querySelector("input");
+          r.checked = true;
         });
+      });
 
-        // Fade in animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+      checkBtn.onclick = () => {
+        if(answered) return;
+        const selected = $("#quizOpts input[name='q']:checked");
+        if(!selected) {
+          toast("Тест", "Выберите вариант ответа.", "🎮");
+          return;
+        }
+        const val = Number(selected.value);
+        const opts = $$("#quizOpts .quiz-opt");
+        opts.forEach(o => o.classList.remove("correct","wrong"));
+        opts[q.correct].classList.add("correct");
+        if(val !== q.correct) {
+          opts[val].classList.add("wrong");
+        } else {
+          quizScore += 1;
+        }
+        answered = true;
+        nextBtn.style.display = "";
+      };
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
+      nextBtn.onclick = () => {
+        if(!answered) return;
+        quizIdx += 1;
+        renderQuiz();
+      };
 
-        document.querySelectorAll('.content-section, .final-slide, .ai-notice').forEach(section => {
-            observer.observe(section);
+      restartBtn.onclick = () => {
+        quizIdx = 0;
+        quizScore = 0;
+        renderQuiz();
+      };
+    }
+
+    // ===== Motion (GSAP) =====
+    function initMotion(on=true) {
+      if(!on) return;
+      if(!window.gsap || !window.ScrollTrigger) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // section reveal
+      $$(".card").forEach((card, idx) => {
+        gsap.fromTo(card, {
+          y: 24, opacity: 0
+        }, {
+          y: 0, opacity: 1, duration: .6, ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 80%",
+            once: true
+          }
         });
+      });
 
-        // Interactive effects for cards
-        document.querySelectorAll('.stat-card, .game-card, .effect-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
+      // stat count-up
+      $$(".stat-number").forEach((el) => {
+        const raw = el.textContent.trim();
+        const num = parseFloat(raw.replace(/[^0-9.]/g,""));
+        const suffix = raw.replace(/[0-9.]/g,"").trim();
+        if(!isFinite(num)) return;
+        el.dataset.raw = raw;
+        el.textContent = "0" + (suffix ? " " + suffix : "");
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 85%",
+          once: true,
+          onEnter: () => {
+            gsap.to({v:0}, {
+              v: num,
+              duration: 1.1,
+              ease: "power3.out",
+              onUpdate: function() {
+                const v = this.targets()[0].v;
+                const txt = (num >= 100 ? Math.round(v) : v.toFixed(1)).replace(".0","");
+                el.textContent = txt + (suffix ? " " + suffix : "");
+              }
             });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
+          }
         });
+      });
+    }
 
-        // Initialize quiz
-        loadQuestion();
-    </script>
+    // ===== WebGL background (Three.js) =====
+    function initWebGL(on=true) {
+      if(!on) return;
+      if(!window.THREE) return;
+
+      const canvas = $("#bg3d");
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 6);
+
+      const group = new THREE.Group();
+      scene.add(group);
+
+      const count = 1400;
+      const geom = new THREE.BufferGeometry();
+      const pos = new Float32Array(count * 3);
+      const col = new Float32Array(count * 3);
+
+      function rand(a,b) { return a + Math.random()*(b-a); }
+
+      for(let i=0;i<count;i++) {
+        pos[i*3+0] = rand(-6,6);
+        pos[i*3+1] = rand(-4,4);
+        pos[i*3+2] = rand(-6,6);
+        // pseudo gradient colors
+        const t = Math.random();
+        const c1 = new THREE.Color(0x7c3aed);
+        const c2 = new THREE.Color(0x22d3ee);
+        const c3 = new THREE.Color(0xfb7185);
+        const mix = c1.clone().lerp(c2, t*0.7).lerp(c3, Math.max(0, t-0.6));
+        col[i*3+0] = mix.r;
+        col[i*3+1] = mix.g;
+        col[i*3+2] = mix.b;
+      }
+
+      geom.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      geom.setAttribute("color", new THREE.BufferAttribute(col, 3));
+
+      const mat = new THREE.PointsMaterial({
+        size: 0.035,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.85,
+        depthWrite: false
+      });
+      const points = new THREE.Points(geom, mat);
+      group.add(points);
+
+      let mx = 0, my = 0;
+      window.addEventListener("mousemove", (e) => {
+        mx = (e.clientX / window.innerWidth) * 2 - 1;
+        my = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+
+      function onResize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      }
+      window.addEventListener("resize", onResize);
+
+      let t = 0;
+      function tick() {
+        t += 0.0035;
+        group.rotation.y = t * 0.35 + mx * 0.08;
+        group.rotation.x = t * 0.22 - my * 0.06;
+        group.position.x = mx * 0.12;
+        group.position.y = -my * 0.10;
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
+      }
+      tick();
+    }
+
+    // ===== Modals / Palette =====
+    const settingsOverlay = $("#settingsOverlay");
+    const paletteOverlay = $("#paletteOverlay");
+    const paletteInput = $("#paletteInput");
+    const paletteList = $("#paletteList");
+
+    function openOverlay(el) {
+      el.classList.add("show");
+      el.setAttribute("aria-hidden", "false");
+    }
+    function closeOverlay(el) {
+      el.classList.remove("show");
+      el.setAttribute("aria-hidden", "true");
+    }
+
+    function buildPalette(filter="") {
+      const f = filter.trim().toLowerCase();
+      const items = sectionOrder
+        .map(id => ({ id, name: sectionNames[id] }))
+        .filter(x => !f || x.name.toLowerCase().includes(f) || x.id.includes(f));
+
+      paletteList.innerHTML = items.map(x => `
+        <button class="btn" data-go="${x.id}" style="justify-content: space-between;">
+          <span>${x.name}</span>
+          <span class="kbd">#${x.id}</span>
+        </button>
+      `).join("");
+
+      $$("[data-go]", paletteList).forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.go;
+          closeOverlay(paletteOverlay);
+          document.querySelector("#"+id)?.scrollIntoView({behavior:"smooth", block:"start"});
+        });
+      });
+    }
+
+    function openPalette() {
+      buildPalette("");
+      openOverlay(paletteOverlay);
+      setTimeout(() => paletteInput?.focus(), 30);
+    }
+
+    // ===== Theme toggle =====
+    let theme = "neon";
+    function setTheme(next) {
+      theme = next;
+      const root = document.documentElement;
+      if(theme === "mono") {
+        root.style.setProperty("--brand", "#a3a3a3");
+        root.style.setProperty("--brand2", "#e5e7eb");
+        $("#toggleThemeBtn").textContent = "Тема: Mono";
+      } else {
+        root.style.setProperty("--brand", "#7c3aed");
+        root.style.setProperty("--brand2", "#22d3ee");
+        $("#toggleThemeBtn").textContent = "Тема: Neon";
+      }
+      unlock("theme", "Ачивка: Скин изменён", `Тема интерфейса: ${theme}.`, "🎨");
+    }
+
+
+    // ===== Ultra v2: Missions / Rank =====
+    const PROG_KEY = "gaming_longread_progress_v2";
+    const defaultProg = { read60:false, story:false, quiz:false, story_claimed:false };
+    function loadProg(){
+      try { return Object.assign({}, defaultProg, JSON.parse(localStorage.getItem(PROG_KEY) || "{}")); }
+      catch(e){ return Object.assign({}, defaultProg); }
+    }
+    function saveProg(p){ localStorage.setItem(PROG_KEY, JSON.stringify(p)); }
+    let prog = loadProg();
+
+    function computeRank(){
+      const done = [prog.read60, prog.story, prog.quiz].filter(Boolean).length;
+      const badge = done === 3 ? "Legend"
+                  : done === 2 ? "Diamond"
+                  : done === 1 ? "Bronze"
+                  : "Recruit";
+      $("#rankValue").textContent = badge;
+      $("#rankBadge").textContent = badge;
+      $("#rankSub").textContent = `${done}/3 миссий`;
+      // mark mission cards
+      const setDone = (sel, ok) => {
+        const el = document.querySelector(sel);
+        if(!el) return;
+        el.classList.toggle("done", !!ok);
+      };
+      setDone('.mission[data-m="read"]', prog.read60);
+      setDone('.mission[data-m="story"]', prog.story);
+      setDone('.mission[data-m="quiz"]', prog.quiz);
+
+      return { done, badge };
+    }
+
+    function setMission(key, value=true){
+      prog[key] = !!value;
+      saveProg(prog);
+      computeRank();
+    }
+
+    // patch unlock to also advance missions
+    const _unlock = unlock;
+    unlock = function(key, title, msg, icon="🏆"){
+      _unlock(key, title, msg, icon);
+      if(key === "quiz_done") setMission("quiz", true);
+      if(key === "story_done") setMission("story", true);
+    };
+
+    // ===== Callout toggles =====
+    function initCallouts(){
+      $$(".callout").forEach(c => {
+        const btn = c.querySelector(".callout-toggle");
+        const body = c.querySelector(".callout-body");
+        if(!btn || !body) return;
+        btn.addEventListener("click", () => {
+          const open = body.hasAttribute("hidden");
+          if(open){ body.removeAttribute("hidden"); btn.setAttribute("aria-expanded","true"); btn.textContent = "Скрыть"; }
+          else { body.setAttribute("hidden",""); btn.setAttribute("aria-expanded","false"); btn.textContent = "Показать"; }
+          unlock("callout", "Ачивка: Техразбор", "Вы раскрыли блок с методикой.", "🧩");
+        });
+      });
+    }
+
+    // ===== Pull quote actions =====
+    function initPullQuotes(){
+      $$(".pq-copy").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const t = btn.dataset.copy || "";
+          try { await navigator.clipboard.writeText(t); toast("Цитата", "Скопировано в буфер обмена.", "📌"); }
+          catch(e){ toast("Цитата", "Не удалось скопировать — проверьте разрешения браузера.", "⚠️"); }
+          unlock("quote", "Ачивка: Цитата", "Вы сохранили мысль из лонгрида.", "📌");
+        });
+      });
+      $$(".pq-share").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const hash = btn.dataset.share || "#top";
+          const url = location.origin + location.pathname + hash;
+          try { await navigator.clipboard.writeText(url); toast("Ссылка", "Скопировано.", "🔗"); }
+          catch(e){ toast("Ссылка", "Не удалось скопировать.", "⚠️"); }
+        });
+      });
+    }
+
+    // ===== Highlight-to-share =====
+    function initHighlightShare(){
+      const fab = $("#shareFab");
+      const fabBtn = $("#shareFabBtn");
+      if(!fab || !fabBtn) return;
+
+      let lastSel = "";
+      const hide = () => { fab.classList.remove("show"); fab.setAttribute("aria-hidden","true"); };
+      const show = (x, y) => {
+        fab.style.left = Math.max(12, Math.min(window.innerWidth - 220, x)) + "px";
+        fab.style.top  = Math.max(12, Math.min(window.innerHeight - 80, y)) + "px";
+        fab.classList.add("show");
+        fab.setAttribute("aria-hidden","false");
+      };
+
+      document.addEventListener("selectionchange", () => {
+        const sel = String(window.getSelection()?.toString() || "").trim();
+        if(sel && sel.length >= 14){
+          lastSel = sel.length > 240 ? sel.slice(0,240) + "…" : sel;
+          const r = window.getSelection().getRangeAt(0).getBoundingClientRect();
+          show(r.left + r.width/2, r.top - 50);
+        } else {
+          lastSel = "";
+          hide();
+        }
+      });
+
+      fabBtn.addEventListener("click", async () => {
+        if(!lastSel) return;
+        const url = location.href.split("#")[0] + (location.hash || "#top");
+        const payload = `“${lastSel}”\n\n${url}`;
+        try { await navigator.clipboard.writeText(payload); toast("Поделиться", "Цитата + ссылка скопированы.", "🚀"); }
+        catch(e){ toast("Поделиться", "Не удалось скопировать.", "⚠️"); }
+        unlock("share", "Ачивка: Шеринг", "Вы подготовили цитату для публикации.", "🚀");
+        hide();
+      });
+
+      document.addEventListener("scroll", () => fab.classList.contains("show") && hide(), { passive:true });
+      document.addEventListener("click", (e) => {
+        if(fab.contains(e.target)) return;
+        if(window.getSelection()?.toString()?.trim()) return;
+        hide();
+      });
+    }
+
+    // ===== Story Mode =====
+    const storyNodes = {
+      start: {
+        title: "Понедельник: старт недели",
+        text: "Утро. У вас учёба/работа, тренировка или дедлайны. Вечером хочется поиграть. Как вы планируете день?",
+        choices: [
+          { title:"Режим баланса", meta:"+сон +контроль", delta:{sleep:+1, hours:1, stress:-1, control:+2}, next:"mid" },
+          { title:"Сначала дела, потом короткая сессия", meta:"+дисциплина", delta:{sleep:0, hours:2, stress:0, control:+1}, next:"mid" },
+          { title:"Играть до поздней ночи", meta:"+часы -сон", delta:{sleep:-2, hours:4, stress:+1, control:-2}, next:"mid" },
+        ]
+      },
+      mid: {
+        title: "Среда: первая турбулентность",
+        text: "После пары матчей появляется раздражение из‑за поражений. Команда «не тянет», хочется «отыграться». Что вы делаете?",
+        choices: [
+          { title:"Делаю паузу и выхожу", meta:"+самоконтроль", delta:{sleep:+1, hours:-1, stress:-2, control:+2}, next:"late" },
+          { title:"Меняю режим: ещё 1–2 игры", meta:"нейтрально", delta:{sleep:0, hours:+1, stress:+1, control:0}, next:"late" },
+          { title:"Дожимаю до победы любой ценой", meta:"+стресс +часы", delta:{sleep:-1, hours:+3, stress:+3, control:-2}, next:"late" },
+        ]
+      },
+      late: {
+        title: "Пятница: социальный фактор",
+        text: "Друзья зовут на вечер. Параллельно начинается ивент в игре с наградами и ограничением по времени. Вы выбираете:",
+        choices: [
+          { title:"Иду к друзьям, ивент — частично", meta:"+социальность +баланс", delta:{sleep:+1, hours:1, stress:-1, control:+2}, next:"end" },
+          { title:"Остаюсь дома, но ставлю лимит", meta:"+границы", delta:{sleep:0, hours:+2, stress:0, control:+1}, next:"end" },
+          { title:"Полностью ухожу в ивент", meta:"риск зависимости", delta:{sleep:-2, hours:+4, stress:+2, control:-2}, next:"end" },
+        ]
+      },
+      end: {
+        title: "Воскресенье: итог",
+        text: "Неделя заканчивается. Пора зафиксировать выводы: что усиливает пользу, а что повышает риски.",
+        choices: []
+      }
+    };
+
+    const storyState = {
+      node:"start",
+      path:[],
+      sleep:7,
+      hours:0,
+      stress:2,
+      control:2
+    };
+
+    function storyRisk(){
+      // demo model: higher with hours, stress, low sleep/control
+      const s = Math.max(4, Math.min(9, storyState.sleep));
+      const h = Math.max(0, Math.min(10, storyState.hours));
+      const st = Math.max(0, Math.min(10, storyState.stress));
+      const c = Math.max(0, Math.min(6, storyState.control));
+      const risk = (h*1.2) + (st*1.1) + ((7 - s)*1.6) + ((3 - c)*1.3);
+      return Math.max(0, Math.min(100, Math.round(risk*6)));
+    }
+
+    function storyBalanceLabel(){
+      const r = storyRisk();
+      if(r <= 22) return "Стабильный";
+      if(r <= 45) return "Напряжённый";
+      if(r <= 68) return "Рискованный";
+      return "Критический";
+    }
+
+    function storyTip(){
+      const r = storyRisk();
+      if(r <= 22) return "Сохраняйте лимиты и паузы после серии матчей.";
+      if(r <= 45) return "Добавьте сон и чёткий стоп‑сигнал (2 поражения подряд → перерыв).";
+      if(r <= 68) return "Сократите вечерние сессии, уберите «отыгрыш» как триггер, планируйте альтернативы.";
+      return "Нужны жёсткие границы: лимит времени, отключение триггеров и поддержка офлайн‑рутин.";
+    }
+
+    function storyRender(){
+      const n = storyNodes[storyState.node];
+      if(!n) return;
+      $("#storyText").textContent = `${n.title}. ${n.text}`;
+      $("#storyStepLabel").textContent = `#${storyState.path.length+1}`;
+      $("#stSleep").textContent = `${storyState.sleep}ч`;
+      $("#stHours").textContent = `${storyState.hours}ч`;
+      $("#stStress").textContent = String(storyState.stress);
+      $("#stRisk").textContent = `${storyRisk()}%`;
+
+      const choices = $("#storyChoices");
+      const finishBtn = $("#storyFinishBtn");
+
+      if(n.choices.length === 0){
+        choices.innerHTML = `
+          <div class="choice" style="cursor:default;">
+            <div class="c-title">Финал ветки</div>
+            <div class="c-meta">Нажмите «Завершить ветку», чтобы увидеть разбор и зафиксировать результат.</div>
+          </div>
+        `;
+        finishBtn.disabled = false;
+        return;
+      }
+
+      finishBtn.disabled = true;
+      choices.innerHTML = n.choices.map((c, i)=>`
+        <div class="choice" data-i="${i}">
+          <div class="c-title">${c.title}</div>
+          <div class="c-meta">
+            <span>Эффект: ${c.meta}</span>
+            <span>Δсон ${c.delta.sleep>=0?"+":""}${c.delta.sleep}</span>
+            <span>Δигры ${c.delta.hours>=0?"+":""}${c.delta.hours}</span>
+            <span>Δстресс ${c.delta.stress>=0?"+":""}${c.delta.stress}</span>
+          </div>
+        </div>
+      `).join("");
+
+      $$(".choice", choices).forEach(el => {
+        el.addEventListener("click", () => {
+          const i = Number(el.dataset.i);
+          const c = n.choices[i];
+          if(!c) return;
+          // update state
+          storyState.path.push({ node: storyState.node, choice: c.title });
+          storyState.sleep = Math.max(4, Math.min(9, storyState.sleep + (c.delta.sleep||0)));
+          storyState.hours = Math.max(0, Math.min(12, storyState.hours + (c.delta.hours||0)));
+          storyState.stress = Math.max(0, Math.min(10, storyState.stress + (c.delta.stress||0)));
+          storyState.control = Math.max(0, Math.min(6, storyState.control + (c.delta.control||0)));
+          storyState.node = c.next;
+          storyUpdatePath();
+          storyRender();
+          unlock("story_step", "Story Mode", "Вы сделали выбор в сценарии.", "🕹️");
+        });
+      });
+    }
+
+    function storyUpdatePath(){
+      const out = $("#storyPath");
+      if(!out) return;
+      out.innerHTML = storyState.path.slice(-5).map((x, idx)=>`
+        <div class="path-item">
+          <b>${idx+1}. ${storyNodes[x.node].title}</b>
+          <div style="color:var(--muted); font-size:12px; margin-top:4px;">${x.choice}</div>
+        </div>
+      `).join("") || `<div class="path-item"><b>Старт</b><div style="color:var(--muted); font-size:12px; margin-top:4px;">Выберите первый вариант.</div></div>`;
+    }
+
+    function storyBack(){
+      if(storyState.path.length === 0) return;
+      // soft back: reset and replay path except last
+      const keep = storyState.path.slice(0, -1);
+      storyReset();
+      for(const step of keep){
+        const node = storyNodes[storyState.node];
+        const c = node.choices.find(x => x.title === step.choice);
+        if(!c) continue;
+        storyState.path.push({ node: storyState.node, choice: c.title });
+        storyState.sleep = Math.max(4, Math.min(9, storyState.sleep + (c.delta.sleep||0)));
+        storyState.hours = Math.max(0, Math.min(12, storyState.hours + (c.delta.hours||0)));
+        storyState.stress = Math.max(0, Math.min(10, storyState.stress + (c.delta.stress||0)));
+        storyState.control = Math.max(0, Math.min(6, storyState.control + (c.delta.control||0)));
+        storyState.node = c.next;
+      }
+      storyUpdatePath();
+      storyRender();
+    }
+
+    function storyReset(){
+      storyState.node="start";
+      storyState.path=[];
+      storyState.sleep=7;
+      storyState.hours=0;
+      storyState.stress=2;
+      storyState.control=2;
+      $("#storyResult").style.display = "none";
+      $("#storyFinishBtn").disabled = true;
+      storyUpdatePath();
+      storyRender();
+    }
+
+    function storyFinish(){
+      // show summary
+      const r = storyRisk();
+      $("#storyResult").style.display = "";
+      $("#storySummary").textContent =
+        `Ваш баланс: ${storyBalanceLabel()}. Итоговый риск по демонстрационной модели: ${r}%. ${storyTip()}`;
+      $("#resBalance").textContent = storyBalanceLabel();
+      $("#resRisk").textContent = `${r}%`;
+      $("#resTip").textContent = storyTip().slice(0, 44) + (storyTip().length>44?"…":"");
+      unlock("story_done", "Ачивка: Story Mode", "Вы завершили сценарий.", "🕹️");
+    }
+
+    function initStory(){
+      if(!$("#storyText")) return;
+      storyUpdatePath();
+      storyRender();
+
+      $("#storyBackBtn")?.addEventListener("click", storyBack);
+      $("#storyRestartBtn")?.addEventListener("click", () => { storyReset(); toast("Story Mode","Сценарий перезапущен.","↺"); });
+      $("#storyFinishBtn")?.addEventListener("click", storyFinish);
+
+      $("#storyClaimBtn")?.addEventListener("click", () => {
+        setMission("story", true);
+        prog.story_claimed = true;
+        saveProg(prog);
+        toast("Миссия", "Story Mode засчитан. Ранг обновлён.", "🏅");
+      });
+    }
+
+    // ===== Reading mission (60%) =====
+    function updateReadMission(){
+      const pct = parseInt($("#progValue")?.textContent || "0", 10) || 0;
+      $("#mRead").textContent = pct + "%";
+      if(pct >= 60 && !prog.read60){
+        setMission("read60", true);
+        unlock("read60", "Ачивка: 60%", "Вы прошли основную часть лонгрида.", "📈");
+      }
+    }
+
+    // ===== Reset progress =====
+    function initResetProgress(){
+      $("#resetProgressBtn")?.addEventListener("click", () => {
+        localStorage.removeItem(PROG_KEY);
+        prog = loadProg();
+        computeRank();
+        toast("Прогресс", "Локальный прогресс сброшен.", "🧹");
+      });
+    }
+
+
+    // ===== Init =====
+    window.addEventListener("DOMContentLoaded", () => {
+      computeReading();
+      updateProgress();
+
+      computeReading();
+      updateProgress();
+      computeRank();
+      initCallouts();
+      initPullQuotes();
+      initHighlightShare();
+      initStory();
+      initResetProgress();
+      updateReadMission();
+
+      // default smooth scroll
+      enableLenis(true);
+
+      // Bind UI
+      $("#startBtn").addEventListener("click", () => {
+        document.querySelector("#stats")?.scrollIntoView({behavior:"smooth", block:"start"});
+        unlock("start", "Ачивка: Вход в рейд", "Вы начали чтение материала.", "🚀");
+      });
+      $("#jumpToRead").addEventListener("click", () => {
+        document.querySelector("#stats")?.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+      $("#settingsBtn").addEventListener("click", () => openOverlay(settingsOverlay));
+      $("#closeSettings").addEventListener("click", () => closeOverlay(settingsOverlay));
+      $("#paletteBtn").addEventListener("click", () => openPalette());
+      $("#closePalette").addEventListener("click", () => closeOverlay(paletteOverlay));
+      $("#toggleThemeBtn").addEventListener("click", () => setTheme(theme === "neon" ? "mono" : "neon"));
+
+      settingsOverlay.addEventListener("click", (e) => {
+        if(e.target === settingsOverlay) closeOverlay(settingsOverlay);
+      });
+      paletteOverlay.addEventListener("click", (e) => {
+        if(e.target === paletteOverlay) closeOverlay(paletteOverlay);
+      });
+
+      // Settings controls
+      const fontRange = $("#fontRange");
+      const fontVal = $("#fontVal");
+      const measureRange = $("#measureRange");
+      const measureVal = $("#measureVal");
+      const smoothToggle = $("#smoothToggle");
+      const motionToggle = $("#motionToggle");
+
+      fontRange.addEventListener("input", () => {
+        const v = Number(fontRange.value);
+        document.documentElement.style.setProperty("--fs", v + "px");
+        fontVal.textContent = String(v);
+        computeReading();
+      });
+      measureRange.addEventListener("input", () => {
+        const v = Number(measureRange.value);
+        document.documentElement.style.setProperty("--measure", v + "ch");
+        measureVal.textContent = String(v);
+      });
+      smoothToggle.addEventListener("change", () => {
+        enableLenis(smoothToggle.checked);
+      });
+
+      // Motion toggles apply only at init time for simplicity
+      let motionEnabled = true;
+      motionToggle.addEventListener("change", () => {
+        motionEnabled = motionToggle.checked;
+        toast("Настройки", motionEnabled ? "Motion включён." : "Motion отключён (обновите страницу для полного эффекта).", "⚙️");
+      });
+
+      // Palette search
+      paletteInput.addEventListener("input", () => buildPalette(paletteInput.value));
+      paletteInput.addEventListener("keydown", (e) => {
+        if(e.key === "Escape") closeOverlay(paletteOverlay);
+        if(e.key === "Enter") {
+          const first = $("[data-go]", paletteList);
+          if(first) first.click();
+        }
+      });
+
+      // TOC smooth scroll (Lenis-compatible)
+      $$("#toc a").forEach(a => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const id = a.getAttribute("href").slice(1);
+          document.getElementById(id)?.scrollIntoView({behavior:"smooth", block:"start"});
+        });
+      });
+
+      // Scroll spy / achievements
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if(en.isIntersecting) {
+            const id = en.target.id;
+            setActive(id);
+            unlock("visit_"+id, "Ачивка: Раздел открыт", sectionNames[id], "🧭");
+          }
+        });
+      }, { threshold: 0.45 });
+
+      sectionOrder.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) io.observe(el);
+      });
+
+      // Progress updates
+      window.addEventListener("scroll", () => {
+        const pct = updateProgress();
+        if(pct > 80) unlock("deep", "Ачивка: Глубокое чтение", "Вы дошли до 80% лонгрида.", "📚");
+      }, { passive: true });
+
+      // Init interactive modules
+      bindTilt();
+      initChart();
+      initRisk();
+      initFilters();
+      renderQuiz();
+
+      // Motion / WebGL
+      initMotion(true);
+      initWebGL(true);
+
+      // Keyboard shortcuts
+      window.addEventListener("keydown", (e) => {
+        const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+        const inInput = ["input","textarea"].includes(tag);
+
+        if(e.key === "Escape") {
+          closeOverlay(settingsOverlay);
+          closeOverlay(paletteOverlay);
+        }
+        if(e.ctrlKey && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          openPalette();
+        }
+        if(!inInput && e.key === "/") {
+          e.preventDefault();
+          openPalette();
+          setTimeout(() => {
+            paletteInput.value = "";
+            buildPalette("");
+            paletteInput.focus();
+          }, 30);
+        }
+        if(!inInput && e.key.toLowerCase() === "s") {
+          openOverlay(settingsOverlay);
+        }
+        if(!inInput && e.key.toLowerCase() === "t") {
+          setTheme(theme === "neon" ? "mono" : "neon");
+        }
+      });
+
+      // Initial active
+      setActive("stats");
+      unlock("boot", "Инициализация", "Интерактивные модули загружены.", "⚡");
+    });
+  </script>
 </body>
 </html>
-
