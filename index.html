@@ -1,496 +1,4985 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Суффиксы причастий и прилагательных — таблица + интерактив</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CodeShift - перевод кода между языками</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d1117' stroke='%232f81f7' stroke-width='1.5'/%3E%3Cpath d='M12 10L6 16l6 6M20 10l6 6-6 6' fill='none' stroke='%23e6edf3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+/* ==========================================================================
+   1. Design Tokens - Matte Engineering Frame + Steam Profile Side Wings
+   ========================================================================== */
+:root {
+  --outer-bg: #070a0f;
+  --frame-bg: #0d1117;
+  --surface: #161b22;
+  --surface-raised: #1c222b;
+  --surface-hover: #242c37;
+  --code-bg: #0a0e14;
+  --gutter-bg: #0d1219;
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: #f2f5f9;
-            color: #1e2f3e;
-            padding: 2rem 1.5rem;
-            line-height: 1.5;
-        }
+  --border: rgba(240, 246, 252, 0.1);
+  --border-strong: rgba(240, 246, 252, 0.18);
+  --frame-shadow: 0 24px 72px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(240, 246, 252, 0.08);
+  --card-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+  --pop-shadow: 0 18px 46px -10px rgba(0, 0, 0, 0.82), 0 0 0 1px rgba(240, 246, 252, 0.12);
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: #ffffff;
-            border-radius: 2rem;
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            padding: 2rem 2rem 2.5rem;
-        }
+  --text: #e6edf3;
+  --text-secondary: #adbac7;
+  --muted: #768390;
 
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            background: linear-gradient(120deg, #1f5e6e, #2b8c6e);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.3px;
-        }
+  --accent: #2f81f7;
+  --accent-hover: #388bfd;
+  --accent-soft: rgba(47, 129, 247, 0.14);
+  --accent-border: rgba(47, 129, 247, 0.5);
 
-        .table-wrapper {
-            overflow-x: auto;
-            margin: 2rem 0 2.2rem;
-            border-radius: 1.25rem;
-            border: 1px solid #e2edf2;
-            background: white;
-            box-shadow: 0 6px 12px -8px rgba(0, 0, 0, 0.05);
-        }
+  --green: #3fb950;
+  --green-soft: rgba(63, 185, 80, 0.13);
+  --amber: #d29922;
+  --amber-soft: rgba(210, 153, 34, 0.15);
+  --red: #f85149;
+  --red-soft: rgba(248, 81, 73, 0.14);
+  --overlay: rgba(4, 7, 11, 0.72);
 
-        .rule-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.92rem;
-            min-width: 700px;
-        }
+  /* Syntax highlighting tokens */
+  --syn-kw: #79c0ff;
+  --syn-str: #a5d6ff;
+  --syn-com: #6e7681;
+  --syn-num: #f2cc60;
+  --syn-type: #d2a8ff;
 
-        .rule-table th {
-            background: #eef3fa;
-            color: #1f4e6e;
-            padding: 14px 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-align: center;
-            border-bottom: 2px solid #cbdde9;
-        }
+  --fs: 13.5px;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
 
-        .rule-table td {
-            border: 1px solid #e0eaf0;
-            padding: 12px 10px;
-            vertical-align: top;
-            background-color: #ffffff;
-        }
+[data-theme="light"] {
+  --outer-bg: #e6ecf2;
+  --frame-bg: #ffffff;
+  --surface: #f6f8fa;
+  --surface-raised: #ffffff;
+  --surface-hover: #eef2f6;
+  --code-bg: #f8fafc;
+  --gutter-bg: #f0f4f8;
 
-        .rule-table tr:hover td {
-            background-color: #fafdff;
-        }
+  --border: rgba(31, 35, 40, 0.12);
+  --border-strong: rgba(31, 35, 40, 0.22);
+  --frame-shadow: 0 20px 56px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(31, 35, 40, 0.1);
+  --card-shadow: 0 4px 16px -8px rgba(15, 23, 42, 0.08);
+  --pop-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(31, 35, 40, 0.12);
 
-        .exmpl {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-weight: 600;
-            color: #1f6d5c;
-            background: #e9f4f0;
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 24px;
-            font-size: 0.85rem;
-            margin: 2px 3px;
-            white-space: nowrap;
-        }
+  --text: #1f2328;
+  --text-secondary: #424a53;
+  --muted: #656d76;
 
-        .badge {
-            background: #eef2fa;
-            color: #2c6a8c;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
+  --accent: #0969da;
+  --accent-hover: #0550ae;
+  --accent-soft: rgba(9, 105, 218, 0.1);
+  --accent-border: rgba(9, 105, 218, 0.42);
 
-        .quiz-section {
-            background: #f8fafd;
-            border-radius: 1.6rem;
-            padding: 1.8rem;
-            margin: 2rem 0 1rem;
-            border: 1px solid #dce5ec;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
-        }
+  --green: #1a7f37;
+  --green-soft: rgba(26, 127, 55, 0.1);
+  --amber: #9a6700;
+  --amber-soft: rgba(154, 103, 0, 0.12);
+  --red: #cf222e;
+  --red-soft: rgba(207, 34, 46, 0.1);
+  --overlay: rgba(15, 23, 42, 0.42);
 
-        .quiz-header {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            gap: 15px;
-            border-bottom: 2px solid #cbdde6;
-            padding-bottom: 0.75rem;
-        }
+  --syn-kw: #0550ae;
+  --syn-str: #0a3069;
+  --syn-com: #6e7781;
+  --syn-num: #953800;
+  --syn-type: #8250df;
+  color-scheme: light;
+}
 
-        .quiz-title {
-            font-size: 1.65rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #1f5e6e, #368f72);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
+/* Strictly enforce hidden attribute over flex/grid rules */
+[hidden] {
+  display: none !important;
+}
 
-        .score {
-            background: #2b6c5c;
-            padding: 5px 18px;
-            border-radius: 40px;
-            color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
-        .question-card {
-            background: white;
-            border-radius: 1.2rem;
-            padding: 1.3rem;
-            margin-bottom: 1.4rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e2eaf1;
-            transition: 0.1s;
-        }
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--outer-bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
 
-        .question-text {
-            font-size: 1.18rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #1f5268;
-        }
+body.no-anim *,
+body.no-anim *::before,
+body.no-anim *::after {
+  animation: none !important;
+  transition: none !important;
+}
 
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 0.8rem 0 0.5rem;
-        }
+button, input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+}
 
-        .option-btn {
-            background: #f0f4f9;
-            border: 1px solid #cbdbe0;
-            padding: 8px 20px;
-            border-radius: 60px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.1s;
-            color: #1f3a4b;
-            font-family: inherit;
-        }
+button {
+  cursor: pointer;
+}
 
-        .option-btn:hover {
-            background: #e4ebf3;
-            transform: scale(0.97);
-        }
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
-        .option-btn.correct-glow {
-            background: #2b8c6e;
-            border-color: #1f6a52;
-            color: white;
-            box-shadow: 0 0 0 2px #bbe9dd;
-        }
+svg.ic {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-        .option-btn.wrong-glow {
-            background: #cf5a4a;
-            border-color: #a63d2e;
-            color: white;
-        }
+/* ==========================================================================
+   2. Fullscreen Procedural Steam-Style Backdrop Canvas
+   ========================================================================== */
+.steam-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--outer-bg);
+}
 
-        .feedback {
-            margin-top: 0.75rem;
-            font-size: 0.9rem;
-            padding: 8px 14px;
-            border-radius: 30px;
-            background: #f8f9fc;
-            border-left: 4px solid;
-        }
+#bgCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
-        .feedback.correct-fb {
-            background: #e0f2ec;
-            border-left-color: #2b8c6e;
-            color: #145c46;
-        }
+.backdrop-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(7, 10, 15, 0.25) 20%,
+    rgba(7, 10, 15, 0.55) 50%,
+    rgba(7, 10, 15, 0.25) 80%,
+    transparent 100%
+  );
+}
 
-        .feedback.wrong-fb {
-            background: #ffe6e2;
-            border-left-color: #cf5a4a;
-            color: #9b3a2c;
-        }
+[data-theme="light"] .backdrop-vignette {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(230, 236, 242, 0.22) 20%,
+    rgba(230, 236, 242, 0.52) 50%,
+    rgba(230, 236, 242, 0.22) 80%,
+    transparent 100%
+  );
+}
 
-        .reset-btn {
-            background: #eef2f7;
-            border: 1px solid #bdcbd6;
-            padding: 8px 26px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.1s;
-            margin-top: 0.3rem;
-            color: #2a5f6e;
-        }
+/* ==========================================================================
+   3. Centered Matte Application Frame (max-width: 1120px)
+   ========================================================================== */
+.stage {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: 20px 16px 72px;
+}
 
-        .reset-btn:hover {
-            background: #e2eaf1;
-            transform: scale(0.98);
-        }
+.app-frame {
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: calc(100vh - 92px);
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--frame-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+}
 
-        footer {
-            text-align: center;
-            margin-top: 2.2rem;
-            font-size: 0.75rem;
-            color: #8a9bb0;
-            border-top: 1px solid #dfe6ed;
-            padding-top: 1.2rem;
-        }
+/* ==========================================================================
+   4. Sticky Top Navigation Bar
+   ========================================================================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: 54px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
 
-        @media (max-width: 720px) {
-            body { padding: 1rem; }
-            .container { padding: 1.2rem; }
-            .options { flex-direction: column; }
-            .option-btn { text-align: center; }
-        }
-    </style>
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--frame-bg);
+  border: 1px solid var(--border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+}
+
+.brand-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brand-chip {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 6px;
+}
+
+.nav-tabs {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 8px;
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+}
+
+.tab-btn {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: color 0.14s ease, background 0.14s ease, border-color 0.14s ease;
+}
+
+.tab-btn:hover {
+  color: var(--text);
+}
+
+.tab-btn.active {
+  color: var(--text);
+  background: var(--surface-raised);
+  border-color: var(--border-strong);
+}
+
+.tab-count {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 99px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.hdr-btn {
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--frame-bg);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+.hdr-btn:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+.hdr-btn.icon-only {
+  width: 32px;
+  padding: 0;
+  justify-content: center;
+}
+
+.bg-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Popover Menus */
+.menu-wrap {
+  position: relative;
+}
+
+.pop-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 45;
+  min-width: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 5px;
+  box-shadow: var(--pop-shadow);
+  display: none;
+}
+
+.pop-menu.pop-left {
+  left: 0;
+  right: auto;
+  max-width: calc(100vw - 44px);
+}
+
+.menu-wrap.open .pop-menu {
+  display: block;
+}
+
+.pop-head {
+  padding: 5px 8px 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.pop-item {
+  width: 100%;
+  text-align: left;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pop-item:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.pop-item.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--text);
+}
+
+.pop-item small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   5. Inner Shell Layout & Common Buttons
+   ========================================================================== */
+.shell-main {
+  padding: 18px 20px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.btn-primary {
+  height: 34px;
+  padding: 0 13px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 7px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: background 0.14s ease, transform 0.08s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.btn-stop {
+  height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(248, 81, 73, 0.55);
+  border-radius: 7px;
+  background: var(--red-soft);
+  color: var(--red);
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-stop:hover {
+  background: var(--red);
+  color: #ffffff;
+}
+
+.btn-sec {
+  height: 31px;
+  padding: 0 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: border-color 0.14s ease, color 0.14s ease, background 0.14s ease;
+}
+
+.btn-sec:hover {
+  border-color: var(--accent-border);
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.btn-sec.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.btn-sec.primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-sec.danger:hover {
+  border-color: rgba(248, 81, 73, 0.55);
+  color: var(--red);
+}
+
+.btn-xs {
+  height: 27px;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--frame-bg);
+  color: var(--text-secondary);
+  font-size: 11.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.btn-xs:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+.btn-xs.accent {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.btn-xs.pinned {
+  border-color: rgba(210, 153, 34, 0.5);
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.btn-xs.danger:hover {
+  border-color: rgba(248, 81, 73, 0.5);
+  color: var(--red);
+}
+
+.keycap {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.1;
+}
+
+.lang-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--dot, var(--muted));
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.22);
+}
+
+/* ==========================================================================
+   6. TAB 1: Translator Workspace
+   ========================================================================== */
+.toolbar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lang-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  flex: 1 1 540px;
+}
+
+.lang-chip {
+  position: relative;
+  display: inline-flex;
+}
+
+.lang-chip input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.lang-chip span.pill {
+  height: 29px;
+  padding: 0 9px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--frame-bg);
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+  transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+
+.lang-chip:hover span.pill {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+}
+
+.lang-chip input:checked + span.pill {
+  color: var(--text);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+[data-theme="light"] .lang-chip input:checked + span.pill {
+  color: var(--accent);
+}
+
+.lang-chip input:focus-visible + span.pill {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.cta-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Split-Pane Editor Workbench */
+.workbench {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  overflow: visible;
+  box-shadow: var(--card-shadow);
+}
+
+.pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pane-left {
+  border-right: 1px solid var(--border);
+}
+
+.pane-left .pane-header { border-top-left-radius: 7px; }
+.pane-right .pane-header { border-top-right-radius: 7px; }
+.pane-left .pane-footer { border-bottom-left-radius: 7px; }
+.pane-right .pane-footer { border-bottom-right-radius: 7px; }
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  overflow: hidden;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.pane.busy .progress-bar {
+  opacity: 1;
+}
+
+.pane.busy .progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -38%;
+  width: 38%;
+  height: 100%;
+  background: var(--accent);
+  animation: progress-slide 1.05s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes progress-slide {
+  0% { left: -38%; }
+  100% { left: 100%; }
+}
+
+.pane-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.pane-top {
+  height: 39px;
+  padding: 0 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pane-bar {
+  height: 38px;
+  padding: 4px 8px;
+  background: var(--frame-bg);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: nowrap;
+  overflow: visible;
+}
+
+.file-tab-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.file-tab {
+  height: 26px;
+  padding: 0 9px;
+  border-radius: 6px;
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.file-tab.mono {
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+.duration-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid rgba(63, 185, 80, 0.3);
+}
+
+.pane-tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tool-btn {
+  height: 27px;
+  padding: 0 7px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.tool-btn:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+  border-color: var(--border);
+}
+
+.tool-btn svg.ic {
+  width: 13px;
+  height: 13px;
+}
+
+.code-well {
+  display: flex;
+  flex: 1 0 430px;
+  height: 430px;
+  min-height: 320px;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+
+.gutter {
+  width: 44px;
+  flex-shrink: 0;
+  padding: 14px 8px 14px 4px;
+  background: var(--gutter-bg);
+  border-right: 1px solid var(--border);
+  color: var(--muted);
+  opacity: 0.72;
+  font-family: var(--mono);
+  font-size: var(--fs);
+  line-height: 1.65;
+  text-align: right;
+  user-select: none;
+  overflow: hidden;
+  white-space: pre;
+}
+
+textarea#src,
+pre#out {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 14px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: var(--fs);
+  line-height: 1.65;
+  tab-size: 4;
+  overflow: auto;
+  outline: none;
+}
+
+textarea#src {
+  resize: none;
+  white-space: pre;
+}
+
+textarea#src::placeholder {
+  color: var(--muted);
+  opacity: 0.78;
+}
+
+pre#out {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+body.nowrap pre#out {
+  white-space: pre;
+  word-break: normal;
+}
+
+pre#out:empty::before {
+  content: attr(data-ph);
+  color: var(--muted);
+  opacity: 0.78;
+}
+
+.tok-kw { color: var(--syn-kw); font-weight: 500; }
+.tok-str { color: var(--syn-str); }
+.tok-com { color: var(--syn-com); font-style: italic; }
+.tok-num { color: var(--syn-num); }
+.tok-type { color: var(--syn-type); }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 5px; }
+
+.pane-footer {
+  min-height: 38px;
+  padding: 6px 12px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.meta-mono {
+  font-family: var(--mono);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.char-warn { color: var(--amber); font-weight: 600; }
+.char-over { color: var(--red); font-weight: 600; }
+.status-ok { color: var(--green); font-weight: 500; }
+.status-busy { color: var(--accent); font-weight: 500; }
+
+/* Inline Feedback Controls */
+.feedback-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.fb-pill {
+  height: 23px;
+  padding: 0 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--frame-bg);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fb-pill:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.fb-pill.active-ok {
+  border-color: rgba(63, 185, 80, 0.5);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.fb-pill.active-err {
+  border-color: rgba(248, 81, 73, 0.5);
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+/* Inline Alert / Demo Fallback Banner */
+.alert-banner {
+  margin-top: 12px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(248, 81, 73, 0.45);
+  background: var(--red-soft);
+  color: var(--text);
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.alert-banner.is-demo {
+  border-color: rgba(210, 153, 34, 0.48);
+  background: var(--amber-soft);
+}
+
+.alert-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  flex: 1 1 360px;
+}
+
+.alert-body svg.ic { color: var(--red); margin-top: 2px; }
+.alert-banner.is-demo .alert-body svg.ic { color: var(--amber); }
+
+/* ==========================================================================
+   7. TAB 2: "Буфер и история" (Local Profile Bar, Sub-modes, Feed & Buffer)
+   ========================================================================== */
+.vault-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.prof-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.prof-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.prof-select {
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--frame-bg);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 500;
+  min-width: 155px;
+}
+
+.prof-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Sub-mode Switcher + Search & Filters */
+.controls-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.submode-seg {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 7px;
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  gap: 3px;
+}
+
+.submode-btn {
+  height: 29px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.submode-btn:hover {
+  color: var(--text);
+}
+
+.submode-btn.active {
+  background: var(--surface-raised);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.mini-badge {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.submode-btn.active .mini-badge {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 360px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1 1 190px;
+  max-width: 290px;
+}
+
+.search-box svg.ic {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.text-input,
+.filter-select {
+  height: 31px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--frame-bg);
+  color: var(--text);
+  font-size: 12.5px;
+  outline: none;
+}
+
+.search-box .text-input {
+  width: 100%;
+  padding-left: 30px;
+}
+
+.text-input:focus,
+.filter-select:focus {
+  border-color: var(--accent);
+}
+
+.pin-filter-btn {
+  height: 31px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--frame-bg);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.pin-filter-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.pin-filter-btn.active {
+  border-color: rgba(210, 153, 34, 0.55);
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+/* History & Buffer Cards */
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.record-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.record-card.pinned {
+  border-color: rgba(210, 153, 34, 0.45);
+}
+
+.rec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rec-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 280px;
+  flex-wrap: wrap;
+}
+
+.lang-route {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 7px;
+  flex-shrink: 0;
+}
+
+.rec-title {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 420px;
+}
+
+.rec-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.tag-chip {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--frame-bg);
+  color: var(--text-secondary);
+}
+
+.tag-chip.ok { border-color: rgba(63, 185, 80, 0.45); color: var(--green); background: var(--green-soft); }
+.tag-chip.err { border-color: rgba(248, 81, 73, 0.45); color: var(--red); background: var(--red-soft); }
+.tag-chip.warn { border-color: rgba(210, 153, 34, 0.45); color: var(--amber); background: var(--amber-soft); }
+.tag-chip.accent { border-color: var(--accent-border); color: var(--accent); background: var(--accent-soft); }
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.code-preview {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--code-bg);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.code-preview-head {
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mini-pre {
+  margin: 0;
+  padding: 9px 10px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text);
+  max-height: 135px;
+  overflow: auto;
+  white-space: pre;
+}
+
+.record-card.expanded .mini-pre {
+  max-height: 420px;
+}
+
+.rec-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.empty-state {
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+  padding: 36px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.empty-state p {
+  margin: 0;
+  max-width: 460px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   8. TAB 3: "О сервисе" (Compact 3-Block Layout)
+   ========================================================================== */
+.about-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panel-head {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.panel-head span.sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.panel-body {
+  padding: 14px 15px;
+}
+
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.flow-step {
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.flow-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.flow-step h3 { margin: 0; font-size: 13px; font-weight: 600; }
+.flow-step p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+.param-strip {
+  padding: 10px 15px;
+  border-top: 1px solid var(--border);
+  background: var(--code-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.param-strip b { color: var(--text); }
+
+.bench-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.bench-card {
+  text-align: left;
+  padding: 11px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--frame-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.14s ease, background 0.14s ease;
+}
+
+.bench-card:hover {
+  border-color: var(--accent-border);
+  background: var(--surface-hover);
+}
+
+.bench-top { display: flex; align-items: center; justify-content: space-between; }
+.bench-idx { font-family: var(--mono); font-size: 11px; color: var(--accent); font-weight: 600; }
+.bench-open { font-size: 11px; color: var(--muted); }
+.bench-card:hover .bench-open { color: var(--accent); }
+.bench-card strong { font-size: 12.5px; font-weight: 600; }
+.bench-card span.desc { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+
+.est-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.est-sliders { display: flex; flex-direction: column; gap: 13px; }
+.slider-field { display: flex; flex-direction: column; gap: 6px; }
+.slider-head { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+.slider-head label { color: var(--text-secondary); }
+.slider-head b { font-family: var(--mono); font-size: 12px; }
+.slider-field input[type="range"] { width: 100%; margin: 0; accent-color: var(--accent); cursor: pointer; }
+
+.est-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.metric-box {
+  background: var(--frame-bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 12px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.metric-box.accent {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+}
+
+.metric-lbl { font-size: 11.5px; color: var(--muted); }
+.metric-val { font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+.metric-box.accent .metric-val { color: var(--accent); }
+.est-note { margin: 11px 0 0; font-size: 11.5px; color: var(--muted); }
+
+/* Footer inside frame */
+.shell-footer {
+  margin-top: auto;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   9. Settings Drawer & In-Page Modals (No native alert/confirm/prompt)
+   ========================================================================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--overlay);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 45;
+  width: min(370px, 94vw);
+  background: var(--surface);
+  border-left: 1px solid var(--border-strong);
+  box-shadow: var(--pop-shadow);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-head {
+  min-height: 54px;
+  padding: 10px 14px 10px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-head h2 { margin: 0; font-size: 14.5px; font-weight: 600; }
+
+.close-btn {
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--frame-bg);
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.close-btn:hover { color: var(--text); border-color: var(--border-strong); }
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+}
+
+.drawer-foot {
+  padding: 11px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.s-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.s-row:first-child { padding-top: 0; }
+.s-row:last-child { border-bottom: 0; }
+
+.s-label { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+.s-label b { font-family: var(--mono); font-size: 11.5px; color: var(--accent); }
+
+.seg-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.seg-group.two { grid-template-columns: repeat(2, 1fr); }
+
+.seg-group button {
+  height: 31px;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--frame-bg);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.seg-group button:hover { color: var(--text); border-color: var(--border-strong); }
+.seg-group button.active { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+
+.s-toggle {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.s-toggle span { font-size: 12.5px; }
+
+.switch {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--code-bg);
+  border: 1px solid var(--border-strong);
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.14s ease, border-color 0.14s ease;
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.14s ease, background 0.14s ease;
+}
+
+.switch:checked { background: var(--accent); border-color: var(--accent); }
+.switch:checked::after { transform: translateX(16px); background: #ffffff; }
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: var(--overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-box {
+  width: min(420px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  box-shadow: var(--pop-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-head {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-head h3 { margin: 0; font-size: 14.5px; font-weight: 600; }
+
+.modal-body {
+  padding: 15px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-foot {
+  padding: 11px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   10. Floating Support Chat & Toast
+   ========================================================================== */
+.chat-fab {
+  position: fixed;
+  right: 18px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 32;
+  height: 36px;
+  padding: 0 13px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: var(--pop-shadow);
+}
+
+.chat-fab:hover {
+  border-color: var(--accent-border);
+  background: var(--surface-hover);
+}
+
+.chat-panel {
+  position: fixed;
+  right: 18px;
+  bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+  z-index: 35;
+  width: min(365px, calc(100vw - 24px));
+  height: min(465px, calc(100vh - 108px));
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  box-shadow: var(--pop-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.chat-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+.chat-head {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--frame-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-title { font-size: 13px; font-weight: 600; }
+.chat-sub { font-size: 11px; color: var(--muted); }
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.msg {
+  max-width: 88%;
+  padding: 8px 11px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.msg.bot { align-self: flex-start; background: var(--frame-bg); border: 1px solid var(--border); }
+.msg.user { align-self: flex-end; background: var(--accent); color: #ffffff; }
+.msg.typing { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
+
+.chat-quick { padding: 0 12px 8px; display: flex; gap: 5px; flex-wrap: wrap; }
+.chat-quick button {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--frame-bg);
+  color: var(--text-secondary);
+  font-size: 11.5px;
+}
+.chat-quick button:hover { border-color: var(--accent-border); color: var(--text); }
+
+.chat-form { padding: 9px; border-top: 1px solid var(--border); display: flex; gap: 7px; }
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--code-bg);
+  color: var(--text);
+  font-size: 12.5px;
+  outline: none;
+}
+.chat-form input:focus { border-color: var(--accent); }
+.chat-form button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 10px);
+  z-index: 65;
+  padding: 8px 14px;
+  border-radius: 7px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 500;
+  box-shadow: var(--pop-shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.toast.visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ==========================================================================
+   11. Responsive Adaptation
+   ========================================================================== */
+@media (max-width: 1160px) {
+  .stage { padding: 10px 10px 64px; }
+}
+
+@media (max-width: 980px) {
+  .workbench,
+  .compare-grid,
+  .est-layout { grid-template-columns: 1fr; }
+  .pane-left { border-right: 0; border-bottom: 1px solid var(--border); }
+  .pane-left .pane-header { border-radius: 7px 7px 0 0; }
+  .pane-right .pane-header,
+  .pane-left .pane-footer { border-radius: 0; }
+  .pane-right .pane-footer { border-radius: 0 0 7px 7px; }
+  .pane-bar { height: auto; min-height: 38px; flex-wrap: wrap; }
+  .code-well { flex: 1 0 320px; height: 320px; }
+  .flow-grid,
+  .bench-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .stage { padding: 0 0 68px; }
+  .app-frame { border-radius: 0; border-left: 0; border-right: 0; min-height: 100vh; }
+  .topbar {
+    grid-template-columns: auto 1fr;
+    padding: 8px 12px;
+    row-gap: 8px;
+  }
+  .nav-tabs {
+    grid-column: 1 / -1;
+    order: 3;
+    width: 100%;
+    justify-content: stretch;
+  }
+  .tab-btn { flex: 1; justify-content: center; padding: 0 8px; font-size: 12px; }
+  .brand-chip,
+  .hdr-lbl { display: none; }
+  .shell-main { padding: 12px; }
+  .flow-grid,
+  .bench-grid,
+  .est-metrics { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
 </head>
 <body>
-<div class="container">
-    <h1>📚 Правописание суффиксов<br>причастий и отглагольных прилагательных</h1>
 
-    <!-- ЕДИНАЯ ПОДРОБНАЯ ТАБЛИЦА -->
-    <div class="table-wrapper">
-        <table class="rule-table">
-            <thead>
-                <tr><th>Часть речи / форма</th><th>Суффиксы</th><th>Правило (коротко)</th><th>Примеры</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Действительные причастия наст. времени</strong><br><span class="badge">что делающий?</span></td>
-                    <td><code>-ущ-/-ющ-</code> (I спр.)<br><code>-ащ-/-ящ-</code> (II спр.)</td>
-                    <td>От глагола I спряжения → <strong>-ущ-/-ющ-</strong><br>От II спряжения → <strong>-ащ-/-ящ-</strong></td>
-                    <td><span class="exmpl">колющий</span> (колоть, I)<br><span class="exmpl">строящий</span> (строить, II)<br><span class="exmpl">дышащий</span> (дышать, II)</td>
-                </tr>
-                <tr>
-                    <td><strong>Страдательные причастия наст. времени</strong><br><span class="badge">тот, кого... </span></td>
-                    <td><code>-ем-/-ом-</code> (I спр.)<br><code>-им-</code> (II спр.)</td>
-                    <td>I спр. → <strong>-ем-/-ом-</strong><br>II спр. → <strong>-им-</strong> (запомнить: видимый, слышимый)</td>
-                    <td><span class="exmpl">решаемый</span> (решать, I)<br><span class="exmpl">видимый</span> (видеть, II, искл.)<br><span class="exmpl">слышимый</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Действительные причастия прош. вр.</strong></td>
-                    <td><code>-вш-</code>, <code>-ш-</code></td>
-                    <td>Перед <strong>-вш-</strong> сохраняется та же гласная, что в инфинитиве перед <strong>-ть</strong>.</td>
-                    <td><span class="exmpl">увидевший</span> (увидеть → е)<br><span class="exmpl">растаявший</span> (растаять → я)<br><span class="exmpl">замерзший</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Страдательные причастия прош. вр.</strong><br><span class="badge">-НН- / -ЕНН- / -Т-</span></td>
-                    <td><code>-нн-</code>, <code>-енн-</code></td>
-                    <td>Глагол на <strong>-ать, -ять</strong> → <strong>-нн-</strong><br>Глагол на <strong>-ить, -еть</strong> → <strong>-енн-</strong></td>
-                    <td><span class="exmpl">прочитанный</span> (читать → -ать)<br><span class="exmpl">засеянный</span> (засеять)<br><span class="exmpl">построенный</span> (строить → -ить)</td>
-                </tr>
-                <tr>
-                    <td><strong>Отглагольные прилагательные</strong><br><span class="badge">нет приставки/зависимых</span></td>
-                    <td><code>-н-</code> (одна Н)</td>
-                    <td>Пишется <strong>-н-</strong>, если слово образовано от глагола, но нет приставки (кроме НЕ-) и нет зависимых слов.<br>Исключения: <em>желанный, священный, нечаянный</em> и др.</td>
-                    <td><span class="exmpl">жареный картофель</span><br><span class="exmpl">раненый боец</span><br><span class="exmpl">крашеный пол</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Прилагательные на -ОВАННЫЙ, -ЁВАННЫЙ</strong></td>
-                    <td><code>-ованн-</code>, <code>-ёванн-</code></td>
-                    <td>Всегда <strong>НН</strong> (исключений нет)</td>
-                    <td><span class="exmpl">маринованный</span>, <span class="exmpl">балованный</span>, <span class="exmpl">асфальтированный</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Краткие причастия</strong></td>
-                    <td><code>-н-</code> (всегда одна Н)</td>
-                    <td>В кратких страдательных причастиях всегда пишется <strong>одна Н</strong>.</td>
-                    <td><span class="exmpl">задача решена</span>, <span class="exmpl">поле засеяно</span>, <span class="exmpl">письмо написано</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Прилагательные-исключения (НН)</strong></td>
-                    <td><code>-янн- / -анн- / -енн-</code></td>
-                    <td>Несмотря на правило, пишутся с НН: <strong>стеклянный, оловянный, деревянный</strong>.<br>А также: <strong>ветреный</strong> (но безветренный) — одна Н.</td>
-                    <td><span class="exmpl">стеклянная дверь</span>, <span class="exmpl">оловянный солдатик</span><br><span class="exmpl">деревянный дом</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- ИНТЕРАКТИВ -->
-    <div class="quiz-section">
-        <div class="quiz-header">
-            <div class="quiz-title">Интерактив</div>
-            <div class="score" id="scoreDisplay">★ 0 / 6</div>
-        </div>
-        <div id="questionsContainer"></div>
-        <div style="display: flex; justify-content: center; margin-top: 20px;">
-            <button class="reset-btn" id="resetQuizBtn">⟳ Пройти заново</button>
-        </div>
-    </div>
-    <footer></footer>
+<!-- ==========================================================================
+     Steam Profile Procedural Side-Wing Canvas Backdrop
+     ========================================================================== -->
+<div class="steam-backdrop" aria-hidden="true">
+  <canvas id="bgCanvas"></canvas>
+  <div class="backdrop-vignette"></div>
 </div>
 
+<!-- ==========================================================================
+     Centered Matte Application Frame (max-width: 1120px)
+     ========================================================================== -->
+<div class="stage">
+  <div class="app-frame">
+
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></svg>
+        </span>
+        <span class="brand-name">CodeShift</span>
+        <span class="brand-chip">YandexGPT</span>
+      </div>
+
+      <nav class="nav-tabs" role="tablist" aria-label="Разделы">
+        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="translator" id="tabTranslator">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h14"/></svg>
+          <span data-i18n="tabTranslator">Переводчик</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="vault" id="tabVault">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+          <span data-i18n="tabVault">Буфер и история</span>
+          <span class="tab-count" id="navTotalBadge">0</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="about" id="tabAbout">
+          <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span data-i18n="tabAbout">О сервисе</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Quick Steam Backdrop Selector -->
+        <div class="menu-wrap" id="bgMenuWrap">
+          <button class="hdr-btn" id="btnBgMenu" aria-haspopup="true" aria-expanded="false" title="Боковой фон">
+            <span class="bg-indicator" id="bgIndicator"></span>
+            <span class="hdr-lbl" id="hdrBgName" data-i18n="bgStation">Станция</span>
+            <svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="pop-menu" id="bgMenu" role="menu">
+            <div class="pop-head" data-i18n="bgMenuHead">Фон по бокам</div>
+            <button class="pop-item" data-bg="station">
+              <strong data-i18n="bgStation">Станция</strong>
+              <small data-i18n="bgStationDesc">Изометрия, серверные узлы и магистрали</small>
+            </button>
+            <button class="pop-item" data-bg="topo">
+              <strong data-i18n="bgTopo">Топография</strong>
+              <small data-i18n="bgTopoDesc">Изогипсы высот, сетка и радарные засечки</small>
+            </button>
+            <button class="pop-item" data-bg="syntax">
+              <strong data-i18n="bgSyntax">Поток синтаксиса</strong>
+              <small data-i18n="bgSyntaxDesc">Адреса памяти и фрагменты кода в графите</small>
+            </button>
+            <button class="pop-item" data-bg="clean">
+              <strong data-i18n="bgClean">Чистый</strong>
+              <small data-i18n="bgCleanDesc">Спокойный однотонный фон без графики</small>
+            </button>
+          </div>
+        </div>
+
+        <button class="hdr-btn icon-only" id="btnThemeToggle" aria-label="Переключить тему" title="Переключить тему">
+          <svg class="ic" id="themeIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+
+        <button class="hdr-btn icon-only" id="btnSettings" aria-label="Настройки" title="Настройки">
+          <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Views -->
+    <main class="shell-main">
+
+      <!-- ==================================================================
+           TAB 1: TRANSLATOR WORKSPACE ("Переводчик")
+           ================================================================== -->
+      <section class="view active" id="viewTranslator" aria-labelledby="tabTranslator">
+        <!-- Language Selection & Action Bar -->
+        <div class="toolbar-card">
+          <div class="lang-strip" role="radiogroup" aria-label="Целевой язык">
+            <label class="lang-chip"><input type="radio" name="lang" value="Python" checked><span class="pill"><i class="lang-dot" style="--dot:#3572A5"></i>Python</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="JavaScript"><span class="pill"><i class="lang-dot" style="--dot:#f1e05a"></i>JavaScript</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="TypeScript"><span class="pill"><i class="lang-dot" style="--dot:#3178c6"></i>TypeScript</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="Java"><span class="pill"><i class="lang-dot" style="--dot:#b07219"></i>Java</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="C#"><span class="pill"><i class="lang-dot" style="--dot:#178600"></i>C#</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="C++"><span class="pill"><i class="lang-dot" style="--dot:#f34b7d"></i>C++</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="C"><span class="pill"><i class="lang-dot" style="--dot:#8b949e"></i>C</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="Go"><span class="pill"><i class="lang-dot" style="--dot:#00ADD8"></i>Go</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="Rust"><span class="pill"><i class="lang-dot" style="--dot:#dea584"></i>Rust</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="Kotlin"><span class="pill"><i class="lang-dot" style="--dot:#A97BFF"></i>Kotlin</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="Swift"><span class="pill"><i class="lang-dot" style="--dot:#F05138"></i>Swift</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="PHP"><span class="pill"><i class="lang-dot" style="--dot:#777BB4"></i>PHP</span></label>
+            <label class="lang-chip"><input type="radio" name="lang" value="Ruby"><span class="pill"><i class="lang-dot" style="--dot:#cc342d"></i>Ruby</span></label>
+          </div>
+
+          <div class="cta-group">
+            <button class="btn-stop" id="btnStop" hidden>
+              <svg class="ic" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>
+              <span data-i18n="stop">Остановить</span>
+            </button>
+            <button class="btn-primary" id="btnGo">
+              <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span id="goLabel" data-i18n="translate">Перевести</span>
+              <span class="keycap">Ctrl+Enter</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Split Editor Workbench -->
+        <div class="workbench">
+          <!-- Left Pane: Source Code -->
+          <section class="pane pane-left" id="paneIn">
+            <div class="pane-header">
+              <div class="pane-top">
+                <div class="file-tab-group">
+                  <span class="file-tab">
+                    <i class="lang-dot" id="srcDot" style="--dot:#768390"></i>
+                    <span id="srcTabLabel" data-i18n="sourceCode">Исходный код</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="pane-bar pane-tools">
+                <!-- Examples Dropdown (All 8 report examples) -->
+                <div class="menu-wrap" id="examplesWrap">
+                  <button class="tool-btn" id="btnExamples" aria-haspopup="true" aria-expanded="false">
+                    <svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                    <span data-i18n="examples">Примеры</span>
+                    <svg class="ic" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                  <div class="pop-menu pop-left" id="examplesMenu" role="menu" style="min-width:265px;max-height:360px;overflow-y:auto"></div>
+                </div>
+
+                <button class="tool-btn" id="btnPaste" title="Вставить из буфера обмена">
+                  <svg class="ic" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+                  <span data-i18n="paste">Вставить</span>
+                </button>
+                <button class="tool-btn" id="btnSaveBuffer" title="Сохранить фрагмент в «Буфер вставок»">
+                  <svg class="ic" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                  <span data-i18n="toBuffer">В буфер</span>
+                </button>
+                <button class="tool-btn" id="btnCopySrc" title="Копировать исходный код">
+                  <svg class="ic" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <span data-i18n="copy">Копировать</span>
+                </button>
+                <button class="tool-btn" id="btnClear" title="Очистить оба окна">
+                  <svg class="ic" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+                  <span data-i18n="clear">Очистить</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="code-well">
+              <div class="gutter" id="gutterSrc" aria-hidden="true">1</div>
+              <textarea id="src" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Вставьте исходный код сюда..."></textarea>
+            </div>
+
+            <div class="pane-footer">
+              <span class="meta-mono" id="srcInfo">0 строк · 0 / 8000 симв.</span>
+              <span class="meta-mono" data-i18n="editorKeysHint">Tab - отступ · Ctrl+V в буфер</span>
+            </div>
+          </section>
+
+          <!-- Right Pane: Translated Output -->
+          <section class="pane pane-right" id="paneOut">
+            <div class="progress-bar" aria-hidden="true"></div>
+            <div class="pane-header">
+              <div class="pane-top">
+                <div class="file-tab-group">
+                  <span class="file-tab mono">
+                    <i class="lang-dot" id="outDot" style="--dot:#3572A5"></i>
+                    <span id="outFilename">translated.py</span>
+                  </span>
+                  <span class="duration-badge" id="durationBadge" hidden></span>
+                </div>
+              </div>
+
+              <div class="pane-bar pane-tools">
+                <button class="tool-btn" id="btnToSrc" title="Перенести результат в левое окно">
+                  <svg class="ic" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+                  <span data-i18n="moveLeft">В исходник</span>
+                </button>
+                <button class="tool-btn" id="btnCopyOut" title="Копировать результат">
+                  <svg class="ic" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <span data-i18n="copy">Копировать</span>
+                </button>
+                <button class="tool-btn" id="btnDownload" title="Скачать результат файлом">
+                  <svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                  <span data-i18n="download">Скачать</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="code-well">
+              <div class="gutter" id="gutterOut" aria-hidden="true">1</div>
+              <pre id="out" data-ph="Здесь появится переведённый код..."></pre>
+            </div>
+
+            <div class="pane-footer">
+              <div class="meta-mono">
+                <span id="outInfo">0 строк · 0 симв.</span>
+                <span id="outStatus"></span>
+              </div>
+
+              <div class="feedback-group" id="feedbackGroup" hidden>
+                <button class="fb-pill" id="fbOk">
+                  <svg class="ic" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span data-i18n="fbOk">Точно</span>
+                </button>
+                <button class="fb-pill" id="fbErr">
+                  <svg class="ic" style="width:12px;height:12px" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  <span data-i18n="fbErr">Есть ошибка</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Inline Alert & Honest Demo Fallback Banner -->
+        <div class="alert-banner" id="alertBanner" role="alert" hidden>
+          <div class="alert-body">
+            <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+            <span id="alertText"></span>
+          </div>
+          <button class="btn-sec" id="btnDemoRun" hidden data-i18n="btnDemoRun">Локальный демо-перевод</button>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           TAB 2: CLIPBOARD & TRANSLATION HISTORY ("Буфер и история")
+           ================================================================== -->
+      <section class="view" id="viewVault" aria-labelledby="tabVault">
+        <div class="vault-stack">
+          <!-- Compact Local Profile Bar -->
+          <div class="profile-bar">
+            <div class="prof-left">
+              <span class="prof-badge">
+                <svg class="ic" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span data-i18n="profileLabel">Профиль:</span>
+              </span>
+              <select class="prof-select" id="profileSelect" aria-label="Выбор локального профиля"></select>
+              <button class="btn-xs" id="btnRenameProfile" data-i18n="renameProfile">Переименовать</button>
+              <button class="btn-xs accent" id="btnNewProfile" data-i18n="newProfile">+ Новый профиль</button>
+            </div>
+
+            <div class="prof-actions">
+              <button class="btn-sec" id="btnExportJson">
+                <svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <span data-i18n="exportJson">Экспорт JSON</span>
+              </button>
+              <button class="btn-sec" id="btnImportJson">
+                <svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                <span data-i18n="importJson">Импорт JSON</span>
+              </button>
+              <input type="file" id="importFileInput" accept=".json,application/json" hidden>
+              <button class="btn-sec danger" id="btnClearSubmode" data-i18n="clearBtn">Очистить</button>
+            </div>
+          </div>
+
+          <!-- Sub-mode Switcher + Search & Filters -->
+          <div class="controls-panel">
+            <div class="submode-seg" role="tablist" aria-label="Режим журнала">
+              <button class="submode-btn active" id="subHistoryBtn" data-sub="history" role="tab" aria-selected="true">
+                <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                <span data-i18n="subHistory">История переводов</span>
+                <span class="mini-badge" id="subHistCount">0</span>
+              </button>
+              <button class="submode-btn" id="subBufferBtn" data-sub="buffer" role="tab" aria-selected="false">
+                <svg class="ic" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+                <span data-i18n="subBuffer">Буфер вставок</span>
+                <span class="mini-badge" id="subBufCount">0</span>
+              </button>
+            </div>
+
+            <div class="filter-controls">
+              <div class="search-box">
+                <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input type="text" class="text-input" id="vaultSearch" placeholder="Поиск по коду...">
+              </div>
+              <select class="filter-select" id="vaultLangFilter" aria-label="Фильтр по языку"></select>
+              <button class="pin-filter-btn" id="btnPinOnly" aria-pressed="false">
+                <svg class="ic" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                <span data-i18n="pinnedOnly">Только закреплённые</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Records Container -->
+          <div class="records-list" id="vaultList"></div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           TAB 3: ABOUT ("О сервисе" - 3 Compact Blocks)
+           ================================================================== -->
+      <section class="view" id="viewAbout" aria-labelledby="tabAbout">
+        <div class="about-stack">
+          <!-- Block 1: 4-Step Architecture & Security Params -->
+          <section class="panel-card">
+            <div class="panel-head">
+              <h2 data-i18n="howTitle">Как устроен перевод</h2>
+              <span class="sub" data-i18n="howSub">Разделение клиентской части и serverless-функции Vercel</span>
+            </div>
+            <div class="panel-body">
+              <div class="flow-grid">
+                <div class="flow-step">
+                  <span class="flow-num">01</span>
+                  <h3 data-i18n="step1Title">Клиент в браузере</h3>
+                  <p data-i18n="step1Desc">Передаёт только текст кода и целевой язык на внутренний маршрут, без ключей API.</p>
+                </div>
+                <div class="flow-step">
+                  <span class="flow-num">02</span>
+                  <h3 data-i18n="step2Title">Vercel /api/translate</h3>
+                  <p data-i18n="step2Desc">Проверяет метод POST, длину кода, список 13 языков и лимит обращений с IP.</p>
+                </div>
+                <div class="flow-step">
+                  <span class="flow-num">03</span>
+                  <h3 data-i18n="step3Title">YandexGPT API</h3>
+                  <p data-i18n="step3Desc">Запрос с temperature 0.1 и защитой от выполнения инструкций внутри кода.</p>
+                </div>
+                <div class="flow-step">
+                  <span class="flow-num">04</span>
+                  <h3 data-i18n="step4Title">Ответ и журнал</h3>
+                  <p data-i18n="step4Desc">Готовый код приходит в редактор и фиксируется в локальной истории профиля.</p>
+                </div>
+              </div>
+            </div>
+            <div class="param-strip">
+              <span><span data-i18n="paramMax">Лимит кода:</span> <b>8 000 симв.</b></span>
+              <span><span data-i18n="paramRate">Частота:</span> <b>15 запросов / 10 мин</b></span>
+              <span><span data-i18n="paramLangs">Языков:</span> <b>13</b></span>
+              <span><span data-i18n="paramKey">API-ключ:</span> <b data-i18n="paramKeyVal">только на сервере Vercel</b></span>
+            </div>
+          </section>
+
+          <!-- Block 2: 4x2 Grid with 8 Test Scenarios from check_translation.py -->
+          <section class="panel-card">
+            <div class="panel-head">
+              <h2 data-i18n="benchTitle">Тестовый набор (методика check_translation.py)</h2>
+              <span class="sub" data-i18n="benchSub">Нажмите на пример, чтобы загрузить его в переводчик</span>
+            </div>
+            <div class="panel-body">
+              <div class="bench-grid" id="benchGrid"></div>
+            </div>
+          </section>
+
+          <!-- Block 3: Mini Time-Saving Estimator (2 Sliders) -->
+          <section class="panel-card">
+            <div class="panel-head">
+              <h2 data-i18n="estTitle">Оценка экономии времени</h2>
+              <span class="sub" data-i18n="estSub">Ориентировочный расчёт при переносе кода между языками</span>
+            </div>
+            <div class="panel-body">
+              <div class="est-layout">
+                <div class="est-sliders">
+                  <div class="slider-field">
+                    <div class="slider-head">
+                      <label for="estLines" data-i18n="estLinesLbl">Объём кода (строк)</label>
+                      <b id="estLinesVal">1 000 строк</b>
+                    </div>
+                    <input type="range" id="estLines" min="100" max="5000" step="100" value="1000">
+                  </div>
+
+                  <div class="slider-field">
+                    <div class="slider-head">
+                      <label for="estRate" data-i18n="estRateLbl">Ставка разработчика</label>
+                      <b id="estRateVal">1 900 ₽/час</b>
+                    </div>
+                    <input type="range" id="estRate" min="500" max="4500" step="100" value="1900">
+                  </div>
+                </div>
+
+                <div class="est-metrics">
+                  <div class="metric-box">
+                    <span class="metric-lbl" data-i18n="estTimeLbl">Экономия времени</span>
+                    <span class="metric-val" id="estTimeVal">~10.7 ч</span>
+                  </div>
+                  <div class="metric-box accent">
+                    <span class="metric-lbl" data-i18n="estMoneyLbl">Экономия бюджета</span>
+                    <span class="metric-val" id="estMoneyVal">~20 357 ₽</span>
+                  </div>
+                </div>
+              </div>
+              <p class="est-note" data-i18n="estNote">Учитывает ручную проверку и запуск результата (ускорение ~2.8x относительно ручного переноса со скоростью 60 строк/час; базовая ставка 1 900 ₽/час).</p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- Frame Footer -->
+    <footer class="shell-footer">
+      <span data-i18n="footerWarning">CodeShift · Перед использованием проверьте результат и запустите его. Не передавайте пароли и секретные ключи.</span>
+      <span class="meta-mono">13 langs · max 8000 chars</span>
+    </footer>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     Settings Slide-Over Drawer
+     ========================================================================== -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="settingsDrawer" aria-hidden="true" aria-label="Настройки">
+  <div class="drawer-head">
+    <h2 data-i18n="settingsTitle">Настройки</h2>
+    <button class="close-btn" id="closeSettings" aria-label="Закрыть">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body">
+    <div class="s-row">
+      <div class="s-label"><span data-i18n="setTheme">Тема оформления</span></div>
+      <div class="seg-group" id="themeOpts">
+        <button data-v="dark" data-i18n="themeDark">Тёмная</button>
+        <button data-v="light" data-i18n="themeLight">Светлая</button>
+        <button data-v="auto" data-i18n="themeAuto">Авто</button>
+      </div>
+    </div>
+
+    <div class="s-row">
+      <div class="s-label"><span data-i18n="bgMenuHead">Фон по бокам</span></div>
+      <div class="seg-group two" id="bgOpts">
+        <button data-v="station" data-i18n="bgStation">Станция</button>
+        <button data-v="topo" data-i18n="bgTopo">Топография</button>
+        <button data-v="syntax" data-i18n="bgSyntax">Поток синтаксиса</button>
+        <button data-v="clean" data-i18n="bgClean">Чистый</button>
+      </div>
+    </div>
+
+    <div class="s-row">
+      <div class="s-label"><span data-i18n="setLang">Язык интерфейса</span></div>
+      <div class="seg-group two" id="uiLangOpts">
+        <button data-v="ru">Русский</button>
+        <button data-v="en">English</button>
+      </div>
+    </div>
+
+    <div class="s-row">
+      <div class="s-label">
+        <span data-i18n="setFontSize">Размер шрифта кода</span>
+        <b id="fontSizeVal">13.5 px</b>
+      </div>
+      <input type="range" id="fontSizeRange" min="11" max="20" step="0.5" value="13.5">
+    </div>
+
+    <label class="s-row s-toggle">
+      <span data-i18n="setWrap">Переносить длинные строки</span>
+      <input type="checkbox" class="switch" id="setWrap">
+    </label>
+
+    <label class="s-row s-toggle">
+      <span data-i18n="setAnim">Анимация фона и интерфейса</span>
+      <input type="checkbox" class="switch" id="setAnim">
+    </label>
+
+    <label class="s-row s-toggle">
+      <span data-i18n="setRemember">Запоминать код в браузере</span>
+      <input type="checkbox" class="switch" id="setRemember">
+    </label>
+  </div>
+  <div class="drawer-foot">
+    <button class="btn-sec" id="btnResetSettings" data-i18n="resetSettings">Сбросить настройки</button>
+  </div>
+</aside>
+
+<!-- ==========================================================================
+     In-Page Modals (Profile Create/Rename & Confirmation - Zero alert/confirm)
+     ========================================================================== -->
+<div class="modal-backdrop" id="inputModal" hidden role="dialog" aria-modal="true" aria-labelledby="inputModalTitle">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="inputModalTitle">Профиль</h3>
+      <button class="close-btn" id="closeInputModal" aria-label="Закрыть">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <label for="inputModalField" id="inputModalDesc">Введите название профиля:</label>
+      <input type="text" class="text-input" id="inputModalField" maxlength="32" autocomplete="off">
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sec" id="inputModalCancel" data-i18n="cancelBtn">Отмена</button>
+      <button class="btn-sec primary" id="inputModalOk" data-i18n="saveBtn">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="confirmModal" hidden role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="confirmTitle">Подтверждение</h3>
+      <button class="close-btn" id="closeConfirmModal" aria-label="Закрыть">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="confirmBody"></div>
+    <div class="modal-foot">
+      <button class="btn-sec" id="confirmCancel" data-i18n="cancelBtn">Отмена</button>
+      <button class="btn-sec primary" id="confirmOk" data-i18n="confirmBtn">Подтвердить</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     Floating Support Chat (/api/chat + Polite Local Help Fallback)
+     ========================================================================== -->
+<button class="chat-fab" id="chatFab" aria-expanded="false" aria-controls="chatPanel">
+  <svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span data-i18n="support">Поддержка</span>
+</button>
+
+<section class="chat-panel" id="chatPanel" aria-hidden="true" aria-label="Поддержка CodeShift">
+  <div class="chat-head">
+    <div>
+      <div class="chat-title" data-i18n="chatTitle">Поддержка CodeShift</div>
+      <div class="chat-sub" data-i18n="chatSub">Вопросы по работе сервиса</div>
+    </div>
+    <button class="close-btn" id="closeChat" aria-label="Закрыть">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-quick" id="chatQuick">
+    <button data-i18n="qLangs">Какие языки есть?</button>
+    <button data-i18n="qWhy">Почему не переводится?</button>
+    <button data-i18n="qLeft">Что значит «В исходник»?</button>
+  </div>
+  <form class="chat-form" id="chatForm">
+    <input type="text" id="chatInput" maxlength="500" autocomplete="off" placeholder="Напишите вопрос...">
+    <button type="submit" id="chatSend" aria-label="Отправить">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </form>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-    // Банк вопросов
-    const questions = [
-        {
-            text: "В каком слове пишется суффикс -ЮЩ- (действительное причастие)?",
-            options: ["кле..щий", "дремл..щий", "пен..щийся", "стро..щий"],
-            correct: "дремл..щий",
-            explanation: "✅ ДремлЮщий ← дремать (I спряжение) → суффикс -ЮЩ-. Клеящий (II спр.), пенящийся (II), строящий (II)."
-        },
-        {
-            text: "Выберите страдательное причастие с суффиксом -ИМ- (наст. время):",
-            options: ["уважа..мый", "невид..мый", "применя..мый", "сопровожда..мый"],
-            correct: "невид..мый",
-            explanation: "✅ Невидимый — от глагола 'видеть' (II спряжение, искл.) → суффикс -ИМ-. Остальные от I спр. (-ем-)."
-        },
-        {
-            text: "В каком слове пишется ОДНА Н (отглагольное прилагательное)?",
-            options: ["маринова..ый", "ветре..ый", "раненый (без зависимых слов)", "стекля..ый"],
-            correct: "раненый (без зависимых слов)",
-            explanation: "✅ Раненый — нет приставки и зависимых слов → одна Н. Маринованный ( -ованн-), ветреный (исключение, но одна Н), стеклянный — исключение, две Н. Верный вариант по правилу: 'раненый'."
-        },
-        {
-            text: "В каком причастии нужен суффикс -ЕНН- (страдат. прош.)?",
-            options: ["услыш..ный", "замеш..нный (в тесто)", "развеш..нные", "выкач..нная бочка"],
-            correct: "замеш..нный (в тесто)",
-            explanation: "✅ Замешенный ← замесить (на -ить) → -ЕНН-. Услышанный (услышать -ать → -нн-), выкачанная (выкачать → -нн-)."
-        },
-        {
-            text: "Какое прилагательное-исключение требует написания НН (две Н)?",
-            options: ["румя..ый", "ю..ый", "оловя..ый", "сви..ой"],
-            correct: "оловя..ый",
-            explanation: "✅ Оловянный — исключение (оловянный, деревянный, стеклянный). Румяный, юный, свиной — одна Н."
-        },
-        {
-            text: "Укажите действительное причастие с суффиксом -ЯЩ- (наст. время):",
-            options: ["бор..щиеся", "кле..щий", "стел..щийся", "пиш..щие"],
-            correct: "кле..щий",
-            explanation: "✅ Клеящий ← клеить (II спряжение) → -ЯЩ-. Борющиеся (I спр → -ющ), стелющийся (I спр. → -ющ), пишущие (I спр. → -ущ)."
-        }
-    ];
+(function () {
+  "use strict";
 
-    let userAnswers = new Array(questions.length).fill(null);
-    const questionsContainer = document.getElementById('questionsContainer');
-    const scoreDisplay = document.getElementById('scoreDisplay');
+  const $ = (id) => document.getElementById(id);
 
-    function updateScore() {
-        let correctCount = 0;
-        for (let i = 0; i < questions.length; i++) {
-            if (userAnswers[i] !== null && userAnswers[i] === questions[i].correct) {
-                correctCount++;
-            }
-        }
-        scoreDisplay.innerText = `★ ${correctCount} / ${questions.length}`;
+  /* ========================================================================
+     1. Constants, Language Metadata & 8 Benchmark Scenarios
+     ======================================================================== */
+  const MAX_CODE = 8000;
+  const WARN_CODE = 6500;
+  const MAX_HISTORY = 80;
+  const MAX_BUFFER = 80;
+
+  const PREFS_KEY = "codeshift_prefs_v4";
+  const PROFILES_KEY = "codeshift_profiles_v4";
+  const DRAFT_KEY = "codeshift_draft_v4";
+
+  /* GitHub Linguist colors and file extensions for all 13 backend languages */
+  const LANG_META = {
+    Python:     { ext: "py",    color: "#3572A5" },
+    JavaScript: { ext: "js",    color: "#f1e05a" },
+    TypeScript: { ext: "ts",    color: "#3178c6" },
+    Java:       { ext: "java",  color: "#b07219" },
+    "C#":       { ext: "cs",    color: "#178600" },
+    "C++":      { ext: "cpp",   color: "#f34b7d" },
+    C:          { ext: "c",     color: "#8b949e" },
+    Go:         { ext: "go",    color: "#00ADD8" },
+    Rust:       { ext: "rs",    color: "#dea584" },
+    Kotlin:     { ext: "kt",    color: "#A97BFF" },
+    Swift:      { ext: "swift", color: "#F05138" },
+    PHP:        { ext: "php",   color: "#777BB4" },
+    Ruby:       { ext: "rb",    color: "#cc342d" }
+  };
+
+  /* All 8 examples from the project report / check_translation.py */
+  const SCENARIOS = [
+    {
+      id: "fib",
+      ruTitle: "Фибоначчи",
+      enTitle: "Fibonacci",
+      ruDesc: "Цикл вычисления первых 10 чисел последовательности",
+      enDesc: "Loop computing the first 10 Fibonacci numbers",
+      code: 'def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n\nfor i in range(10):\n    print(i, fib(i))\n'
+    },
+    {
+      id: "fact",
+      ruTitle: "Факториал",
+      enTitle: "Factorial",
+      ruDesc: "Итеративный и рекурсивный расчёт 10!",
+      enDesc: "Iterative and recursive calculation of 10!",
+      code: 'def fact_iter(n):\n    res = 1\n    for i in range(2, n + 1):\n        res *= i\n    return res\n\ndef fact_rec(n):\n    return 1 if n <= 1 else n * fact_rec(n - 1)\n\nprint(fact_iter(10), fact_rec(10))\n'
+    },
+    {
+      id: "strings",
+      ruTitle: "Строки",
+      enTitle: "Strings",
+      ruDesc: "Нижний регистр, подсчёт слов и разворот",
+      enDesc: "Lowercase, word count, and reverse join",
+      code: 'text = "CodeShift automates code migration"\nwords = text.lower().split()\nprint("words:", len(words))\nprint("reversed:", " ".join(words[::-1]))\n'
+    },
+    {
+      id: "list",
+      ruTitle: "Список",
+      enTitle: "List",
+      ruDesc: "Отбор чётных, возведение в квадрат и сумма",
+      enDesc: "Filtering evens, squaring, and summing",
+      code: 'nums = [3, 8, 12, 5, 7, 14, 2, 9]\neven_squares = [x * x for x in nums if x % 2 == 0]\nprint(even_squares)\nprint("sum:", sum(even_squares))\n'
+    },
+    {
+      id: "fizzbuzz",
+      ruTitle: "FizzBuzz",
+      enTitle: "FizzBuzz",
+      ruDesc: "Ветвление по кратности для чисел от 1 до 20",
+      enDesc: "Divisibility branching from 1 to 20",
+      code: 'for n in range(1, 21):\n    if n % 15 == 0:\n        print("FizzBuzz")\n    elif n % 3 == 0:\n        print("Fizz")\n    elif n % 5 == 0:\n        print("Buzz")\n    else:\n        print(n)\n'
+    },
+    {
+      id: "dict",
+      ruTitle: "Словарь",
+      enTitle: "Dictionary",
+      ruDesc: "Подсчёт частоты элементов и сортировка ключей",
+      enDesc: "Frequency map with sorted key output",
+      code: 'items = ["py", "go", "py", "rs", "go", "py"]\ncounts = {}\nfor item in items:\n    counts[item] = counts.get(item, 0) + 1\n\nfor k in sorted(counts):\n    print(f"{k}: {counts[k]}")\n'
+    },
+    {
+      id: "orderClass",
+      ruTitle: "Класс",
+      enTitle: "Class",
+      ruDesc: "Класс заказа с расчётом суммы и скидки",
+      enDesc: "Order class computing discounted total",
+      code: 'class Order:\n    def __init__(self, client, items, discount=0.1):\n        self.client = client\n        self.items = items\n        self.discount = discount\n\n    def total(self):\n        raw = sum(self.items.values())\n        return round(raw * (1 - self.discount), 2)\n\norder = Order("Acme", {"api": 1900, "review": 950})\nprint(order.client, order.total())\n'
+    },
+    {
+      id: "primes",
+      ruTitle: "Простые числа",
+      enTitle: "Prime numbers",
+      ruDesc: "Поиск всех простых чисел до 50",
+      enDesc: "Finding all prime numbers up to 50",
+      code: 'def is_prime(n):\n    if n < 2:\n        return False\n    d = 2\n    while d * d <= n:\n        if n % d == 0:\n            return False\n        d += 1\n    return True\n\nprimes = [n for n in range(2, 51) if is_prime(n)]\nprint(primes)\n'
     }
+  ];
 
-    function renderSingleQuestion(idx) {
-        const q = questions[idx];
-        const card = document.querySelector(`.question-card[data-qidx='${idx}']`);
-        if (!card) return;
+  /* Plausible local demo outputs for previewing when /api/translate is offline */
+  const DEMO_TRANSLATIONS = {
+    fib: {
+      JavaScript: 'function fib(n) {\n  let a = 0, b = 1;\n  for (let i = 0; i < n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return a;\n}\n\nfor (let i = 0; i < 10; i++) {\n  console.log(i, fib(i));\n}\n',
+      TypeScript: 'function fib(n: number): number {\n  let a = 0;\n  let b = 1;\n  for (let i = 0; i < n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return a;\n}\n\nfor (let i = 0; i < 10; i++) {\n  console.log(i, fib(i));\n}\n',
+      Go: 'package main\n\nimport "fmt"\n\nfunc fib(n int) int {\n\ta, b := 0, 1\n\tfor i := 0; i < n; i++ {\n\t\ta, b = b, a+b\n\t}\n\treturn a\n}\n\nfunc main() {\n\tfor i := 0; i < 10; i++ {\n\t\tfmt.Println(i, fib(i))\n\t}\n}\n',
+      Rust: 'fn fib(n: u32) -> u64 {\n    let (mut a, mut b) = (0, 1);\n    for _ in 0..n {\n        let next = a + b;\n        a = b;\n        b = next;\n    }\n    a\n}\n\nfn main() {\n    for i in 0..10 {\n        println!("{} {}", i, fib(i));\n    }\n}\n',
+      Java: 'public class Main {\n    static int fib(int n) {\n        int a = 0, b = 1;\n        for (int i = 0; i < n; i++) {\n            int next = a + b;\n            a = b;\n            b = next;\n        }\n        return a;\n    }\n\n    public static void main(String[] args) {\n        for (int i = 0; i < 10; i++) {\n            System.out.println(i + " " + fib(i));\n        }\n    }\n}\n',
+      "C++": '#include <iostream>\n\nint fib(int n) {\n    int a = 0, b = 1;\n    for (int i = 0; i < n; ++i) {\n        int next = a + b;\n        a = b;\n        b = next;\n    }\n    return a;\n}\n\nint main() {\n    for (int i = 0; i < 10; ++i) {\n        std::cout << i << " " << fib(i) << "\\n";\n    }\n    return 0;\n}\n',
+      "C#": 'using System;\n\nclass Program {\n    static int Fib(int n) {\n        int a = 0, b = 1;\n        for (int i = 0; i < n; i++) {\n            int next = a + b;\n            a = b;\n            b = next;\n        }\n        return a;\n    }\n\n    static void Main() {\n        for (int i = 0; i < 10; i++) {\n            Console.WriteLine($"{i} {Fib(i)}");\n        }\n    }\n}\n',
+      C: '#include <stdio.h>\n\nint fib(int n) {\n    int a = 0, b = 1;\n    for (int i = 0; i < n; i++) {\n        int next = a + b;\n        a = b;\n        b = next;\n    }\n    return a;\n}\n\nint main(void) {\n    for (int i = 0; i < 10; i++) {\n        printf("%d %d\\n", i, fib(i));\n    }\n    return 0;\n}\n',
+      Kotlin: 'fun fib(n: Int): Int {\n    var a = 0\n    var b = 1\n    repeat(n) {\n        val next = a + b\n        a = b\n        b = next\n    }\n    return a\n}\n\nfun main() {\n    for (i in 0 until 10) {\n        println("$i ${fib(i)}")\n    }\n}\n',
+      Swift: 'func fib(_ n: Int) -> Int {\n    var a = 0\n    var b = 1\n    for _ in 0..<n {\n        (a, b) = (b, a + b)\n    }\n    return a\n}\n\nfor i in 0..<10 {\n    print(i, fib(i))\n}\n',
+      PHP: '<?php\nfunction fib(int $n): int {\n    $a = 0;\n    $b = 1;\n    for ($i = 0; $i < $n; $i++) {\n        [$a, $b] = [$b, $a + $b];\n    }\n    return $a;\n}\n\nfor ($i = 0; $i < 10; $i++) {\n    echo $i . " " . fib($i) . PHP_EOL;\n}\n',
+      Ruby: 'def fib(n)\n  a, b = 0, 1\n  n.times { a, b = b, a + b }\n  a\nend\n\n(0...10).each do |i|\n  puts "#{i} #{fib(i)}"\nend\n',
+      Python: 'def fib(n: int) -> int:\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n\nfor i in range(10):\n    print(i, fib(i))\n'
+    },
+    fizzbuzz: {
+      JavaScript: 'for (let n = 1; n <= 20; n++) {\n  if (n % 15 === 0) console.log("FizzBuzz");\n  else if (n % 3 === 0) console.log("Fizz");\n  else if (n % 5 === 0) console.log("Buzz");\n  else console.log(n);\n}\n',
+      Go: 'package main\n\nimport "fmt"\n\nfunc main() {\n\tfor n := 1; n <= 20; n++ {\n\t\tswitch {\n\t\tcase n%15 == 0:\n\t\t\tfmt.Println("FizzBuzz")\n\t\tcase n%3 == 0:\n\t\t\tfmt.Println("Fizz")\n\t\tcase n%5 == 0:\n\t\t\tfmt.Println("Buzz")\n\t\tdefault:\n\t\t\tfmt.Println(n)\n\t\t}\n\t}\n}\n',
+      Rust: 'fn main() {\n    for n in 1..=20 {\n        match (n % 3, n % 5) {\n            (0, 0) => println!("FizzBuzz"),\n            (0, _) => println!("Fizz"),\n            (_, 0) => println!("Buzz"),\n            _ => println!("{}", n),\n        }\n    }\n}\n'
+    },
+    orderClass: {
+      TypeScript: 'class Order {\n  constructor(\n    public client: string,\n    public items: Record<string, number>,\n    public discount: number = 0.1\n  ) {}\n\n  total(): number {\n    const raw = Object.values(this.items).reduce((acc, v) => acc + v, 0);\n    return Math.round(raw * (1 - this.discount) * 100) / 100;\n  }\n}\n\nconst order = new Order("Acme", { api: 1900, review: 950 });\nconsole.log(order.client, order.total());\n',
+      JavaScript: 'class Order {\n  constructor(client, items, discount = 0.1) {\n    this.client = client;\n    this.items = items;\n    this.discount = discount;\n  }\n\n  total() {\n    const raw = Object.values(this.items).reduce((a, b) => a + b, 0);\n    return Math.round(raw * (1 - this.discount) * 100) / 100;\n  }\n}\n\nconst order = new Order("Acme", { api: 1900, review: 950 });\nconsole.log(order.client, order.total());\n'
+    }
+  };
 
-        const optionsDiv = card.querySelector('.options');
-        const feedbackDiv = card.querySelector('.feedback');
+  /* ========================================================================
+     2. Localization Dictionary (RU / EN)
+     ======================================================================== */
+  const I18N = {
+    ru: {
+      pageTitle: "CodeShift - перевод кода между языками",
+      tabTranslator: "Переводчик",
+      tabVault: "Буфер и история",
+      tabAbout: "О сервисе",
+      bgMenuHead: "Фон по бокам",
+      bgStation: "Станция",
+      bgStationDesc: "Изометрия, серверные узлы и магистрали",
+      bgTopo: "Топография",
+      bgTopoDesc: "Изогипсы высот, сетка и радарные засечки",
+      bgSyntax: "Поток синтаксиса",
+      bgSyntaxDesc: "Адреса памяти и фрагменты кода в графите",
+      bgClean: "Чистый",
+      bgCleanDesc: "Спокойный однотонный фон без графики",
+      translate: "Перевести",
+      translating: "Перевожу...",
+      stop: "Остановить",
+      sourceCode: "Исходный код",
+      autoSuffix: " · авто",
+      examples: "Примеры",
+      paste: "Вставить",
+      toBuffer: "В буфер",
+      copy: "Копировать",
+      clear: "Очистить",
+      moveLeft: "В исходник",
+      download: "Скачать",
+      srcPlaceholder: "Вставьте исходный код сюда...",
+      outPlaceholder: "Здесь появится переведённый код...",
+      editorKeysHint: "Tab - отступ · Ctrl+V в буфер",
+      fbOk: "Точно",
+      fbErr: "Есть ошибка",
+      btnDemoRun: "Локальный демо-перевод",
+      profileLabel: "Профиль:",
+      defaultProfileName: "Локальный",
+      renameProfile: "Переименовать",
+      newProfile: "+ Новый профиль",
+      exportJson: "Экспорт JSON",
+      importJson: "Импорт JSON",
+      clearBtn: "Очистить",
+      subHistory: "История переводов",
+      subBuffer: "Буфер вставок",
+      searchPh: "Поиск по коду...",
+      allLangs: "Все языки",
+      pinnedOnly: "Только закреплённые",
+      wasLabel: "Было (исходный код)",
+      becameLabel: "Стало (перевод)",
+      snippetLabel: "Фрагмент кода",
+      openInEditor: "Открыть в редакторе",
+      toEditor: "В редактор",
+      copySource: "Копировать исходник",
+      copyResult: "Копировать перевод",
+      pinBtn: "Закрепить",
+      unpinBtn: "Закреплено",
+      expandBtn: "Развернуть",
+      collapseBtn: "Свернуть",
+      deleteBtn: "Удалить",
+      srcPaste: "Вставка",
+      srcCopy: "Копирование",
+      srcManual: "Сохранено вручную",
+      emptyHistText: "История переводов текущего профиля пока пуста. Выполните перевод во вкладке «Переводчик» или загрузите демо-записи, чтобы посмотреть формат журнала.",
+      load3Samples: "Загрузить 3 примера в историю",
+      emptyBufText: "Буфер вставок пока пуст. Любой код, вставленный через Ctrl+V, кнопку «Вставить», сохранённый кнопкой «В буфер» или скопированный из результата, появится здесь.",
+      noMatchText: "По заданному поиску или фильтру записей не найдено.",
+      howTitle: "Как устроен перевод",
+      howSub: "Разделение клиентской части и serverless-функции Vercel",
+      step1Title: "Клиент в браузере",
+      step1Desc: "Передаёт только текст кода и целевой язык на внутренний маршрут, без ключей API.",
+      step2Title: "Vercel /api/translate",
+      step2Desc: "Проверяет метод POST, длину кода, список 13 языков и лимит обращений с IP.",
+      step3Title: "YandexGPT API",
+      step3Desc: "Запрос с temperature 0.1 и защитой от выполнения инструкций внутри кода.",
+      step4Title: "Ответ и журнал",
+      step4Desc: "Готовый код приходит в редактор и фиксируется в локальной истории профиля.",
+      paramMax: "Лимит кода:",
+      paramRate: "Частота:",
+      paramLangs: "Языков:",
+      paramKey: "API-ключ:",
+      paramKeyVal: "только на сервере Vercel",
+      benchTitle: "Тестовый набор (методика check_translation.py)",
+      benchSub: "Нажмите на пример, чтобы загрузить его в переводчик",
+      openLabel: "Открыть",
+      estTitle: "Оценка экономии времени",
+      estSub: "Ориентировочный расчёт при переносе кода между языками",
+      estLinesLbl: "Объём кода (строк)",
+      estRateLbl: "Ставка разработчика",
+      estTimeLbl: "Экономия времени",
+      estMoneyLbl: "Экономия бюджета",
+      estNote: "Учитывает ручную проверку и запуск результата (ускорение ~2.8x относительно ручного переноса со скоростью 60 строк/час; базовая ставка 1 900 ₽/час).",
+      footerWarning: "CodeShift · Перед использованием проверьте результат и запустите его. Не передавайте пароли и секретные ключи.",
+      settingsTitle: "Настройки",
+      setTheme: "Тема оформления",
+      themeDark: "Тёмная",
+      themeLight: "Светлая",
+      themeAuto: "Авто",
+      setLang: "Язык интерфейса",
+      setFontSize: "Размер шрифта кода",
+      setWrap: "Переносить длинные строки",
+      setAnim: "Анимация фона и интерфейса",
+      setRemember: "Запоминать код в браузере",
+      resetSettings: "Сбросить настройки",
+      cancelBtn: "Отмена",
+      saveBtn: "Сохранить",
+      confirmBtn: "Подтвердить",
+      support: "Поддержка",
+      chatTitle: "Поддержка CodeShift",
+      chatSub: "Вопросы по работе сервиса",
+      chatPh: "Напишите вопрос...",
+      chatWelcome: "Здравствуйте! Я помощник поддержки CodeShift. Подскажу по языкам, буферу вставок, истории профилей и ограничениям сервиса.",
+      qLangs: "Какие языки есть?",
+      qWhy: "Почему не переводится?",
+      qLeft: "Что значит «В исходник»?",
+      typing: "Печатает...",
+      statusDone: "Готово",
+      statusDemo: "Демо-режим",
+      statusStopped: "Остановлено",
+      statusBusy: "Запрос к /api/translate...",
+      errEmpty: "Сначала вставьте исходный код в левое окно.",
+      errTooLong: "Код превышает лимит 8 000 символов. Сократите фрагмент.",
+      errOffline: "Эндпоинт /api/translate недоступен в локальном предпросмотре. Реальный перевод через YandexGPT работает на Vercel при заданных YANDEX_API_KEY и YANDEX_FOLDER_ID.",
+      toastCopiedSrc: "Исходный код скопирован",
+      toastCopiedOut: "Перевод скопирован и записан в буфер",
+      toastCopiedBuf: "Фрагмент скопирован",
+      toastCopyEmpty: "Копировать пока нечего",
+      toastCopyFail: "Не удалось скопировать, выделите текст вручную",
+      toastPasted: "Код вставлен и добавлен в буфер",
+      toastPasteEmpty: "Системный буфер обмена пуст",
+      toastPasteFail: "Нет доступа к системному буферу - вставьте через Ctrl + V",
+      toastSavedBuf: "Фрагмент сохранён в «Буфер вставок»",
+      toastBufEmpty: "Сначала введите или вставьте код в левое окно",
+      toastCleared: "Редактор очищен",
+      toastPreset: "Пример загружен в редактор",
+      toastMoved: "Результат перенесён в левое окно",
+      toastNoOut: "Результата пока нет",
+      toastDownloaded: "Файл сохранён",
+      toastFb: "Оценка сохранена в истории",
+      toastRestored: "Запись открыта в редакторе",
+      toastSamplesLoaded: "Загружено 3 примера в историю профиля",
+      toastDemo: "Выполнен локальный демо-перевод и записан в историю",
+      toastProfCreated: "Создан и выбран новый локальный профиль",
+      toastProfRenamed: "Название профиля обновлено",
+      toastProfSwitched: "Профиль переключён",
+      toastProfNeedName: "Введите название профиля",
+      toastExported: "Данные профиля экспортированы в JSON",
+      toastImported: "Профиль импортирован",
+      toastImportErr: "Некорректный JSON-файл профиля",
+      toastClearedList: "Список очищен",
+      toastReset: "Настройки сброшены",
+      modalNewProfTitle: "Новый локальный профиль",
+      modalNewProfDesc: "У каждого профиля своя отдельная история переводов и буфер вставок в этом браузере:",
+      modalRenameProfTitle: "Переименовать профиль",
+      modalRenameProfDesc: "Новое название для текущего локального профиля:",
+      confirmClearHistTitle: "Очистить историю переводов?",
+      confirmClearHistBody: "Все записи «Истории переводов» текущего профиля будут удалены.",
+      confirmClearBufTitle: "Очистить буфер вставок?",
+      confirmClearBufBody: "Все сохранённые фрагменты из «Буфера вставок» текущего профиля будут удалены.",
+      unitLines: "строк",
+      unitRate: "₽/час",
+      unitHours: "ч",
+      unitSec: "с",
+      autoSrc: "Авто",
+      plainCode: "Код"
+    },
+    en: {
+      pageTitle: "CodeShift - code translation between languages",
+      tabTranslator: "Translator",
+      tabVault: "Clipboard & History",
+      tabAbout: "About",
+      bgMenuHead: "Side backdrop",
+      bgStation: "Station",
+      bgStationDesc: "Isometric server blocks & data highways",
+      bgTopo: "Topography",
+      bgTopoDesc: "Elevation contour lines & radar ticks",
+      bgSyntax: "Syntax Flow",
+      bgSyntaxDesc: "Memory addresses & code columns in graphite",
+      bgClean: "Clean",
+      bgCleanDesc: "Calm solid backdrop without artwork",
+      translate: "Translate",
+      translating: "Translating...",
+      stop: "Stop",
+      sourceCode: "Source code",
+      autoSuffix: " · auto",
+      examples: "Examples",
+      paste: "Paste",
+      toBuffer: "Save clip",
+      copy: "Copy",
+      clear: "Clear",
+      moveLeft: "To source",
+      download: "Download",
+      srcPlaceholder: "Paste your source code here...",
+      outPlaceholder: "Translated code will appear here...",
+      editorKeysHint: "Tab - indent · Ctrl+V to clip",
+      fbOk: "Accurate",
+      fbErr: "Has issue",
+      btnDemoRun: "Local demo translation",
+      profileLabel: "Profile:",
+      defaultProfileName: "Local",
+      renameProfile: "Rename",
+      newProfile: "+ New profile",
+      exportJson: "Export JSON",
+      importJson: "Import JSON",
+      clearBtn: "Clear",
+      subHistory: "Translation history",
+      subBuffer: "Paste buffer",
+      searchPh: "Search code...",
+      allLangs: "All languages",
+      pinnedOnly: "Pinned only",
+      wasLabel: "Before (source)",
+      becameLabel: "After (translated)",
+      snippetLabel: "Code snippet",
+      openInEditor: "Open in editor",
+      toEditor: "To editor",
+      copySource: "Copy source",
+      copyResult: "Copy translation",
+      pinBtn: "Pin",
+      unpinBtn: "Pinned",
+      expandBtn: "Expand",
+      collapseBtn: "Collapse",
+      deleteBtn: "Delete",
+      srcPaste: "Paste",
+      srcCopy: "Copy",
+      srcManual: "Saved manually",
+      emptyHistText: "No translations in this profile yet. Translate a snippet in the Translator tab or load 3 sample entries to preview the log.",
+      load3Samples: "Load 3 sample entries",
+      emptyBufText: "Paste buffer is empty. Code pasted via Ctrl+V, the Paste button, saved manually, or copied from output appears here automatically.",
+      noMatchText: "No records match your search or filter.",
+      howTitle: "How translation works",
+      howSub: "Client separation backed by a Vercel serverless function",
+      step1Title: "Browser client",
+      step1Desc: "Sends only code text and target language to the internal route, with no API keys.",
+      step2Title: "Vercel /api/translate",
+      step2Desc: "Validates POST method, code size, 13-language allowlist, and IP rate limit.",
+      step3Title: "YandexGPT API",
+      step3Desc: "Low temperature (0.1) request with guardrails against executing code instructions.",
+      step4Title: "Response & log",
+      step4Desc: "Validated output appears in the editor and saves to the active local profile.",
+      paramMax: "Code limit:",
+      paramRate: "Rate limit:",
+      paramLangs: "Languages:",
+      paramKey: "API key:",
+      paramKeyVal: "Vercel server env only",
+      benchTitle: "Benchmark suite (check_translation.py)",
+      benchSub: "Click any example to load it into the translator",
+      openLabel: "Open",
+      estTitle: "Time-saving estimate",
+      estSub: "Approximate calculation for migrating code between languages",
+      estLinesLbl: "Code volume (lines)",
+      estRateLbl: "Developer rate",
+      estTimeLbl: "Time saved",
+      estMoneyLbl: "Budget saved",
+      estNote: "Includes manual verification and running tests (~2.8x speedup vs manual rewrite at 60 lines/h; default rate 1,900 RUB/h).",
+      footerWarning: "CodeShift · Verify and run translated code before use. Do not paste passwords or secret keys.",
+      settingsTitle: "Settings",
+      setTheme: "Color theme",
+      themeDark: "Dark",
+      themeLight: "Light",
+      themeAuto: "Auto",
+      setLang: "Interface language",
+      setFontSize: "Code font size",
+      setWrap: "Wrap long lines",
+      setAnim: "Backdrop & UI animations",
+      setRemember: "Remember code in browser",
+      resetSettings: "Reset settings",
+      cancelBtn: "Cancel",
+      saveBtn: "Save",
+      confirmBtn: "Confirm",
+      support: "Support",
+      chatTitle: "CodeShift Support",
+      chatSub: "Questions about the service",
+      chatPh: "Type your question...",
+      chatWelcome: "Hello! I am the CodeShift support assistant. Ask about supported languages, paste buffer, profiles, or limits.",
+      qLangs: "Which languages are available?",
+      qWhy: "Why won't it translate?",
+      qLeft: "What does «To source» mean?",
+      typing: "Typing...",
+      statusDone: "Done",
+      statusDemo: "Demo mode",
+      statusStopped: "Stopped",
+      statusBusy: "Calling /api/translate...",
+      errEmpty: "Paste source code into the left pane first.",
+      errTooLong: "Code exceeds the 8,000-character limit. Shorten the snippet.",
+      errOffline: "/api/translate is unreachable in local preview. Live YandexGPT translation runs on Vercel with YANDEX_API_KEY and YANDEX_FOLDER_ID.",
+      toastCopiedSrc: "Source code copied",
+      toastCopiedOut: "Translation copied and logged to buffer",
+      toastCopiedBuf: "Snippet copied",
+      toastCopyEmpty: "Nothing to copy yet",
+      toastCopyFail: "Could not copy, select text manually",
+      toastPasted: "Code pasted and logged to buffer",
+      toastPasteEmpty: "System clipboard is empty",
+      toastPasteFail: "No clipboard access - paste with Ctrl + V",
+      toastSavedBuf: "Snippet saved to Paste buffer",
+      toastBufEmpty: "Enter or paste code in the left editor first",
+      toastCleared: "Editors cleared",
+      toastPreset: "Example loaded into editor",
+      toastMoved: "Result moved to source editor",
+      toastNoOut: "No result yet",
+      toastDownloaded: "File saved",
+      toastFb: "Feedback saved to history",
+      toastRestored: "Record loaded into editor",
+      toastSamplesLoaded: "Loaded 3 sample entries into history",
+      toastDemo: "Local demo translation complete and saved to history",
+      toastProfCreated: "Created and switched to new local profile",
+      toastProfRenamed: "Profile renamed",
+      toastProfSwitched: "Profile switched",
+      toastProfNeedName: "Enter a profile name",
+      toastExported: "Profile data exported to JSON",
+      toastImported: "Profile imported",
+      toastImportErr: "Invalid profile JSON file",
+      toastClearedList: "List cleared",
+      toastReset: "Settings reset",
+      modalNewProfTitle: "New local profile",
+      modalNewProfDesc: "Each profile keeps its own translation history and paste buffer in this browser:",
+      modalRenameProfTitle: "Rename profile",
+      modalRenameProfDesc: "New name for the current local profile:",
+      confirmClearHistTitle: "Clear translation history?",
+      confirmClearHistBody: "All entries in Translation history for this profile will be removed.",
+      confirmClearBufTitle: "Clear paste buffer?",
+      confirmClearBufBody: "All saved snippets in Paste buffer for this profile will be removed.",
+      unitLines: "lines",
+      unitRate: "RUB/h",
+      unitHours: "h",
+      unitSec: "s",
+      autoSrc: "Auto",
+      plainCode: "Code"
+    }
+  };
 
-        optionsDiv.innerHTML = '';
-        q.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            if (userAnswers[idx] === opt) {
-                if (opt === q.correct) {
-                    btn.classList.add('correct-glow');
-                } else {
-                    btn.classList.add('wrong-glow');
-                }
-            }
-            btn.addEventListener('click', () => {
-                userAnswers[idx] = opt;
-                renderSingleQuestion(idx);
-                updateScore();
-            });
-            optionsDiv.appendChild(btn);
+  /* ========================================================================
+     3. Safe Storage & State Management (Prefs + Multi-Profile Local Store)
+     ======================================================================== */
+  const store = (() => {
+    const mem = new Map();
+    let ls = null;
+    try {
+      const probe = "__cs_ok__";
+      window.localStorage.setItem(probe, "1");
+      window.localStorage.removeItem(probe);
+      ls = window.localStorage;
+    } catch (e) {
+      ls = null;
+    }
+    return {
+      get(k) {
+        try { return ls ? ls.getItem(k) : (mem.get(k) ?? null); }
+        catch (e) { return mem.get(k) ?? null; }
+      },
+      set(k, v) {
+        mem.set(k, v);
+        try { if (ls) ls.setItem(k, v); } catch (e) {}
+      },
+      remove(k) {
+        mem.delete(k);
+        try { if (ls) ls.removeItem(k); } catch (e) {}
+      }
+    };
+  })();
+
+  const DEFAULT_PREFS = {
+    theme: "dark",
+    bg: "station",
+    ui: "ru",
+    font: 13.5,
+    wrap: true,
+    anim: true,
+    remember: false,
+    lang: "Python"
+  };
+
+  function loadPrefs() {
+    try {
+      return Object.assign({}, DEFAULT_PREFS, JSON.parse(store.get(PREFS_KEY) || "{}"));
+    } catch (e) {
+      return Object.assign({}, DEFAULT_PREFS);
+    }
+  }
+
+  function loadProfiles() {
+    try {
+      const data = JSON.parse(store.get(PROFILES_KEY) || "null");
+      if (data && Array.isArray(data.list) && data.list.length) {
+        data.list.forEach((p) => {
+          if (!Array.isArray(p.history)) p.history = [];
+          if (!Array.isArray(p.buffer)) p.buffer = [];
         });
+        if (!data.list.some((p) => p.id === data.activeId)) data.activeId = data.list[0].id;
+        return data;
+      }
+    } catch (e) {}
+    return {
+      activeId: "local_default",
+      list: [{ id: "local_default", name: "Локальный", isDefault: true, history: [], buffer: [] }]
+    };
+  }
 
-        if (userAnswers[idx] !== null) {
-            const isCorrect = (userAnswers[idx] === q.correct);
-            if (isCorrect) {
-                feedbackDiv.innerHTML = `✅ Верно! ${q.explanation}`;
-                feedbackDiv.classList.add('correct-fb');
-                feedbackDiv.classList.remove('wrong-fb');
-            } else {
-                feedbackDiv.innerHTML = `❌ Неверно. Правильный ответ: "${q.correct}".<br> ${q.explanation}`;
-                feedbackDiv.classList.add('wrong-fb');
-                feedbackDiv.classList.remove('correct-fb');
-            }
+  let prefs = loadPrefs();
+  let profiles = loadProfiles();
+  let vaultSubMode = "history";
+  let pinnedOnly = false;
+  let rawOutputText = "";
+  let detectedSrcLang = null;
+  let currentHistoryId = null;
+  let activeAbort = null;
+  let toastTimer = null;
+  let inputModalCallback = null;
+  let confirmCallback = null;
+
+  const mqDark = window.matchMedia("(prefers-color-scheme: dark)");
+  const mqReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function savePrefs() {
+    store.set(PREFS_KEY, JSON.stringify(prefs));
+  }
+
+  function saveProfiles() {
+    store.set(PROFILES_KEY, JSON.stringify(profiles));
+  }
+
+  function getActiveProfile() {
+    let p = profiles.list.find((x) => x.id === profiles.activeId);
+    if (!p) {
+      p = profiles.list[0];
+      profiles.activeId = p.id;
+    }
+    return p;
+  }
+
+  function t(key) {
+    const dict = I18N[prefs.ui] || I18N.ru;
+    return Object.prototype.hasOwnProperty.call(dict, key) ? dict[key] : key;
+  }
+
+  function uid(prefix) {
+    return (prefix || "id") + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+  }
+
+  function escapeHtml(s) {
+    return String(s || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function countLines(str) {
+    return str ? str.replace(/\n$/, "").split("\n").length : 0;
+  }
+
+  function pluralRu(n) {
+    const m = n % 10, h = n % 100;
+    if (m === 1 && h !== 11) return "строка";
+    if (m >= 2 && m <= 4 && (h < 10 || h >= 20)) return "строки";
+    return "строк";
+  }
+
+  function formatLines(n) {
+    return prefs.ui === "en" ? `${n} ${n === 1 ? "line" : "lines"}` : `${n} ${pluralRu(n)}`;
+  }
+
+  function formatNum(n) {
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+
+  function formatTime(ts) {
+    const d = new Date(ts);
+    const pad = (x) => String(x).padStart(2, "0");
+    return `${pad(d.getDate())}.${pad(d.getMonth() + 1)} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function extractSnippetTitle(code, fallback) {
+    const lines = (code || "").split("\n").map((l) => l.trim()).filter(Boolean);
+    if (!lines.length) return fallback || "Snippet";
+    return lines[0].slice(0, 56);
+  }
+
+  function toast(msg) {
+    const el = $("toast");
+    el.textContent = msg;
+    el.classList.add("visible");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("visible"), 2200);
+  }
+
+  /* ========================================================================
+     4. Procedural Steam-Style Side-Wing Canvas Renderer (4 Themes)
+     ======================================================================== */
+  const canvas = $("bgCanvas");
+  const ctx = canvas.getContext("2d");
+  let cW = 0, cH = 0;
+  let rafId = null;
+  let bootTime = 0;
+  let mouseTargetX = 0, mouseTargetY = 0;
+  let parallaxX = 0, parallaxY = 0;
+
+  const stationPulses = Array.from({ length: 14 }, (_, i) => ({
+    side: i % 2 === 0 ? -1 : 1,
+    bus: i % 4,
+    speed: 0.045 + (i % 3) * 0.018,
+    offset: (i * 0.23) % 1,
+    amber: i % 5 === 0
+  }));
+
+  const SYNTAX_LINES = [
+    "0x004A10  fn parse_ast(src: &str)",
+    "0x004A28  emit::target(Lang::Go)",
+    "0x004A40  let mut buf = Vec::new();",
+    "0x004A58  POST /api/translate 200",
+    "0x004A70  temp=0.10 max_tok=4000",
+    "0x004A88  guard::no_exec(prompt)",
+    "0x004AA0  token::scan -> Ident",
+    "0x004AB8  rate_limit(ip) <= 15",
+    "0x004AD0  type_infer(Return::Int)",
+    "0x004AE8  hash::sha256(snippet)",
+    "0x004B00  fmt::write(&mut out)",
+    "0x004B18  assert_eq!(stdout, ref)",
+    "0x004B30  struct Frame { len: u16 }",
+    "0x004B48  yield Ok(translated)"
+  ];
+
+  function getCanvasPalette() {
+    const light = document.documentElement.getAttribute("data-theme") === "light";
+    if (light) {
+      return {
+        light: true,
+        bg: "#e6ecf2",
+        grid: "rgba(31, 58, 102, 0.065)",
+        gridMajor: "rgba(31, 58, 102, 0.14)",
+        line: "rgba(31, 58, 102, 0.22)",
+        lineStrong: "rgba(9, 105, 218, 0.34)",
+        fillTop: "rgba(9, 105, 218, 0.07)",
+        fillLeft: "rgba(255, 255, 255, 0.72)",
+        fillRight: "rgba(186, 202, 222, 0.42)",
+        blue: "rgba(9, 105, 218, 0.78)",
+        amber: "rgba(180, 110, 12, 0.78)",
+        amberSoft: "rgba(180, 110, 12, 0.24)",
+        topoLine: "rgba(26, 94, 138, 0.22)",
+        topoMajor: "rgba(26, 94, 138, 0.42)",
+        emerald: "rgba(22, 118, 68, 0.56)",
+        emeraldSoft: "rgba(22, 118, 68, 0.16)",
+        text: "rgba(31, 45, 65, 0.48)"
+      };
+    }
+    return {
+      light: false,
+      bg: "#070a0f",
+      grid: "rgba(130, 165, 214, 0.05)",
+      gridMajor: "rgba(130, 165, 214, 0.11)",
+      line: "rgba(138, 174, 224, 0.17)",
+      lineStrong: "rgba(47, 129, 247, 0.34)",
+      fillTop: "rgba(47, 129, 247, 0.08)",
+      fillLeft: "rgba(16, 22, 32, 0.9)",
+      fillRight: "rgba(23, 32, 46, 0.75)",
+      blue: "rgba(88, 166, 255, 0.82)",
+      amber: "rgba(218, 160, 56, 0.85)",
+      amberSoft: "rgba(218, 160, 56, 0.22)",
+      topoLine: "rgba(86, 152, 198, 0.18)",
+      topoMajor: "rgba(96, 180, 226, 0.36)",
+      emerald: "rgba(63, 185, 80, 0.48)",
+      emeraldSoft: "rgba(63, 185, 80, 0.14)",
+      text: "rgba(148, 166, 188, 0.42)"
+    };
+  }
+
+  function drawStation(tSec, pal) {
+    const step = 36;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = pal.grid;
+    ctx.beginPath();
+    for (let x = 0; x <= cW; x += step) { ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, cH); }
+    for (let y = 0; y <= cH; y += step) { ctx.moveTo(0, y + 0.5); ctx.lineTo(cW, y + 0.5); }
+    ctx.stroke();
+
+    const frameHalf = Math.min(560, cW * 0.48);
+    const wingW = Math.max(170, (cW - frameHalf * 2) * 0.5);
+
+    [-1, 1].forEach((dir) => {
+      ctx.save();
+      if (dir === 1) {
+        ctx.translate(cW, 0);
+        ctx.scale(-1, 1);
+      }
+      ctx.translate(parallaxX * dir, parallaxY);
+
+      ctx.strokeStyle = pal.gridMajor;
+      ctx.beginPath();
+      ctx.moveTo(18.5, 22);
+      ctx.lineTo(18.5, cH - 22);
+      ctx.stroke();
+
+      ctx.font = '500 9.5px "JetBrains Mono", monospace';
+      ctx.fillStyle = pal.text;
+      for (let y = 48, n = 0; y < cH - 28; y += 84, n++) {
+        ctx.beginPath();
+        ctx.moveTo(12, y + 0.5);
+        ctx.lineTo(25, y + 0.5);
+        ctx.stroke();
+        if (dir === 1) {
+          ctx.save();
+          ctx.translate(30, y + 3);
+          ctx.scale(-1, 1);
+          ctx.textAlign = "right";
+          ctx.fillText(`S-${String(n * 40).padStart(3, "0")}`, 0, 0);
+          ctx.restore();
         } else {
-            feedbackDiv.innerHTML = '👆 Нажми на вариант, чтобы проверить';
-            feedbackDiv.classList.remove('correct-fb', 'wrong-fb');
+          ctx.fillText(`S-${String(n * 40).padStart(3, "0")}`, 30, y + 3);
         }
+      }
+
+      const edgeX = wingW + 24;
+      const buses = [
+        [[0, cH * 0.14], [wingW * 0.42, cH * 0.14], [wingW * 0.62, cH * 0.2], [edgeX, cH * 0.2]],
+        [[0, cH * 0.41], [wingW * 0.35, cH * 0.41], [wingW * 0.55, cH * 0.35], [edgeX, cH * 0.35]],
+        [[0, cH * 0.67], [wingW * 0.5, cH * 0.67], [wingW * 0.72, cH * 0.72], [edgeX, cH * 0.72]],
+        [[0, cH * 0.88], [wingW * 0.38, cH * 0.88], [wingW * 0.58, cH * 0.83], [edgeX, cH * 0.83]]
+      ];
+
+      buses.forEach((pts, idx) => {
+        ctx.strokeStyle = idx === 1 ? pal.amberSoft : pal.lineStrong;
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        pts.forEach(([x, y], j) => (j === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)));
+        ctx.stroke();
+
+        for (let j = 1; j < pts.length - 1; j++) {
+          ctx.beginPath();
+          ctx.arc(pts[j][0], pts[j][1], 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = pal.bg;
+          ctx.fill();
+          ctx.strokeStyle = idx === 1 ? pal.amber : pal.blue;
+          ctx.stroke();
+        }
+      });
+
+      stationPulses.forEach((p) => {
+        if (p.side !== dir) return;
+        const pts = buses[p.bus];
+        const prog = (p.offset + tSec * p.speed) % 1;
+        let total = 0;
+        const segs = [];
+        for (let i = 0; i < pts.length - 1; i++) {
+          const len = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
+          segs.push({ a: pts[i], b: pts[i + 1], len });
+          total += len;
+        }
+        let d = prog * total;
+        for (const s of segs) {
+          if (d <= s.len) {
+            const r = s.len ? d / s.len : 0;
+            const px = s.a[0] + (s.b[0] - s.a[0]) * r;
+            const py = s.a[1] + (s.b[1] - s.a[1]) * r;
+            ctx.beginPath();
+            ctx.arc(px, py, 2.7, 0, Math.PI * 2);
+            ctx.fillStyle = p.amber ? pal.amber : pal.blue;
+            ctx.fill();
+            break;
+          }
+          d -= s.len;
+        }
+      });
+
+      const drawBlock = (bx, by, w, d, h, label, accentAmber) => {
+        const ix = w * 0.866, iy = w * 0.45;
+        const dx = d * 0.866, dy = d * 0.45;
+
+        ctx.beginPath();
+        ctx.moveTo(bx, by);
+        ctx.lineTo(bx + ix, by - iy);
+        ctx.lineTo(bx + ix + dx, by - iy + dy);
+        ctx.lineTo(bx + dx, by + dy);
+        ctx.closePath();
+        ctx.fillStyle = accentAmber ? pal.amberSoft : pal.fillTop;
+        ctx.fill();
+        ctx.strokeStyle = accentAmber ? pal.amber : pal.lineStrong;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(bx, by);
+        ctx.lineTo(bx + dx, by + dy);
+        ctx.lineTo(bx + dx, by + dy + h);
+        ctx.lineTo(bx, by + h);
+        ctx.closePath();
+        ctx.fillStyle = pal.fillLeft;
+        ctx.fill();
+        ctx.strokeStyle = pal.line;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(bx + dx, by + dy);
+        ctx.lineTo(bx + ix + dx, by - iy + dy);
+        ctx.lineTo(bx + ix + dx, by - iy + dy + h);
+        ctx.lineTo(bx + dx, by + dy + h);
+        ctx.closePath();
+        ctx.fillStyle = pal.fillRight;
+        ctx.fill();
+        ctx.strokeStyle = pal.line;
+        ctx.stroke();
+
+        for (let sy = 15; sy < h - 10; sy += 15) {
+          ctx.strokeStyle = pal.gridMajor;
+          ctx.beginPath();
+          ctx.moveTo(bx + 6, by + sy + 4);
+          ctx.lineTo(bx + dx - 6, by + dy + sy - 2);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(bx + 10, by + sy + 6, 1.35, 0, Math.PI * 2);
+          ctx.fillStyle = (sy % 45 === 0 || accentAmber) ? pal.amber : pal.blue;
+          ctx.fill();
+        }
+
+        if (label) {
+          ctx.font = '500 9.5px "JetBrains Mono", monospace';
+          ctx.fillStyle = pal.text;
+          if (dir === 1) {
+            ctx.save();
+            ctx.translate(bx + 4, by - 9);
+            ctx.scale(-1, 1);
+            ctx.textAlign = "right";
+            ctx.fillText(label, 0, 0);
+            ctx.restore();
+          } else {
+            ctx.fillText(label, bx + 2, by - 9);
+          }
+        }
+      };
+
+      const colX = Math.max(46, Math.min(92, wingW * 0.22));
+      ctx.strokeStyle = pal.gridMajor;
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      ctx.moveTo(colX - 18, cH * 0.25);
+      ctx.lineTo(colX + 220, cH * 0.25 - 102);
+      ctx.moveTo(colX - 18, cH * 0.6);
+      ctx.lineTo(colX + 240, cH * 0.6 + 112);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      drawBlock(colX + 6,  cH * 0.16, 52, 56, 114, dir === -1 ? "NODE-A1" : "NODE-B1", false);
+      drawBlock(colX + 44, cH * 0.44, 68, 70, 146, dir === -1 ? "RELAY-02" : "CORE-02", true);
+      drawBlock(colX + 8,  cH * 0.75, 50, 52, 92,  dir === -1 ? "CACHE-04" : "SYNC-04", false);
+
+      [[colX + 158, cH * 0.13], [colX + 178, cH * 0.42], [colX + 144, cH * 0.85]].forEach(([rx, ry]) => {
+        ctx.strokeStyle = pal.lineStrong;
+        ctx.beginPath();
+        ctx.arc(rx, ry, 7, 0, Math.PI * 2);
+        ctx.moveTo(rx - 12, ry); ctx.lineTo(rx + 12, ry);
+        ctx.moveTo(rx, ry - 12); ctx.lineTo(rx, ry + 12);
+        ctx.stroke();
+      });
+
+      ctx.restore();
+    });
+  }
+
+  function drawTopo(tSec, pal) {
+    const step = 44;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = pal.grid;
+    ctx.beginPath();
+    for (let x = 0; x <= cW; x += step) { ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, cH); }
+    for (let y = 0; y <= cH; y += step) { ctx.moveTo(0, y + 0.5); ctx.lineTo(cW, y + 0.5); }
+    ctx.stroke();
+
+    const wingW = Math.max(170, (cW - 1120) * 0.5);
+
+    const drawHill = (cx, cy, maxR, rings, seed, label) => {
+      const drift = Math.sin(tSec * 0.35 + seed) * 2.5;
+      for (let rIdx = 1; rIdx <= rings; rIdx++) {
+        const baseR = (maxR / rings) * rIdx + drift * (rIdx / rings);
+        const major = rIdx % 3 === 0;
+        ctx.beginPath();
+        const segs = 76;
+        for (let i = 0; i <= segs; i++) {
+          const a = (i / segs) * Math.PI * 2;
+          const wave =
+            Math.sin(a * 3 + seed) * 0.14 +
+            Math.cos(a * 5 - seed * 1.3) * 0.08 +
+            Math.sin(a * 2 + seed * 0.6) * 0.1;
+          const rad = baseR * (1 + wave);
+          const x = cx + Math.cos(a) * rad * 0.88;
+          const y = cy + Math.sin(a) * rad * 1.24;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = major ? pal.topoMajor : pal.topoLine;
+        ctx.lineWidth = major ? 1.25 : 0.85;
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = pal.topoMajor;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx - 6, cy); ctx.lineTo(cx + 6, cy);
+      ctx.moveTo(cx, cy - 6); ctx.lineTo(cx, cy + 6);
+      ctx.stroke();
+
+      ctx.font = '500 9.5px "JetBrains Mono", monospace';
+      ctx.fillStyle = pal.text;
+      ctx.fillText(label, cx + 10, cy + 3);
+    };
+
+    ctx.save();
+    ctx.translate(parallaxX, parallaxY);
+    const lx = Math.max(58, wingW * 0.42);
+    drawHill(lx, cH * 0.24, 175, 9, 1.1, "H 420m");
+    drawHill(lx + 36, cH * 0.74, 195, 10, 3.6, "H 580m");
+
+    const rx = cW - Math.max(58, wingW * 0.42);
+    drawHill(rx, cH * 0.28, 185, 9, 5.2, "H 490m");
+    drawHill(rx - 32, cH * 0.78, 170, 8, 7.5, "H 360m");
+    ctx.restore();
+
+    ctx.font = '500 9.5px "JetBrains Mono", monospace';
+    ctx.fillStyle = pal.text;
+    ctx.strokeStyle = pal.topoMajor;
+    ctx.lineWidth = 1;
+    for (let y = 64, deg = 15; y < cH - 36; y += 78, deg += 15) {
+      ctx.beginPath();
+      ctx.moveTo(8, y + 0.5); ctx.lineTo(20, y + 0.5);
+      ctx.moveTo(cW - 20, y + 0.5); ctx.lineTo(cW - 8, y + 0.5);
+      ctx.stroke();
+      ctx.fillText(`${deg}°N`, 25, y + 3);
+      ctx.fillText(`${deg}°E`, cW - 55, y + 3);
+    }
+  }
+
+  function drawSyntaxFlow(tSec, pal) {
+    const wingW = Math.max(180, (cW - 1120) * 0.5);
+    ctx.lineWidth = 1;
+
+    [24, 130, wingW - 18, cW - wingW + 18, cW - 130, cW - 24].forEach((gx) => {
+      if (gx < 10 || gx > cW - 10) return;
+      ctx.strokeStyle = pal.gridMajor;
+      ctx.beginPath();
+      ctx.moveTo(gx + 0.5, 0);
+      ctx.lineTo(gx + 0.5, cH);
+      ctx.stroke();
+    });
+
+    const rowH = 34;
+    const scrollOffset = (tSec * 12) % (SYNTAX_LINES.length * rowH);
+    ctx.font = '500 10.5px "JetBrains Mono", monospace';
+
+    const drawColumn = (startX, mirrorOffset) => {
+      for (let y = -rowH; y < cH + rowH; y += rowH) {
+        const virtualY = y + scrollOffset + mirrorOffset;
+        const idx = ((Math.floor(virtualY / rowH) % SYNTAX_LINES.length) + SYNTAX_LINES.length) % SYNTAX_LINES.length;
+        const line = SYNTAX_LINES[idx];
+        const parts = line.split("  ");
+        const addr = parts[0];
+        const code = parts[1] || "";
+
+        const py = y - (scrollOffset % rowH) + parallaxY * 0.5;
+        const isFocus = idx % 4 === 0;
+
+        ctx.fillStyle = isFocus ? pal.emerald : pal.emeraldSoft;
+        ctx.fillRect(startX - 10, py - 7, 3, 9);
+
+        ctx.fillStyle = isFocus ? pal.emerald : pal.text;
+        ctx.fillText(addr, startX, py);
+
+        ctx.fillStyle = pal.text;
+        ctx.fillText(code, startX + 66, py);
+      }
+    };
+
+    drawColumn(32 + parallaxX * 0.5, 0);
+    const rightX = Math.max(cW - wingW + 26, cW - 250);
+    drawColumn(rightX + parallaxX * 0.5, 170);
+  }
+
+  function renderBackdrop(tSec) {
+    ctx.fillStyle = getCanvasPalette().bg;
+    ctx.fillRect(0, 0, cW, cH);
+
+    if (prefs.bg === "clean") return;
+    const pal = getCanvasPalette();
+    if (prefs.bg === "station") drawStation(tSec, pal);
+    else if (prefs.bg === "topo") drawTopo(tSec, pal);
+    else if (prefs.bg === "syntax") drawSyntaxFlow(tSec, pal);
+  }
+
+  function syncCanvasLoop() {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    const animate = prefs.anim && !mqReduced.matches && prefs.bg !== "clean";
+    if (!animate) {
+      parallaxX = 0;
+      parallaxY = 0;
+      renderBackdrop(0);
+      return;
+    }
+    const tick = (now) => {
+      parallaxX += (mouseTargetX - parallaxX) * 0.04;
+      parallaxY += (mouseTargetY - parallaxY) * 0.04;
+      renderBackdrop((now - bootTime) / 1000);
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cW = window.innerWidth;
+    cH = window.innerHeight;
+    canvas.width = Math.floor(cW * dpr);
+    canvas.height = Math.floor(cH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    renderBackdrop(bootTime ? (performance.now() - bootTime) / 1000 : 0);
+  }
+
+  /* ========================================================================
+     5. Syntax Highlighting & Auto-Detection of Source Language
+     ======================================================================== */
+  const KW_SET = new Set([
+    "def","class","return","if","elif","else","for","while","in","not","and","or","import","from","as","try","except","finally","with","pass","break","continue","lambda","yield","True","False","None",
+    "function","const","let","var","async","await","export","default","new","this","typeof","switch","case","throw","catch","true","false","null","undefined",
+    "public","private","protected","static","void","final","extends","implements","package","interface","enum","struct","impl","fn","pub","mut","match","use","mod","crate","where","loop","move",
+    "func","go","defer","chan","select","range","type","map","using","namespace","override","virtual","readonly","fun","val","object","when","repeat","until","guard","echo","end","do","puts","each","times","include","sizeof","typedef"
+  ]);
+
+  const TYPE_SET = new Set([
+    "int","long","short","byte","float","double","bool","boolean","char","string","String","number","any","void","i32","i64","u32","u64","usize","f64","Int","Double","Bool","Vec","Option","Result","Record","System","Console","Math","Object","Array","Promise","List","Map","Set","Order"
+  ]);
+
+  function highlightCode(raw) {
+    if (!raw) return "";
+    const tokenRe = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/|#[^\n]*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)|\b(\d+(?:\.\d+)?)\b|\b([A-Za-z_][A-Za-z0-9_]*)\b/g;
+    let out = "";
+    let last = 0;
+    let m;
+    while ((m = tokenRe.exec(raw)) !== null) {
+      if (m.index > last) out += escapeHtml(raw.slice(last, m.index));
+      if (m[1] !== undefined) out += '<span class="tok-com">' + escapeHtml(m[1]) + "</span>";
+      else if (m[2] !== undefined) out += '<span class="tok-str">' + escapeHtml(m[2]) + "</span>";
+      else if (m[3] !== undefined) out += '<span class="tok-num">' + escapeHtml(m[3]) + "</span>";
+      else if (m[4] !== undefined) {
+        const w = m[4];
+        if (KW_SET.has(w)) out += '<span class="tok-kw">' + escapeHtml(w) + "</span>";
+        else if (TYPE_SET.has(w)) out += '<span class="tok-type">' + escapeHtml(w) + "</span>";
+        else out += escapeHtml(w);
+      }
+      last = tokenRe.lastIndex;
+    }
+    if (last < raw.length) out += escapeHtml(raw.slice(last));
+    return out;
+  }
+
+  function detectSourceLang(code) {
+    const s = (code || "").trim();
+    if (s.length < 5) return null;
+    if (/<\?php\b/.test(s) || (/\$[a-zA-Z_]\w*\s*=/.test(s) && /\becho\b/.test(s))) return "PHP";
+    if (/\bfn\s+main\s*\(/.test(s) || /\blet\s+mut\b/.test(s) || /println!\s*\(/.test(s)) return "Rust";
+    if (/\bpackage\s+main\b/.test(s) || /\bfmt\.Print/.test(s) || (/\bfunc\s+\w+\s*\([^)]*\)\s*[^{]*\{/.test(s) && !/->/.test(s))) return "Go";
+    if (/#include\s*<iostream>/.test(s) || /\bstd::/.test(s)) return "C++";
+    if (/#include\s*<stdio\.h>/.test(s) || /\bprintf\s*\(/.test(s)) return "C";
+    if (/\busing\s+System;/.test(s) || /\bConsole\.WriteLine\b/.test(s)) return "C#";
+    if (/\bpublic\s+class\b/.test(s) || /\bSystem\.out\.println\b/.test(s)) return "Java";
+    if (/\bfun\s+main\s*\(/.test(s) || (/\bval\s+\w+/.test(s) && /\bprintln\s*\(/.test(s))) return "Kotlin";
+    if (/\bimport\s+Foundation\b/.test(s) || /\bfunc\s+\w+\s*\([^)]*\)\s*->/.test(s)) return "Swift";
+    if (/\bdef\s+\w+\s*\([^)]*\)\s*:/.test(s) || /\belif\b/.test(s) || /\bfor\s+\w+\s+in\s+range\(/.test(s) || (/\bprint\s*\(/.test(s) && !/;/.test(s))) return "Python";
+    if (/\binterface\s+\w+\s*\{/.test(s) || /:\s*(string|number|boolean|Record<)\b/.test(s)) return "TypeScript";
+    if (/\bconsole\.log\s*\(/.test(s) || /\b(const|let)\s+\w+\s*=/.test(s) || /=>\s*\{/.test(s)) return "JavaScript";
+    if (/\bputs\s+/.test(s) && /\bend\b/.test(s)) return "Ruby";
+    return null;
+  }
+
+  function stripCodeFences(text) {
+    return (text || "")
+      .replace(/^\s*\x60{3}[a-zA-Z0-9+#-]*\r?\n?/, "")
+      .replace(/\r?\n?\x60{3}\s*$/, "");
+  }
+
+  /* ========================================================================
+     6. Clipboard Utility (execCommand('copy') primary for iFrame compatibility)
+     ======================================================================== */
+  function copyText(text, successMsg) {
+    if (!text) {
+      toast(t("toastCopyEmpty"));
+      return false;
+    }
+    let ok = false;
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch (e) {}
+
+    if (ok) {
+      if (successMsg) toast(successMsg);
+      return true;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => { if (successMsg) toast(successMsg); })
+        .catch(() => toast(t("toastCopyFail")));
+      return true;
+    }
+    toast(t("toastCopyFail"));
+    return false;
+  }
+
+  /* ========================================================================
+     7. History & Paste Buffer Logging (Bound to Active Local Profile)
+     ======================================================================== */
+  function logHistory({ src, out, srcLang, target, durationSec, demo }) {
+    const prof = getActiveProfile();
+    const rec = {
+      id: uid("h"),
+      ts: Date.now(),
+      title: extractSnippetTitle(src, `${srcLang || "Code"} -> ${target}`),
+      srcLang: srcLang || null,
+      target,
+      src,
+      out,
+      durationSec: durationSec || "0.1",
+      demo: !!demo,
+      pinned: false,
+      feedback: null
+    };
+    prof.history.unshift(rec);
+    if (prof.history.length > MAX_HISTORY) prof.history.length = MAX_HISTORY;
+    currentHistoryId = rec.id;
+    saveProfiles();
+    updateVaultBadges();
+    renderVault();
+    return rec;
+  }
+
+  function logBuffer({ text, source, lang }) {
+    const clean = (text || "").trim();
+    if (!clean) return;
+    const prof = getActiveProfile();
+    const head = prof.buffer[0];
+    if (head && head.text === text && head.source === source) {
+      head.ts = Date.now();
+      saveProfiles();
+      renderVault();
+      return;
+    }
+    const item = {
+      id: uid("b"),
+      ts: Date.now(),
+      source: source || "manual",
+      lang: lang || detectSourceLang(text) || null,
+      title: extractSnippetTitle(text, "Snippet"),
+      text,
+      pinned: false
+    };
+    prof.buffer.unshift(item);
+    if (prof.buffer.length > MAX_BUFFER) prof.buffer.length = MAX_BUFFER;
+    saveProfiles();
+    updateVaultBadges();
+    renderVault();
+  }
+
+  function loadThreeSampleHistoryEntries() {
+    const now = Date.now();
+    const prof = getActiveProfile();
+    const samples = [
+      {
+        id: uid("h"),
+        ts: now - 1000 * 60 * 35,
+        title: "def fib(n):",
+        srcLang: "Python",
+        target: "Go",
+        src: SCENARIOS[0].code,
+        out: DEMO_TRANSLATIONS.fib.Go,
+        durationSec: "1.4",
+        demo: false,
+        pinned: true,
+        feedback: "ok"
+      },
+      {
+        id: uid("h"),
+        ts: now - 1000 * 60 * 18,
+        title: "for n in range(1, 21):",
+        srcLang: "Python",
+        target: "Rust",
+        src: SCENARIOS[4].code,
+        out: DEMO_TRANSLATIONS.fizzbuzz.Rust,
+        durationSec: "1.8",
+        demo: false,
+        pinned: false,
+        feedback: "ok"
+      },
+      {
+        id: uid("h"),
+        ts: now - 1000 * 60 * 6,
+        title: "class Order:",
+        srcLang: "Python",
+        target: "TypeScript",
+        src: SCENARIOS[6].code,
+        out: DEMO_TRANSLATIONS.orderClass.TypeScript,
+        durationSec: "1.6",
+        demo: false,
+        pinned: false,
+        feedback: null
+      }
+    ];
+    prof.history = [...samples, ...prof.history].slice(0, MAX_HISTORY);
+    saveProfiles();
+    updateVaultBadges();
+    renderVault();
+    toast(t("toastSamplesLoaded"));
+  }
+
+  /* ========================================================================
+     8. Translator Editor Logic & /api/translate Integration
+     ======================================================================== */
+  function renderGutter(el, text) {
+    const n = Math.max(1, text ? text.split("\n").length : 1);
+    const nums = [];
+    for (let i = 1; i <= n; i++) nums.push(i);
+    el.textContent = nums.join("\n");
+  }
+
+  function updateSourceMeta() {
+    const val = $("src").value;
+    const lines = countLines(val);
+    const len = val.length;
+    const info = $("srcInfo");
+
+    info.textContent = `${formatLines(lines)} · ${len} / ${MAX_CODE}${prefs.ui === "en" ? " chars" : " симв."}`;
+    info.classList.toggle("char-warn", len > WARN_CODE && len <= MAX_CODE);
+    info.classList.toggle("char-over", len > MAX_CODE);
+
+    renderGutter($("gutterSrc"), val);
+
+    detectedSrcLang = detectSourceLang(val);
+    if (detectedSrcLang && LANG_META[detectedSrcLang]) {
+      $("srcDot").style.setProperty("--dot", LANG_META[detectedSrcLang].color);
+      $("srcTabLabel").textContent = detectedSrcLang + t("autoSuffix");
+    } else {
+      $("srcDot").style.setProperty("--dot", "#768390");
+      $("srcTabLabel").textContent = t("sourceCode");
     }
 
-    function renderAllQuestions() {
-        questionsContainer.innerHTML = '';
-        questions.forEach((q, idx) => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.setAttribute('data-qidx', idx);
+    if (prefs.remember) store.set(DRAFT_KEY, val);
+  }
 
-            const questionText = document.createElement('div');
-            questionText.className = 'question-text';
-            questionText.innerText = `${idx+1}. ${q.text}`;
-            card.appendChild(questionText);
+  function setOutput(rawText) {
+    rawOutputText = rawText || "";
+    $("out").innerHTML = highlightCode(rawOutputText);
+    renderGutter($("gutterOut"), rawOutputText);
+    const lines = countLines(rawOutputText);
+    $("outInfo").textContent = `${formatLines(lines)} · ${rawOutputText.length}${prefs.ui === "en" ? " chars" : " симв."}`;
+  }
 
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'options';
-            card.appendChild(optionsDiv);
+  function getSelectedLang() {
+    const r = document.querySelector('input[name="lang"]:checked');
+    return r ? r.value : "Python";
+  }
 
-            const feedbackDiv = document.createElement('div');
-            feedbackDiv.className = 'feedback';
-            card.appendChild(feedbackDiv);
+  function updateTargetHeader() {
+    const lang = getSelectedLang();
+    const meta = LANG_META[lang] || { ext: "txt", color: "#768390" };
+    $("outFilename").textContent = "translated." + meta.ext;
+    $("outDot").style.setProperty("--dot", meta.color);
+  }
 
-            questionsContainer.appendChild(card);
+  function showAlert(msg, showDemoBtn) {
+    $("alertText").textContent = msg;
+    $("alertBanner").classList.toggle("is-demo", !!showDemoBtn);
+    $("btnDemoRun").hidden = !showDemoBtn;
+    $("alertBanner").hidden = false;
+  }
 
-            q.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                if (userAnswers[idx] === opt) {
-                    if (opt === q.correct) btn.classList.add('correct-glow');
-                    else btn.classList.add('wrong-glow');
-                }
-                btn.addEventListener('click', () => {
-                    userAnswers[idx] = opt;
-                    renderSingleQuestion(idx);
-                    updateScore();
-                });
-                optionsDiv.appendChild(btn);
-            });
+  function hideAlert() {
+    $("alertBanner").hidden = true;
+    $("alertText").textContent = "";
+    $("btnDemoRun").hidden = true;
+  }
 
-            if (userAnswers[idx] !== null) {
-                const isCorrect = (userAnswers[idx] === q.correct);
-                if (isCorrect) {
-                    feedbackDiv.innerHTML = `✅ Верно! ${q.explanation}`;
-                    feedbackDiv.classList.add('correct-fb');
-                } else {
-                    feedbackDiv.innerHTML = `❌ Неверно. Правильный ответ: "${q.correct}".<br> ${q.explanation}`;
-                    feedbackDiv.classList.add('wrong-fb');
-                }
-            } else {
-                feedbackDiv.innerHTML = '👆 Нажми на вариант, чтобы проверить';
+  function showFeedback(status) {
+    $("feedbackGroup").hidden = false;
+    $("fbOk").classList.toggle("active-ok", status === "ok");
+    $("fbErr").classList.toggle("active-err", status === "err");
+  }
+
+  function hideFeedback() {
+    $("feedbackGroup").hidden = true;
+    $("fbOk").classList.remove("active-ok");
+    $("fbErr").classList.remove("active-err");
+  }
+
+  function setFeedback(status) {
+    showFeedback(status);
+    if (currentHistoryId) {
+      const prof = getActiveProfile();
+      const rec = prof.history.find((x) => x.id === currentHistoryId);
+      if (rec) {
+        rec.feedback = status;
+        saveProfiles();
+        renderVault();
+      }
+    }
+    toast(t("toastFb"));
+  }
+
+  async function runTranslate() {
+    if ($("btnGo").disabled) return;
+    hideAlert();
+
+    const code = $("src").value;
+    if (!code.trim()) {
+      showAlert(t("errEmpty"), false);
+      $("src").focus();
+      return;
+    }
+    if (code.length > MAX_CODE) {
+      showAlert(t("errTooLong"), false);
+      return;
+    }
+
+    const target = getSelectedLang();
+    currentHistoryId = null;
+    updateTargetHeader();
+    setOutput("");
+    hideFeedback();
+    $("durationBadge").hidden = true;
+
+    $("btnGo").disabled = true;
+    $("goLabel").textContent = t("translating");
+    $("btnStop").hidden = false;
+    $("paneOut").classList.add("busy");
+    $("outStatus").textContent = t("statusBusy");
+    $("outStatus").className = "status-busy";
+
+    const t0 = performance.now();
+    activeAbort = new AbortController();
+
+    try {
+      const resp = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, target }),
+        signal: activeAbort.signal
+      });
+
+      const isJson = (resp.headers.get("content-type") || "").includes("application/json");
+      const data = isJson ? await resp.json().catch(() => ({})) : {};
+
+      if (!isJson && (resp.status === 404 || resp.status === 405)) {
+        $("outStatus").textContent = "";
+        showAlert(t("errOffline"), true);
+        return;
+      }
+      if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
+
+      const translated = stripCodeFences(data.text || "");
+      const secs = ((performance.now() - t0) / 1000).toFixed(1);
+      setOutput(translated);
+      $("outStatus").textContent = t("statusDone");
+      $("outStatus").className = "status-ok";
+      $("durationBadge").textContent = `${secs} ${t("unitSec")}`;
+      $("durationBadge").hidden = false;
+
+      logHistory({
+        src: code,
+        out: translated,
+        srcLang: detectedSrcLang,
+        target,
+        durationSec: secs,
+        demo: false
+      });
+      showFeedback(null);
+    } catch (err) {
+      $("outStatus").textContent = "";
+      if (err && err.name === "AbortError") {
+        $("outStatus").textContent = t("statusStopped");
+        $("outStatus").className = "";
+      } else {
+        const msg = (err && err.message) || "";
+        const isNet = err instanceof TypeError || /Failed to fetch|NetworkError|Load failed/i.test(msg);
+        if (isNet) showAlert(t("errOffline"), true);
+        else showAlert((prefs.ui === "en" ? "Translation failed: " : "Не удалось перевести: ") + (msg || "error"), false);
+      }
+    } finally {
+      $("btnGo").disabled = false;
+      $("goLabel").textContent = t("translate");
+      $("btnStop").hidden = true;
+      $("paneOut").classList.remove("busy");
+      activeAbort = null;
+    }
+  }
+
+  function runDemoTranslate() {
+    const target = getSelectedLang();
+    updateTargetHeader();
+    hideAlert();
+
+    let srcCode = $("src").value;
+    if (!srcCode.trim()) {
+      $("src").value = SCENARIOS[0].code;
+      updateSourceMeta();
+      srcCode = $("src").value;
+    }
+
+    let key = "fib";
+    if (/FizzBuzz/.test(srcCode)) key = "fizzbuzz";
+    else if (/class\s+Order/.test(srcCode)) key = "orderClass";
+
+    const pool = DEMO_TRANSLATIONS[key] || DEMO_TRANSLATIONS.fib;
+    const body = pool[target] || DEMO_TRANSLATIONS.fib[target] || DEMO_TRANSLATIONS.fib.Python;
+    const cmt = (target === "Python" || target === "Ruby") ? "# " : "// ";
+    const header = cmt + (prefs.ui === "en"
+      ? `[Demo preview] ${target} output (deploy to Vercel for live YandexGPT)`
+      : `[Локальный демо-перевод] Пример результата на ${target}`) + "\n";
+
+    const result = target === "PHP"
+      ? "<?php\n" + header + body.replace(/^<\?php\n/, "")
+      : header + body;
+
+    setOutput(result);
+    $("outStatus").textContent = t("statusDemo");
+    $("outStatus").className = "status-ok";
+    $("durationBadge").textContent = `0.1 ${t("unitSec")}`;
+    $("durationBadge").hidden = false;
+
+    logHistory({
+      src: srcCode,
+      out: result,
+      srcLang: detectedSrcLang || "Python",
+      target,
+      durationSec: "0.1",
+      demo: true
+    });
+    showFeedback(null);
+    toast(t("toastDemo"));
+  }
+
+  /* ========================================================================
+     9. Render Vault ("Буфер и история") & Profiles
+     ======================================================================== */
+  function updateVaultBadges() {
+    const prof = getActiveProfile();
+    $("subHistCount").textContent = String(prof.history.length);
+    $("subBufCount").textContent = String(prof.buffer.length);
+    $("navTotalBadge").textContent = String(prof.history.length + prof.buffer.length);
+  }
+
+  function renderProfileSelect() {
+    const sel = $("profileSelect");
+    sel.innerHTML = "";
+    profiles.list.forEach((p) => {
+      const opt = document.createElement("option");
+      opt.value = p.id;
+      opt.textContent = p.isDefault && p.name === "Локальный" ? t("defaultProfileName") : p.name;
+      sel.appendChild(opt);
+    });
+    sel.value = profiles.activeId;
+  }
+
+  function populateLangFilter() {
+    const sel = $("vaultLangFilter");
+    const prev = sel.value || "ALL";
+    sel.innerHTML = `<option value="ALL">${escapeHtml(t("allLangs"))}</option>`;
+    Object.keys(LANG_META).forEach((l) => {
+      const opt = document.createElement("option");
+      opt.value = l;
+      opt.textContent = l;
+      sel.appendChild(opt);
+    });
+    sel.value = prev;
+  }
+
+  function renderVault() {
+    updateVaultBadges();
+    const list = $("vaultList");
+    list.innerHTML = "";
+    const prof = getActiveProfile();
+    const q = ($("vaultSearch").value || "").trim().toLowerCase();
+    const langF = $("vaultLangFilter").value || "ALL";
+
+    if (vaultSubMode === "history") {
+      if (!prof.history.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.innerHTML = `<p>${escapeHtml(t("emptyHistText"))}</p>`;
+        const btn = document.createElement("button");
+        btn.className = "btn-sec primary";
+        btn.textContent = t("load3Samples");
+        btn.addEventListener("click", loadThreeSampleHistoryEntries);
+        empty.appendChild(btn);
+        list.appendChild(empty);
+        return;
+      }
+
+      const items = prof.history.filter((h) => {
+        if (pinnedOnly && !h.pinned) return false;
+        if (langF !== "ALL" && h.target !== langF && h.srcLang !== langF) return false;
+        if (q) {
+          const hay = `${h.title}\n${h.src}\n${h.out}\n${h.target}\n${h.srcLang || ""}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (!items.length) {
+        list.innerHTML = `<div class="empty-state"><p>${escapeHtml(t("noMatchText"))}</p></div>`;
+        return;
+      }
+
+      items.forEach((h) => {
+        const card = document.createElement("article");
+        card.className = "record-card" + (h.pinned ? " pinned" : "");
+        const srcColor = (h.srcLang && LANG_META[h.srcLang]) ? LANG_META[h.srcLang].color : "#768390";
+        const tgtColor = (LANG_META[h.target] && LANG_META[h.target].color) || "#2f81f7";
+        const isLong = countLines(h.src) > 6 || countLines(h.out) > 6;
+
+        let fbTag = "";
+        if (h.feedback === "ok") fbTag = `<span class="tag-chip ok">${escapeHtml(t("fbOk"))}</span>`;
+        else if (h.feedback === "err") fbTag = `<span class="tag-chip err">${escapeHtml(t("fbErr"))}</span>`;
+        const demoTag = h.demo ? `<span class="tag-chip warn">demo</span>` : "";
+
+        card.innerHTML = `
+          <div class="rec-head">
+            <div class="rec-title-wrap">
+              <span class="lang-route">
+                <i class="lang-dot" style="--dot:${srcColor}"></i>${escapeHtml(h.srcLang || t("autoSrc"))}
+                <span style="color:var(--muted)">-&gt;</span>
+                <i class="lang-dot" style="--dot:${tgtColor}"></i>${escapeHtml(h.target)}
+              </span>
+              <span class="rec-title" title="${escapeHtml(h.title)}">${escapeHtml(h.title)}</span>
+            </div>
+            <div class="rec-meta">
+              ${demoTag}${fbTag}
+              <span>${escapeHtml(formatTime(h.ts))}</span>
+              <span>· ${escapeHtml(formatLines(countLines(h.out)))}</span>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="code-preview">
+              <div class="code-preview-head">
+                <span>${escapeHtml(t("wasLabel"))}</span>
+                <span>${escapeHtml(h.srcLang || t("autoSrc"))}</span>
+              </div>
+              <pre class="mini-pre">${escapeHtml(h.src)}</pre>
+            </div>
+            <div class="code-preview">
+              <div class="code-preview-head">
+                <span>${escapeHtml(t("becameLabel"))}</span>
+                <span>${escapeHtml(h.target)}</span>
+              </div>
+              <pre class="mini-pre">${highlightCode(h.out)}</pre>
+            </div>
+          </div>
+
+          <div class="rec-actions">
+            <button class="btn-xs accent" data-act="open">${escapeHtml(t("openInEditor"))}</button>
+            <button class="btn-xs" data-act="copysrc">${escapeHtml(t("copySource"))}</button>
+            <button class="btn-xs" data-act="copyout">${escapeHtml(t("copyResult"))}</button>
+            <button class="btn-xs ${h.pinned ? "pinned" : ""}" data-act="pin">${escapeHtml(h.pinned ? t("unpinBtn") : t("pinBtn"))}</button>
+            ${isLong ? `<button class="btn-xs" data-act="expand">${escapeHtml(t("expandBtn"))}</button>` : ""}
+            <button class="btn-xs danger" data-act="del">${escapeHtml(t("deleteBtn"))}</button>
+          </div>
+        `;
+
+        card.addEventListener("click", (e) => {
+          const btn = e.target.closest("button[data-act]");
+          if (!btn) return;
+          const act = btn.dataset.act;
+          if (act === "open") {
+            $("src").value = h.src;
+            const radio = document.querySelector(`input[name="lang"][value="${CSS.escape(h.target)}"]`);
+            if (radio) {
+              radio.checked = true;
+              prefs.lang = h.target;
+              savePrefs();
             }
+            currentHistoryId = h.id;
+            updateTargetHeader();
+            updateSourceMeta();
+            setOutput(h.out);
+            $("outStatus").textContent = h.demo ? t("statusDemo") : t("statusDone");
+            $("outStatus").className = "status-ok";
+            $("durationBadge").textContent = `${h.durationSec || "0.1"} ${t("unitSec")}`;
+            $("durationBadge").hidden = false;
+            showFeedback(h.feedback);
+            hideAlert();
+            switchMainTab("translator");
+            toast(t("toastRestored"));
+          } else if (act === "copysrc") {
+            copyText(h.src, t("toastCopiedSrc"));
+          } else if (act === "copyout") {
+            if (copyText(h.out, t("toastCopiedOut"))) {
+              logBuffer({ text: h.out, source: "copy", lang: h.target });
+            }
+          } else if (act === "pin") {
+            h.pinned = !h.pinned;
+            saveProfiles();
+            renderVault();
+          } else if (act === "expand") {
+            const exp = card.classList.toggle("expanded");
+            btn.textContent = exp ? t("collapseBtn") : t("expandBtn");
+          } else if (act === "del") {
+            prof.history = prof.history.filter((x) => x.id !== h.id);
+            saveProfiles();
+            renderVault();
+          }
         });
-        updateScore();
+
+        list.appendChild(card);
+      });
+    } else {
+      if (!prof.buffer.length) {
+        list.innerHTML = `<div class="empty-state"><p>${escapeHtml(t("emptyBufText"))}</p></div>`;
+        return;
+      }
+
+      const items = prof.buffer.filter((b) => {
+        if (pinnedOnly && !b.pinned) return false;
+        if (langF !== "ALL" && b.lang !== langF) return false;
+        if (q) {
+          const hay = `${b.title}\n${b.text}\n${b.lang || ""}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (!items.length) {
+        list.innerHTML = `<div class="empty-state"><p>${escapeHtml(t("noMatchText"))}</p></div>`;
+        return;
+      }
+
+      items.forEach((b) => {
+        const card = document.createElement("article");
+        card.className = "record-card" + (b.pinned ? " pinned" : "");
+        const dotColor = (b.lang && LANG_META[b.lang]) ? LANG_META[b.lang].color : "#768390";
+        const isLong = countLines(b.text) > 7;
+
+        const srcLabel = b.source === "paste" ? t("srcPaste")
+          : b.source === "copy" ? t("srcCopy")
+          : t("srcManual");
+        const srcClass = b.source === "paste" ? "accent" : b.source === "copy" ? "ok" : "";
+
+        card.innerHTML = `
+          <div class="rec-head">
+            <div class="rec-title-wrap">
+              <span class="lang-route">
+                <i class="lang-dot" style="--dot:${dotColor}"></i>${escapeHtml(b.lang || t("plainCode"))}
+              </span>
+              <span class="tag-chip ${srcClass}">${escapeHtml(srcLabel)}</span>
+              <span class="rec-title" title="${escapeHtml(b.title)}">${escapeHtml(b.title)}</span>
+            </div>
+            <div class="rec-meta">
+              <span>${escapeHtml(formatTime(b.ts))}</span>
+              <span>· ${escapeHtml(formatLines(countLines(b.text)))}</span>
+              <span>· ${b.text.length} ch</span>
+            </div>
+          </div>
+
+          <div class="code-preview">
+            <div class="code-preview-head">
+              <span>${escapeHtml(t("snippetLabel"))}</span>
+              <span>${escapeHtml(b.lang || t("plainCode"))}</span>
+            </div>
+            <pre class="mini-pre">${highlightCode(b.text)}</pre>
+          </div>
+
+          <div class="rec-actions">
+            <button class="btn-xs accent" data-bact="editor">${escapeHtml(t("toEditor"))}</button>
+            <button class="btn-xs" data-bact="copy">${escapeHtml(t("copy"))}</button>
+            <button class="btn-xs ${b.pinned ? "pinned" : ""}" data-bact="pin">${escapeHtml(b.pinned ? t("unpinBtn") : t("pinBtn"))}</button>
+            ${isLong ? `<button class="btn-xs" data-bact="expand">${escapeHtml(t("expandBtn"))}</button>` : ""}
+            <button class="btn-xs danger" data-bact="del">${escapeHtml(t("deleteBtn"))}</button>
+          </div>
+        `;
+
+        card.addEventListener("click", (e) => {
+          const btn = e.target.closest("button[data-bact]");
+          if (!btn) return;
+          const act = btn.dataset.bact;
+          if (act === "editor") {
+            $("src").value = b.text;
+            updateSourceMeta();
+            hideAlert();
+            switchMainTab("translator");
+            toast(t("toastRestored"));
+          } else if (act === "copy") {
+            copyText(b.text, t("toastCopiedBuf"));
+          } else if (act === "pin") {
+            b.pinned = !b.pinned;
+            saveProfiles();
+            renderVault();
+          } else if (act === "expand") {
+            const exp = card.classList.toggle("expanded");
+            btn.textContent = exp ? t("collapseBtn") : t("expandBtn");
+          } else if (act === "del") {
+            prof.buffer = prof.buffer.filter((x) => x.id !== b.id);
+            saveProfiles();
+            renderVault();
+          }
+        });
+
+        list.appendChild(card);
+      });
     }
+  }
 
-    function resetQuiz() {
-        userAnswers = new Array(questions.length).fill(null);
-        renderAllQuestions();
-        updateScore();
+  /* ========================================================================
+     10. Scenarios, Estimator, Navigation & i18n Application
+     ======================================================================== */
+  function loadScenario(id) {
+    const sc = SCENARIOS.find((s) => s.id === id);
+    if (!sc) return;
+    $("src").value = sc.code;
+    updateSourceMeta();
+    hideAlert();
+    toast(t("toastPreset"));
+  }
+
+  function renderScenarios() {
+    const menu = $("examplesMenu");
+    const grid = $("benchGrid");
+    menu.innerHTML = "";
+    grid.innerHTML = "";
+    const isEn = prefs.ui === "en";
+
+    SCENARIOS.forEach((sc, idx) => {
+      const title = isEn ? sc.enTitle : sc.ruTitle;
+      const desc = isEn ? sc.enDesc : sc.ruDesc;
+
+      const item = document.createElement("button");
+      item.className = "pop-item";
+      item.setAttribute("role", "menuitem");
+      item.innerHTML = `<strong>0${idx + 1} · ${escapeHtml(title)}</strong><small>${escapeHtml(desc)}</small>`;
+      item.addEventListener("click", () => {
+        loadScenario(sc.id);
+        $("examplesWrap").classList.remove("open");
+        $("btnExamples").setAttribute("aria-expanded", "false");
+      });
+      menu.appendChild(item);
+
+      const card = document.createElement("button");
+      card.className = "bench-card";
+      card.innerHTML = `
+        <div class="bench-top">
+          <span class="bench-idx">0${idx + 1}</span>
+          <span class="bench-open">${escapeHtml(t("openLabel"))} -&gt;</span>
+        </div>
+        <strong>${escapeHtml(title)}</strong>
+        <span class="desc">${escapeHtml(desc)}</span>
+      `;
+      card.addEventListener("click", () => {
+        loadScenario(sc.id);
+        setOutput("");
+        $("outStatus").textContent = "";
+        $("durationBadge").hidden = true;
+        hideFeedback();
+        switchMainTab("translator");
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function updateEstimator() {
+    const lines = parseFloat($("estLines").value);
+    const rate = parseFloat($("estRate").value);
+    $("estLinesVal").textContent = `${formatNum(lines)} ${t("unitLines")}`;
+    $("estRateVal").textContent = `${formatNum(rate)} ${t("unitRate")}`;
+
+    const manualHours = lines / 60;
+    const savedHours = Math.max(0, manualHours - manualHours / 2.8);
+    const savedRub = savedHours * rate;
+
+    $("estTimeVal").textContent = `~${savedHours.toFixed(1)} ${t("unitHours")}`;
+    $("estMoneyVal").textContent = `~${formatNum(savedRub)} ₽`;
+  }
+
+  function switchMainTab(name) {
+    document.querySelectorAll(".tab-btn").forEach((b) => {
+      const active = b.dataset.tab === name;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    $("viewTranslator").classList.toggle("active", name === "translator");
+    $("viewVault").classList.toggle("active", name === "vault");
+    $("viewAbout").classList.toggle("active", name === "about");
+  }
+
+  function applyTheme() {
+    const eff = prefs.theme === "auto" ? (mqDark.matches ? "dark" : "light") : prefs.theme;
+    document.documentElement.setAttribute("data-theme", eff);
+    $("themeIcon").innerHTML = eff === "dark"
+      ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>'
+      : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    renderBackdrop(bootTime ? (performance.now() - bootTime) / 1000 : 0);
+  }
+
+  function applyBackdropUI() {
+    const mapKey = {
+      station: "bgStation",
+      topo: "bgTopo",
+      syntax: "bgSyntax",
+      clean: "bgClean"
+    };
+    const dotColors = {
+      station: "#2f81f7",
+      topo: "#38a3c7",
+      syntax: "#3fb950",
+      clean: "#768390"
+    };
+    $("hdrBgName").textContent = t(mapKey[prefs.bg] || "bgStation");
+    $("bgIndicator").style.background = dotColors[prefs.bg] || "#2f81f7";
+
+    $("bgMenu").querySelectorAll("[data-bg]").forEach((b) => {
+      b.classList.toggle("active", b.dataset.bg === prefs.bg);
+    });
+    $("bgOpts").querySelectorAll("button").forEach((b) => {
+      b.classList.toggle("active", b.dataset.v === prefs.bg);
+    });
+    syncCanvasLoop();
+  }
+
+  function applyLanguage() {
+    document.documentElement.lang = prefs.ui;
+    document.title = t("pageTitle");
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      el.textContent = t(el.dataset.i18n);
+    });
+
+    $("src").placeholder = t("srcPlaceholder");
+    $("out").setAttribute("data-ph", t("outPlaceholder"));
+    $("vaultSearch").placeholder = t("searchPh");
+    $("chatInput").placeholder = t("chatPh");
+
+    renderScenarios();
+    renderProfileSelect();
+    populateLangFilter();
+    updateSourceMeta();
+    setOutput(rawOutputText);
+    updateEstimator();
+    applyBackdropUI();
+    renderVault();
+
+    if (!$("chatMessages").children.length) {
+      addChatMsg("bot", t("chatWelcome"));
+    } else if ($("chatMessages").children.length === 1 && $("chatMessages").firstChild.dataset.welcome === "1") {
+      $("chatMessages").firstChild.textContent = t("chatWelcome");
     }
+  }
 
-    renderAllQuestions();
+  function applyAllPrefs() {
+    applyTheme();
+    document.documentElement.style.setProperty("--fs", prefs.font + "px");
+    document.body.classList.toggle("nowrap", !prefs.wrap);
+    document.body.classList.toggle("no-anim", !prefs.anim);
 
-    const resetBtn = document.getElementById('resetQuizBtn');
-    if (resetBtn) resetBtn.addEventListener('click', resetQuiz);
+    $("themeOpts").querySelectorAll("button").forEach((b) => b.classList.toggle("active", b.dataset.v === prefs.theme));
+    $("uiLangOpts").querySelectorAll("button").forEach((b) => b.classList.toggle("active", b.dataset.v === prefs.ui));
+    $("fontSizeRange").value = prefs.font;
+    $("fontSizeVal").textContent = prefs.font + " px";
+    $("setWrap").checked = prefs.wrap;
+    $("setAnim").checked = prefs.anim;
+    $("setRemember").checked = prefs.remember;
+
+    const r = document.querySelector(`input[name="lang"][value="${CSS.escape(prefs.lang)}"]`);
+    if (r) r.checked = true;
+    updateTargetHeader();
+    applyLanguage();
+  }
+
+  /* ========================================================================
+     11. Modals & Drawers Helpers
+     ======================================================================== */
+  function openSettings(show) {
+    $("settingsDrawer").classList.toggle("open", show);
+    $("overlay").classList.toggle("open", show);
+    $("settingsDrawer").setAttribute("aria-hidden", show ? "false" : "true");
+  }
+
+  function openInputModal(title, desc, initialVal, cb) {
+    $("inputModalTitle").textContent = title;
+    $("inputModalDesc").textContent = desc;
+    $("inputModalField").value = initialVal || "";
+    inputModalCallback = cb;
+    $("inputModal").hidden = false;
+    setTimeout(() => {
+      $("inputModalField").focus();
+      $("inputModalField").select();
+    }, 30);
+  }
+
+  function closeInputModal() {
+    $("inputModal").hidden = true;
+    inputModalCallback = null;
+  }
+
+  function openConfirm(title, body, cb) {
+    $("confirmTitle").textContent = title;
+    $("confirmBody").textContent = body;
+    confirmCallback = cb;
+    $("confirmModal").hidden = false;
+  }
+
+  function closeConfirm() {
+    $("confirmModal").hidden = true;
+    confirmCallback = null;
+  }
+
+  /* ========================================================================
+     12. Support Chat (/api/chat + Polite Local Help Fallback)
+     ======================================================================== */
+  const chatHistory = [];
+  let chatBusy = false;
+
+  function openChat(show) {
+    $("chatPanel").classList.toggle("open", show);
+    $("chatPanel").setAttribute("aria-hidden", show ? "false" : "true");
+    $("chatFab").setAttribute("aria-expanded", show ? "true" : "false");
+    if (show) setTimeout(() => $("chatInput").focus(), 140);
+  }
+
+  function addChatMsg(role, text, extraCls) {
+    const div = document.createElement("div");
+    div.className = "msg " + role + (extraCls ? " " + extraCls : "");
+    div.textContent = text;
+    if (role === "bot" && !$("chatMessages").children.length) div.dataset.welcome = "1";
+    $("chatMessages").appendChild(div);
+    $("chatMessages").scrollTop = $("chatMessages").scrollHeight;
+    return div;
+  }
+
+  function localSupportReply(q) {
+    const s = q.toLowerCase();
+    const en = prefs.ui === "en";
+    if (/язык|lang|python|rust|java/.test(s)) {
+      return en
+        ? "CodeShift supports 13 target languages: Python, JavaScript, TypeScript, Java, C#, C++, C, Go, Rust, Kotlin, Swift, PHP, and Ruby. The source language is auto-detected."
+        : "CodeShift поддерживает 13 целевых языков: Python, JavaScript, TypeScript, Java, C#, C++, C, Go, Rust, Kotlin, Swift, PHP и Ruby. Исходный язык определяется автоматически.";
+    }
+    if (/влево|исходник|left|source/.test(s)) {
+      return en
+        ? "«To source» moves the translated output into the left pane so you can chain translations into another language."
+        : "Кнопка «В исходник» переносит готовый перевод в левое окно, чтобы можно было сразу перевести его дальше на другой язык.";
+    }
+    if (/буфер|истор|профил|json|buffer|clip|history|profile/.test(s)) {
+      return en
+        ? "The «Clipboard & History» tab stores up to 80 translations (Before/After) and 80 clipboard snippets per local profile in your browser, with search, pinning, and JSON export/import."
+        : "Во вкладке «Буфер и история» хранятся до 80 переводов (Было/Стало) и до 80 фрагментов буфера на профиль прямо в браузере - с поиском, закреплением и экспортом/импортом JSON.";
+    }
+    if (/фон|тем|настройк|backdrop|theme|setting/.test(s)) {
+      return en
+        ? "Theme (Dark, Light, Auto), side backdrop (Station, Topography, Syntax Flow, Clean), interface language, and editor font size can be changed in the top bar or Settings."
+        : "Тему (Тёмная, Светлая, Авто), боковой фон (Станция, Топография, Поток синтаксиса, Чистый), язык сайта и размер шрифта можно переключить в шапке или в «Настройках».";
+    }
+    if (/почему|ошибк|лимит|why|error|limit/.test(s)) {
+      return en
+        ? "Limits: up to 8,000 characters per request, 15 translations and 30 chat messages per 10 minutes per IP. In local preview without the Vercel server, use the «Local demo translation» button."
+        : "Ограничения сервиса: до 8 000 символов за запрос, до 15 переводов и 30 сообщений в чат за 10 минут с одного IP. В локальном предпросмотре без сервера Vercel используйте «Локальный демо-перевод».";
+    }
+    return en
+      ? "The /api/chat backend is offline in local preview. Paste code in the Translator tab, choose one of 13 languages, and press Ctrl+Enter. Pastes and translations are saved in «Clipboard & History»."
+      : "Сервер /api/chat сейчас недоступен в локальном предпросмотре. Вставьте код во вкладке «Переводчик», выберите язык и нажмите Ctrl+Enter. Вставки и история сохраняются в «Буфер и история».";
+  }
+
+  async function sendChat(text) {
+    const clean = (text || "").trim();
+    if (!clean || chatBusy) return;
+    chatBusy = true;
+    $("chatSend").disabled = true;
+    $("chatInput").value = "";
+    $("chatQuick").hidden = true;
+
+    addChatMsg("user", clean);
+    chatHistory.push({ role: "user", text: clean });
+    const waitEl = addChatMsg("bot", t("typing"), "typing");
+
+    try {
+      const resp = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: chatHistory.slice(-8), lang: prefs.ui })
+      });
+      const isJson = (resp.headers.get("content-type") || "").includes("application/json");
+      const data = isJson ? await resp.json().catch(() => ({})) : {};
+      if (!isJson && (resp.status === 404 || resp.status === 405)) {
+        throw new Error("OFFLINE_PREVIEW");
+      }
+      if (!resp.ok || !data.text) {
+        waitEl.remove();
+        chatHistory.pop();
+        const errPrefix = prefs.ui === "en" ? "Support error: " : "Не удалось ответить: ";
+        addChatMsg("bot", errPrefix + (data.error || `HTTP ${resp.status}`));
+        return;
+      }
+      waitEl.remove();
+      addChatMsg("bot", data.text);
+      chatHistory.push({ role: "assistant", text: data.text });
+    } catch (e) {
+      waitEl.remove();
+      const isOffline = (e && e.message === "OFFLINE_PREVIEW") || e instanceof TypeError;
+      if (isOffline) {
+        const reply = localSupportReply(clean);
+        addChatMsg("bot", reply);
+        chatHistory.push({ role: "assistant", text: reply });
+      } else {
+        chatHistory.pop();
+        const errPrefix = prefs.ui === "en" ? "Support error: " : "Не удалось ответить: ";
+        addChatMsg("bot", errPrefix + ((e && e.message) || "unknown error"));
+      }
+    } finally {
+      chatBusy = false;
+      $("chatSend").disabled = false;
+      $("chatInput").focus();
+    }
+  }
+
+  /* ========================================================================
+     13. Event Wiring
+     ======================================================================== */
+  document.querySelectorAll(".tab-btn").forEach((b) => {
+    b.addEventListener("click", () => switchMainTab(b.dataset.tab));
+  });
+
+  $("btnBgMenu").addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = $("bgMenuWrap").classList.toggle("open");
+    $("btnBgMenu").setAttribute("aria-expanded", open ? "true" : "false");
+    $("examplesWrap").classList.remove("open");
+  });
+
+  $("bgMenu").addEventListener("click", (e) => {
+    const item = e.target.closest("[data-bg]");
+    if (!item) return;
+    prefs.bg = item.dataset.bg;
+    savePrefs();
+    applyBackdropUI();
+    $("bgMenuWrap").classList.remove("open");
+    $("btnBgMenu").setAttribute("aria-expanded", "false");
+  });
+
+  $("btnExamples").addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = $("examplesWrap").classList.toggle("open");
+    $("btnExamples").setAttribute("aria-expanded", open ? "true" : "false");
+    $("bgMenuWrap").classList.remove("open");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!$("bgMenuWrap").contains(e.target)) {
+      $("bgMenuWrap").classList.remove("open");
+      $("btnBgMenu").setAttribute("aria-expanded", "false");
+    }
+    if (!$("examplesWrap").contains(e.target)) {
+      $("examplesWrap").classList.remove("open");
+      $("btnExamples").setAttribute("aria-expanded", "false");
+    }
+  });
+
+  $("btnThemeToggle").addEventListener("click", () => {
+    const cur = document.documentElement.getAttribute("data-theme");
+    prefs.theme = cur === "dark" ? "light" : "dark";
+    savePrefs();
+    applyAllPrefs();
+  });
+
+  document.querySelectorAll('input[name="lang"]').forEach((r) => {
+    r.addEventListener("change", () => {
+      prefs.lang = r.value;
+      savePrefs();
+      updateTargetHeader();
+    });
+  });
+
+  $("src").addEventListener("input", updateSourceMeta);
+  $("src").addEventListener("scroll", () => { $("gutterSrc").scrollTop = $("src").scrollTop; });
+  $("out").addEventListener("scroll", () => { $("gutterOut").scrollTop = $("out").scrollTop; });
+
+  $("src").addEventListener("paste", (e) => {
+    try {
+      const clip = (e.clipboardData || window.clipboardData).getData("text");
+      if (clip && clip.trim()) {
+        logBuffer({ text: clip, source: "paste", lang: detectSourceLang(clip) });
+      }
+    } catch (err) {}
+  });
+
+  $("src").addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      runTranslate();
+    } else if (e.key === "Tab") {
+      e.preventDefault();
+      const el = $("src");
+      const s = el.selectionStart, end = el.selectionEnd;
+      el.value = el.value.slice(0, s) + "    " + el.value.slice(end);
+      el.selectionStart = el.selectionEnd = s + 4;
+      updateSourceMeta();
+    }
+  });
+
+  $("btnPaste").addEventListener("click", async () => {
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.readText) throw new Error("no-api");
+      const txt = await navigator.clipboard.readText();
+      if (txt && txt.trim()) {
+        $("src").value = txt;
+        updateSourceMeta();
+        hideAlert();
+        logBuffer({ text: txt, source: "paste", lang: detectSourceLang(txt) });
+        toast(t("toastPasted"));
+      } else {
+        toast(t("toastPasteEmpty"));
+      }
+    } catch (e) {
+      toast(t("toastPasteFail"));
+      $("src").focus();
+    }
+  });
+
+  $("btnSaveBuffer").addEventListener("click", () => {
+    const val = $("src").value;
+    if (!val.trim()) {
+      toast(t("toastBufEmpty"));
+      return;
+    }
+    logBuffer({ text: val, source: "manual", lang: detectedSrcLang });
+    toast(t("toastSavedBuf"));
+  });
+
+  $("btnCopySrc").addEventListener("click", () => copyText($("src").value, t("toastCopiedSrc")));
+
+  $("btnClear").addEventListener("click", () => {
+    $("src").value = "";
+    setOutput("");
+    $("outStatus").textContent = "";
+    $("durationBadge").hidden = true;
+    currentHistoryId = null;
+    hideAlert();
+    hideFeedback();
+    updateSourceMeta();
+    $("src").focus();
+    toast(t("toastCleared"));
+  });
+
+  $("btnToSrc").addEventListener("click", () => {
+    if (!rawOutputText) {
+      toast(t("toastNoOut"));
+      return;
+    }
+    $("src").value = rawOutputText;
+    updateSourceMeta();
+    setOutput("");
+    $("outStatus").textContent = "";
+    $("durationBadge").hidden = true;
+    hideFeedback();
+    toast(t("toastMoved"));
+  });
+
+  $("btnCopyOut").addEventListener("click", () => {
+    if (!rawOutputText) {
+      toast(t("toastCopyEmpty"));
+      return;
+    }
+    if (copyText(rawOutputText, t("toastCopiedOut"))) {
+      logBuffer({ text: rawOutputText, source: "copy", lang: getSelectedLang() });
+    }
+  });
+
+  $("btnDownload").addEventListener("click", () => {
+    if (!rawOutputText) {
+      toast(t("toastNoOut"));
+      return;
+    }
+    const meta = LANG_META[getSelectedLang()] || { ext: "txt" };
+    const blob = new Blob([rawOutputText], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "translated." + meta.ext;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    toast(t("toastDownloaded"));
+  });
+
+  $("btnGo").addEventListener("click", runTranslate);
+  $("btnStop").addEventListener("click", () => { if (activeAbort) activeAbort.abort(); });
+  $("btnDemoRun").addEventListener("click", runDemoTranslate);
+
+  $("fbOk").addEventListener("click", () => setFeedback("ok"));
+  $("fbErr").addEventListener("click", () => setFeedback("err"));
+
+  $("subHistoryBtn").addEventListener("click", () => {
+    vaultSubMode = "history";
+    $("subHistoryBtn").classList.add("active");
+    $("subHistoryBtn").setAttribute("aria-selected", "true");
+    $("subBufferBtn").classList.remove("active");
+    $("subBufferBtn").setAttribute("aria-selected", "false");
+    renderVault();
+  });
+
+  $("subBufferBtn").addEventListener("click", () => {
+    vaultSubMode = "buffer";
+    $("subBufferBtn").classList.add("active");
+    $("subBufferBtn").setAttribute("aria-selected", "true");
+    $("subHistoryBtn").classList.remove("active");
+    $("subHistoryBtn").setAttribute("aria-selected", "false");
+    renderVault();
+  });
+
+  $("vaultSearch").addEventListener("input", renderVault);
+  $("vaultLangFilter").addEventListener("change", renderVault);
+  $("btnPinOnly").addEventListener("click", () => {
+    pinnedOnly = !pinnedOnly;
+    $("btnPinOnly").classList.toggle("active", pinnedOnly);
+    $("btnPinOnly").setAttribute("aria-pressed", pinnedOnly ? "true" : "false");
+    renderVault();
+  });
+
+  $("profileSelect").addEventListener("change", () => {
+    profiles.activeId = $("profileSelect").value;
+    currentHistoryId = null;
+    saveProfiles();
+    renderVault();
+    toast(t("toastProfSwitched"));
+  });
+
+  $("btnNewProfile").addEventListener("click", () => {
+    openInputModal(t("modalNewProfTitle"), t("modalNewProfDesc"), "", (val) => {
+      const name = val.trim();
+      if (!name) {
+        toast(t("toastProfNeedName"));
+        return false;
+      }
+      const p = { id: uid("prof"), name, isDefault: false, history: [], buffer: [] };
+      profiles.list.push(p);
+      profiles.activeId = p.id;
+      saveProfiles();
+      renderProfileSelect();
+      renderVault();
+      toast(t("toastProfCreated"));
+      return true;
+    });
+  });
+
+  $("btnRenameProfile").addEventListener("click", () => {
+    const prof = getActiveProfile();
+    const curName = prof.isDefault && prof.name === "Локальный" ? t("defaultProfileName") : prof.name;
+    openInputModal(t("modalRenameProfTitle"), t("modalRenameProfDesc"), curName, (val) => {
+      const name = val.trim();
+      if (!name) {
+        toast(t("toastProfNeedName"));
+        return false;
+      }
+      prof.name = name;
+      prof.isDefault = false;
+      saveProfiles();
+      renderProfileSelect();
+      toast(t("toastProfRenamed"));
+      return true;
+    });
+  });
+
+  $("btnExportJson").addEventListener("click", () => {
+    const prof = getActiveProfile();
+    const payload = {
+      format: "codeshift-profile-v1",
+      exportedAt: new Date().toISOString(),
+      name: prof.name,
+      history: prof.history,
+      buffer: prof.buffer
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `codeshift-${prof.name.replace(/[^a-zA-Zа-яА-Я0-9_-]/g, "_")}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    toast(t("toastExported"));
+  });
+
+  $("btnImportJson").addEventListener("click", () => $("importFileInput").click());
+  $("importFileInput").addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const obj = JSON.parse(String(reader.result || ""));
+        if (!obj || typeof obj !== "object" || (!Array.isArray(obj.history) && !Array.isArray(obj.buffer))) {
+          throw new Error("invalid");
+        }
+        const imported = {
+          id: uid("prof"),
+          name: (typeof obj.name === "string" && obj.name.trim()) ? obj.name.trim().slice(0, 32) : "Импорт",
+          isDefault: false,
+          history: Array.isArray(obj.history) ? obj.history.slice(0, MAX_HISTORY) : [],
+          buffer: Array.isArray(obj.buffer) ? obj.buffer.slice(0, MAX_BUFFER) : []
+        };
+        profiles.list.push(imported);
+        profiles.activeId = imported.id;
+        saveProfiles();
+        renderProfileSelect();
+        renderVault();
+        toast(t("toastImported"));
+      } catch (err) {
+        toast(t("toastImportErr"));
+      } finally {
+        $("importFileInput").value = "";
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  $("btnClearSubmode").addEventListener("click", () => {
+    const prof = getActiveProfile();
+    if (vaultSubMode === "history") {
+      if (!prof.history.length) return;
+      openConfirm(t("confirmClearHistTitle"), t("confirmClearHistBody"), () => {
+        prof.history = [];
+        currentHistoryId = null;
+        saveProfiles();
+        renderVault();
+        toast(t("toastClearedList"));
+      });
+    } else {
+      if (!prof.buffer.length) return;
+      openConfirm(t("confirmClearBufTitle"), t("confirmClearBufBody"), () => {
+        prof.buffer = [];
+        saveProfiles();
+        renderVault();
+        toast(t("toastClearedList"));
+      });
+    }
+  });
+
+  $("estLines").addEventListener("input", updateEstimator);
+  $("estRate").addEventListener("input", updateEstimator);
+
+  $("btnSettings").addEventListener("click", () => openSettings(true));
+  $("closeSettings").addEventListener("click", () => openSettings(false));
+  $("overlay").addEventListener("click", () => openSettings(false));
+
+  $("themeOpts").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]");
+    if (!b) return;
+    prefs.theme = b.dataset.v;
+    savePrefs();
+    applyAllPrefs();
+  });
+
+  $("bgOpts").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]");
+    if (!b) return;
+    prefs.bg = b.dataset.v;
+    savePrefs();
+    applyBackdropUI();
+  });
+
+  $("uiLangOpts").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]");
+    if (!b) return;
+    prefs.ui = b.dataset.v;
+    savePrefs();
+    applyAllPrefs();
+  });
+
+  $("fontSizeRange").addEventListener("input", () => {
+    prefs.font = parseFloat($("fontSizeRange").value);
+    savePrefs();
+    document.documentElement.style.setProperty("--fs", prefs.font + "px");
+    $("fontSizeVal").textContent = prefs.font + " px";
+  });
+
+  $("setWrap").addEventListener("change", () => {
+    prefs.wrap = $("setWrap").checked;
+    savePrefs();
+    document.body.classList.toggle("nowrap", !prefs.wrap);
+  });
+
+  $("setAnim").addEventListener("change", () => {
+    prefs.anim = $("setAnim").checked;
+    savePrefs();
+    document.body.classList.toggle("no-anim", !prefs.anim);
+    syncCanvasLoop();
+  });
+
+  $("setRemember").addEventListener("change", () => {
+    prefs.remember = $("setRemember").checked;
+    savePrefs();
+    if (prefs.remember) store.set(DRAFT_KEY, $("src").value);
+    else store.remove(DRAFT_KEY);
+  });
+
+  $("btnResetSettings").addEventListener("click", () => {
+    prefs = Object.assign({}, DEFAULT_PREFS);
+    savePrefs();
+    store.remove(DRAFT_KEY);
+    applyAllPrefs();
+    toast(t("toastReset"));
+  });
+
+  $("closeInputModal").addEventListener("click", closeInputModal);
+  $("inputModalCancel").addEventListener("click", closeInputModal);
+  $("inputModalOk").addEventListener("click", () => {
+    if (inputModalCallback) {
+      const ok = inputModalCallback($("inputModalField").value);
+      if (ok !== false) closeInputModal();
+    }
+  });
+  $("inputModalField").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      $("inputModalOk").click();
+    }
+  });
+
+  $("closeConfirmModal").addEventListener("click", closeConfirm);
+  $("confirmCancel").addEventListener("click", closeConfirm);
+  $("confirmOk").addEventListener("click", () => {
+    const fn = confirmCallback;
+    closeConfirm();
+    if (fn) fn();
+  });
+
+  $("chatFab").addEventListener("click", () => openChat(!$("chatPanel").classList.contains("open")));
+  $("closeChat").addEventListener("click", () => openChat(false));
+  $("chatForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    sendChat($("chatInput").value);
+  });
+  $("chatQuick").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (b) sendChat(b.textContent);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      openSettings(false);
+      openChat(false);
+      closeInputModal();
+      closeConfirm();
+      $("bgMenuWrap").classList.remove("open");
+      $("examplesWrap").classList.remove("open");
+    }
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!prefs.anim || prefs.bg === "clean" || mqReduced.matches) return;
+    mouseTargetX = ((e.clientX / Math.max(1, window.innerWidth)) - 0.5) * 14;
+    mouseTargetY = ((e.clientY / Math.max(1, window.innerHeight)) - 0.5) * 10;
+  }, { passive: true });
+
+  window.addEventListener("resize", resizeCanvas);
+  mqDark.addEventListener("change", () => { if (prefs.theme === "auto") applyTheme(); });
+  mqReduced.addEventListener("change", syncCanvasLoop);
+
+  /* ========================================================================
+     14. Application Bootstrap
+     ======================================================================== */
+  applyAllPrefs();
+  if (prefs.remember) {
+    const draft = store.get(DRAFT_KEY);
+    if (draft) {
+      $("src").value = draft;
+      updateSourceMeta();
+    }
+  }
+
+  window.addEventListener("load", () => {
+    bootTime = performance.now();
+    resizeCanvas();
+    syncCanvasLoop();
+  });
+})();
 </script>
 </body>
 </html>
